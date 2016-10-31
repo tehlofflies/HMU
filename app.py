@@ -16,6 +16,7 @@ app.config['MYSQL_DATABASE_USER'] = 'root'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'mysql'
 app.config['MYSQL_DATABASE_DB'] = 'HMUFriends'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+
 mysql.init_app(app)
 
 
@@ -102,6 +103,43 @@ def validateLogin():
         cursor.close()
         con.close()
 
+@app.route('/showAddPost')
+def showAddPost():
+    return render_template('addPost.html')
+
+@app.route('/addPost',methods=['POST'])
+def addPost():
+    print('hello',file=sys.stderr)
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    try:
+        if session.get('user'):
+            print('goodbye',file=sys.stderr)
+            _headline = request.form['inputHeadline']
+            print('jason',file=sys.stderr)
+            _description = request.form['inputDescription']
+            print('monica',file=sys.stderr)
+            _user = session.get('user')
+            _meetingTime = request.form['inputMeetingTime']
+            _location = request.form['inputLocation']
+
+            cursor.callproc('sp_addPost',(_headline, _description, _user, _meetingTime, _location))
+            data = cursor.fetchall()
+
+            if len(data) is 0:
+                conn.commit()
+                print('jy',file=sys.stderr)
+                return redirect('/userHome')
+            else:
+                return render_template('error.html',error = 'An error occurred!')
+
+        else:
+            return render_template('error.html',error = 'Unauthorized Access')
+    except Exception as e:
+        return render_template('error.html',error = str(e))
+    finally:
+        cursor.close()
+        conn.close()
 
 @app.route('/logout')
 def logout():
