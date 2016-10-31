@@ -1,7 +1,7 @@
 from __future__ import print_function # In python 2.7
 import sys
 
-from flask import Flask, render_template, json, request, session
+from flask import Flask, render_template, json, request, redirect, session, jsonify
 from flaskext.mysql import MySQL
 from werkzeug import generate_password_hash, check_password_hash
 
@@ -29,7 +29,17 @@ def showSignUp():
 
 @app.route('/showSignIn')
 def showSignIn():
-    return render_template('signin.html')
+    if session.get('user'):
+        return render_template('userHome.html')
+    else:
+        return render_template('signin.html')
+
+@app.route('/userHome')
+def userHome():
+    if session.get('user'):
+        return render_template('userHome.html')
+    else:
+        return render_template('error.html',error = 'Unauthorized Access')
 
 
 @app.route('/signUp',methods=['POST','GET'])
@@ -43,15 +53,15 @@ def signUp():
         if _name and _email and _password:
             
             # All Good, let's call MySQL
+            
             conn = mysql.connect()
             cursor = conn.cursor()
-            #_hashed_password = generate_password_hash(_password)
             cursor.callproc('sp_createUser',(_name,_email,_password))
             data = cursor.fetchall()
 
             if len(data) is 0:
                 conn.commit()
-                return redirect('/signIn')
+                return json.dumps({'message':'User created successfully !'})
             else:
                 return json.dumps({'error':str(data[0])})
         else:
@@ -69,21 +79,15 @@ def validateLogin():
     try:
         _username = request.form['inputEmail']
         _password = request.form['inputPassword']
-        
-
-        
+       
         # connect to mysql
-
         con = mysql.connect()
         cursor = con.cursor()
-        cursor.callproc('sp_validateLogin',(_username))
+        cursor.callproc('sp_validateLogin',(_username,))
         data = cursor.fetchall()
 
-        
-
-
         if len(data) > 0:
-            if check_password_hash(str(data[0][3]),_password):
+            if str(data[0][3])==_password:
                 session['user'] = data[0][0]
                 return redirect('/userHome')
             else:
@@ -103,14 +107,6 @@ def validateLogin():
 def logout():
     session.pop('user',None)
     return redirect('/')
-
-
-@app.route('/userHome')
-def userHome():
-    if session.get('user'):
-        return render_template('userHome.html')
-    else:
-        return render_template('error.html',error = 'Unauthorized Access')
 
 
 if __name__ == "__main__":
