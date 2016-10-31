@@ -61,7 +61,7 @@ def signUp():
 
             if len(data) is 0:
                 conn.commit()
-                return json.dumps({'message':'User created successfully !'})
+                return json.dumps({'message':'User created successfully!'})
             else:
                 return json.dumps({'error':str(data[0])})
         else:
