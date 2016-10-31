@@ -1,13 +1,15 @@
 from __future__ import print_function # In python 2.7
 import sys
 
-from flask import Flask, render_template, json, request
+from flask import Flask, render_template, json, request, session
 from flaskext.mysql import MySQL
 from werkzeug import generate_password_hash, check_password_hash
 
 
 mysql = MySQL()
 app = Flask(__name__)
+
+app.secret_key = 'why would I tell you my secret key?'
 
 # MySQL configurations
 app.config['MYSQL_DATABASE_USER'] = 'root'
@@ -49,7 +51,7 @@ def signUp():
 
             if len(data) is 0:
                 conn.commit()
-                return json.dumps({'message':'User created successfully!'})
+                return redirect('/signIn')
             else:
                 return json.dumps({'error':str(data[0])})
         else:
@@ -62,37 +64,54 @@ def signUp():
         conn.close()
 
 
-@app.route('/signIn',methods=['POST','GET'])
-def signIn():
+@app.route('/validateLogin',methods=['POST'])
+def validateLogin():
     try:
-        _email = request.form['inputEmail']
+        _username = request.form['inputEmail']
         _password = request.form['inputPassword']
+        
 
-        # validate the received values
-        if _email and _password:
+        
+        # connect to mysql
 
-	    	# All Good, let's call MySQL
-            conn = mysql.connect()
-            cursor = conn.cursor()
+        con = mysql.connect()
+        cursor = con.cursor()
+        cursor.callproc('sp_validateLogin',(_username))
+        data = cursor.fetchall()
 
-            query = "SELECT CheckPassword(%s,%s)"
-            cursor.execute(query, (_email,_password))
-            data = cursor.fetchall()
+        
+
+
+        if len(data) > 0:
+            if check_password_hash(str(data[0][3]),_password):
+                session['user'] = data[0][0]
+                return redirect('/userHome')
+            else:
+                return render_template('error.html',error = 'Wrong Email address or Password.')
+        else:
+            return render_template('error.html',error = 'Wrong Email address or Password.')
             
 
-            if data == 0:
-                conn.commit()
-                return json.dumps({'message':'User logged in successfully!'})
-            else:
-                return json.dumps({'error':str(data[0])})
-        else:
-            return json.dumps({'html':'<span>Enter the required fields</span>'})
-
     except Exception as e:
-        return json.dumps({'error':str(e)})
+        return render_template('error.html',error = str(e))
     finally:
-        cursor.close() 
-        conn.close()
+        cursor.close()
+        con.close()
+
+
+@app.route('/logout')
+def logout():
+    session.pop('user',None)
+    return redirect('/')
+
+
+@app.route('/userHome')
+def userHome():
+    if session.get('user'):
+        return render_template('userHome.html')
+    else:
+        return render_template('error.html',error = 'Unauthorized Access')
+
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug = True)
