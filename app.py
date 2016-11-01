@@ -179,8 +179,8 @@ def getPost():
                     'Headline': post[2],
                     'Description': "WHAT'S UP: "+post[3],
                     'Location': "WHERE: "+post[4],
-                    'MeetingTime': "WHEN: "+post[6].strftime("%B %d, %Y, %H:%m"),
-                    'PostTime': "Posted: "+post[5].strftime("%B %d, %Y, %H:%m")
+                    'MeetingTime': "WHEN: "+post[6].strftime("%B %d, %Y, %I:%M %p"),
+                    'PostTime': "Posted: "+post[5].strftime("%B %d, %Y, %I:%M %p")
                 }
                 posts_dict.append(post_dict)
 
