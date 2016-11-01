@@ -126,7 +126,7 @@ def addPost():
         if session.get('user'):
             _headline = request.form['inputHeadline']
             _description = request.form['inputDescription']
-            _meetingDate = 
+            #_meetingDate = 
             print('jason',file=sys.stderr)
 
             _user = session.get('user')

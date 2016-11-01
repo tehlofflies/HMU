@@ -9,11 +9,12 @@
 
 		<title>HMU</title>
 
-		<!-- Theme CSS -->
-		<link href="../static/css/freelancer.min.css" rel="stylesheet">
 		<!-- Bootstrap -->
 		<link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
 		<link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+		<!-- Theme CSS -->
+		<link href="../static/css/freelancer.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"> 
 		<!-- Custom Fonts -->
 		<link href="../static/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
@@ -68,13 +69,17 @@
 	    <section id="join">
 	        <div class="container">
 	            <div class="row">
-	                <div class="col-lg-8 col-lg-offset-2 text-center">
+	                <div class="col-lg">
 	                    
 	                	<form class="form-horizontal" method="post" action="/addPost">
 			                <fieldset>
 			 
 			                    <!-- Form Name -->
-			                    <legend>Add a Post!</legend>
+			                    <div class="row">
+				                    <div class="col-lg-12 text-center">
+				                    	<legend><h2>Add a Post!</h2></legend>
+				                    </div>
+			                    </div>
 			 
 			                    <!-- Text input-->
 			                    <div class="form-group">
