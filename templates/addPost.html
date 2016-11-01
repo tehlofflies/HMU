@@ -3,13 +3,21 @@
  
 <head>
     <title>HMU App</title>
- 
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"> 
  
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
  
     <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
  
     <script src="../static/js/jquery-1.11.2.js"></script>
+
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script>
+    $(function() {
+        $( ".dtpick" ).datepicker();
+    });
+    </script>
  
  
 </head>
@@ -42,6 +50,12 @@
                             <input id="txtTitle" name="inputHeadline" type="text" placeholder="required" class="form-control input-md">
                         </div>
                     </div>
+
+                    <form method="post" action="">
+                    {{ form.hidden_tag() }}
+                    {{ form.dt(class="dtpick") }}
+                    <button type="submit">Go</button>
+                    </form>
 
                     <!-- Text input-->
                     <div class="form-group">
