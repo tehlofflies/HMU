@@ -3,7 +3,11 @@ import sys
 
 from flask import Flask, render_template, json, request, redirect, session, jsonify
 from flaskext.mysql import MySQL
-from werkzeug import generate_password_hash, check_password_hash
+#from werkzeug import generate_password_hash, check_password_hash
+
+from flask_wtf import Form
+from wtforms import DateField
+from datetime import date
 
 
 mysql = MySQL()
@@ -18,6 +22,9 @@ app.config['MYSQL_DATABASE_DB'] = 'HMUFriends'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 
 mysql.init_app(app)
+
+class DateForm(Form):
+    dt = DateField('Pick a Date', format="%m/%d/%Y")
 
 
 @app.route('/')
@@ -105,7 +112,11 @@ def validateLogin():
 
 @app.route('/showAddPost')
 def showAddPost():
-    return render_template('addPost.html')
+    form = DateForm()
+    #if form.validate_on_submit():
+    #    return form.dt.data.strftime('%x')
+    #return render_template('addPost.html')
+    return render_template('addPost.html', form=form)
 
 @app.route('/addPost',methods=['POST'])
 def addPost():
@@ -113,11 +124,11 @@ def addPost():
     cursor = conn.cursor()
     try:
         if session.get('user'):
-            print('goodbye',file=sys.stderr)
             _headline = request.form['inputHeadline']
-            print('jason',file=sys.stderr)
             _description = request.form['inputDescription']
-            print('monica',file=sys.stderr)
+            _meetingDate = 
+            print('jason',file=sys.stderr)
+
             _user = session.get('user')
             _meetingTime = request.form['inputMeetingTime']
             _location = request.form['inputLocation']
@@ -127,7 +138,6 @@ def addPost():
 
             if len(data) is 0:
                 conn.commit()
-                print('jy',file=sys.stderr)
                 return redirect('/userHome')
             else:
                 return render_template('error.html',error = 'An error occurred!')

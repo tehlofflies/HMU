@@ -3,13 +3,21 @@
  
 <head>
     <title>HMU App</title>
- 
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"> 
  
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
  
     <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
  
     <script src="../static/js/jquery-1.11.2.js"></script>
+
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script>
+    $(function() {
+        $( ".dtpick" ).datepicker();
+    });
+    </script>
  
  
 </head>
@@ -39,7 +47,18 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="txtTitle">Headline</label>
                         <div class="col-md-4">
-                            <input id="txtTitle" name="inputHeadline" type="text" placeholder="required" class="form-control input-md">
+                            <input id="txtTitle" name="inputHeadline" required type="text" placeholder="required" class="form-control input-md">
+                        </div>
+                    </div>
+
+                    <!-- Date input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="txtTitle">Meetup Date</label>
+                        <div class="col-md-4">
+                            <form method="post" action="" placeholder="required">
+                            {{ form.hidden_tag() }}
+                            {{ form.dt(class="dtpick") }}
+                            </form>
                         </div>
                     </div>
 
@@ -47,7 +66,7 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="txtTitle">Meetup Time</label>
                         <div class="col-md-4">
-                            <input id="txtTitle" name="inputMeetingTime" type="text" placeholder="required" class="form-control input-md">
+                            <input id="txtTitle" name="inputMeetingTime" required type="text" placeholder="required" class="form-control input-md">
                         </div>
                     </div>
 
@@ -55,7 +74,7 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="txtTitle">Meetup Location</label>
                         <div class="col-md-4">
-                            <input id="txtTitle" name="inputLocation" type="text" placeholder="required" class="form-control input-md">
+                            <input id="txtTitle" name="inputLocation" required type="text" placeholder="required" class="form-control input-md">
                         </div>
                     </div>
  
