@@ -16,9 +16,14 @@ app = Flask(__name__)
 app.secret_key = 'why would I tell you my secret key?'
 
 # MySQL configurations
-app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'mysql'
-app.config['MYSQL_DATABASE_DB'] = 'HMUFriends'
+# app.config['MYSQL_DATABASE_USER'] = 'root'
+# app.config['MYSQL_DATABASE_PASSWORD'] = 'mysql'
+# app.config['MYSQL_DATABASE_DB'] = 'HMUFriends'
+# app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+
+app.config['MYSQL_DATABASE_USER'] = 'jasonlei'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'Clarendon@15'
+app.config['MYSQL_DATABASE_DB'] = 'bucketlist'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 
 mysql.init_app(app)
