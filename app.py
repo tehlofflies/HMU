@@ -11,18 +11,11 @@ app = Flask(__name__)
 
 app.secret_key = 'why would I tell you my secret key?'
 
-#delete before merging
-app.config['MYSQL_DATABASE_USER'] = 'monicasyting'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'Dingshouyi333!'
-app.config['MYSQL_DATABASE_DB'] = 'Bucketlist'
-app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-app.config['DEBUG'] = True
-
 # MySQL configurations
-# app.config['MYSQL_DATABASE_USER'] = 'root'
-# app.config['MYSQL_DATABASE_PASSWORD'] = 'mysql'
-# app.config['MYSQL_DATABASE_DB'] = 'HMUFriends'
-# app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'mysql'
+app.config['MYSQL_DATABASE_DB'] = 'HMUFriends'
+app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 
 mysql.init_app(app)
 
@@ -116,7 +109,6 @@ def showAddPost():
 
 @app.route('/addPost',methods=['POST'])
 def addPost():
-    print('hello',file=sys.stderr)
     conn = mysql.connect()
     cursor = conn.cursor()
     try:
@@ -147,6 +139,35 @@ def addPost():
     finally:
         cursor.close()
         conn.close()
+
+@app.route('/getPost')
+def getPost():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    try:
+        if session.get('user'):
+            cursor.callproc('sp_getPosts')
+            posts = cursor.fetchall()
+
+            posts_dict = []
+            for post in posts:
+                post_dict = {
+                    'Id': post[0],
+                    'User': post[1],
+                    'Headline': post[2],
+                    'Description': post[3],
+                    'Location': post[4],
+                    'PostTime': post[5],
+                    'MeetingTime': post[6]
+                }
+                posts_dict.append(post_dict)
+
+            return json.dumps(posts_dict)
+        else:
+            print ("poop",sys=stderr)
+            return render_template('error.html', error = 'Unauthorized Access')
+    except Exception as e:
+        return render_template('error.html', error = str(e))
 
 @app.route('/logout')
 def logout():
