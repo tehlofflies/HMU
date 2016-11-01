@@ -1,5 +1,7 @@
 from __future__ import print_function # In python 2.7
 import sys
+import datetime
+import time
 
 from flask import Flask, render_template, json, request, redirect, session, jsonify
 from flaskext.mysql import MySQL
@@ -16,9 +18,9 @@ app = Flask(__name__)
 app.secret_key = 'why would I tell you my secret key?'
 
 # MySQL configurations
-app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_USER'] = 'monicasyting'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'mysql'
-app.config['MYSQL_DATABASE_DB'] = 'HMUFriends'
+app.config['MYSQL_DATABASE_DB'] = 'Bucketlist'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 
 mysql.init_app(app)
@@ -124,16 +126,26 @@ def addPost():
     cursor = conn.cursor()
     try:
         if session.get('user'):
+            form = DateForm(request.form)
             _headline = request.form['inputHeadline']
             _description = request.form['inputDescription']
-            #_meetingDate = 
-            print('jason',file=sys.stderr)
+
+            _unformattedDate = form.dt.data.strftime('%x')
+            _formattedDate = datetime.datetime.strptime(_unformattedDate, '%m/%d/%y')
+            print(_formattedDate, file=sys.stderr)
 
             _user = session.get('user')
-            _meetingTime = request.form['inputMeetingTime']
+            _unformattedTime = request.form['inputMeetingTime']
+            
+            #formattedTime = datetime.time(*map(int, _unformattedTime.split(':')))
+            formattedTime = datetime.datetime.strptime(_unformattedTime, '%H:%M').time()
+            
+            _formattedDatetime = datetime.datetime.combine(_formattedDate, formattedTime)
+        
+
             _location = request.form['inputLocation']
 
-            cursor.callproc('sp_addPost',(_headline, _description, _user, _meetingTime, _location))
+            cursor.callproc('sp_addPost',(_headline, _description, _user, _formattedDatetime, _location))
             data = cursor.fetchall()
 
             if len(data) is 0:

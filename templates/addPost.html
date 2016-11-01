@@ -15,6 +15,7 @@
 		<!-- Theme CSS -->
 		<link href="../static/css/freelancer.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"> 
+        <link rel="stylesheet" href="http://weareoutman.github.io/clockpicker/dist/jquery-clockpicker.min.css"> 
 		<!-- Custom Fonts -->
 		<link href="../static/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
@@ -23,6 +24,7 @@
 		<script src="../static/js/jquery-3.1.1.min.js"></script>
 		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <script src="http://weareoutman.github.io/clockpicker/dist/jquery-clockpicker.min.js"></script>
 		<script>
 		$(function() {
 			$( ".dtpick" ).datepicker();
@@ -89,24 +91,31 @@
 			                        </div>
 			                    </div>
 
-			                    <!-- Date input-->
-			                    <div class="form-group">
-			                        <label class="col-md-4 control-label" for="txtTitle">Meetup Date</label>
-			                        <div class="col-md-4">
-			                            <form method="post" action="" placeholder="required">
-			                            {{ form.hidden_tag() }}
-			                            {{ form.dt(class="dtpick") }}
-			                            </form>
-			                        </div>
-			                    </div>
+			                    <!-- Time input-->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="txtTitle">Meetup Time</label>
+                                    <div class="col-md-4">
+                                        <div class="input-group clockpicker" data-autoclose="true">
+                                            <input type="text" name="inputMeetingTime" class="form-control" value="09:30">
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-time"></span>
+                                            </span>
+                                        </div>
+                                        <script type="text/javascript">
+                                        $('.clockpicker').clockpicker();
+                                        </script>
+                                    </div>
+                                </div>
 
-			                    <!-- Text input-->
-			                    <div class="form-group">
-			                        <label class="col-md-4 control-label" for="txtTitle">Meetup Time</label>
-			                        <div class="col-md-4">
-			                            <input id="txtTitle" name="inputMeetingTime" required type="text" placeholder="required" class="form-control input-md">
-			                        </div>
-			                    </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="txtTitle">Meetup Date</label>
+                                    <div class="col-md-4">
+                                        <form method="post" action="" placeholder="required">
+                                        {{ form.hidden_tag() }}
+                                        {{ form.dt(class="dtpick") }}
+                                        </form>
+                                    </div>
+                                </div>
 
 			                    <!-- Text input-->
 			                    <div class="form-group">
