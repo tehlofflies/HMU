@@ -113,8 +113,8 @@ def validateLogin():
 @app.route('/showAddPost')
 def showAddPost():
     form = DateForm()
-    if form.validate_on_submit():
-        return form.dt.data.strftime('%x')
+    #if form.validate_on_submit():
+    #    return form.dt.data.strftime('%x')
     #return render_template('addPost.html')
     return render_template('addPost.html', form=form)
 
@@ -124,11 +124,11 @@ def addPost():
     cursor = conn.cursor()
     try:
         if session.get('user'):
-            print('goodbye',file=sys.stderr)
             _headline = request.form['inputHeadline']
-            print('jason',file=sys.stderr)
             _description = request.form['inputDescription']
-            print('monica',file=sys.stderr)
+            _meetingDate = 
+            print('jason',file=sys.stderr)
+
             _user = session.get('user')
             _meetingTime = request.form['inputMeetingTime']
             _location = request.form['inputLocation']
@@ -138,7 +138,6 @@ def addPost():
 
             if len(data) is 0:
                 conn.commit()
-                print('jy',file=sys.stderr)
                 return redirect('/userHome')
             else:
                 return render_template('error.html',error = 'An error occurred!')
