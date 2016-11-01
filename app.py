@@ -18,8 +18,8 @@ app = Flask(__name__)
 app.secret_key = 'why would I tell you my secret key?'
 
 # MySQL configurations
-app.config['MYSQL_DATABASE_USER'] = 'monicasyting'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'mysql'
+app.config['MYSQL_DATABASE_USER'] = 'jasonlei'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'itsmejason'
 app.config['MYSQL_DATABASE_DB'] = 'Bucketlist'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 
@@ -175,12 +175,12 @@ def getPost():
             for post in posts:
                 post_dict = {
                     'Id': post[0],
-                    'User': post[1],
+                    'User': "WHO: "+post[1],
                     'Headline': post[2],
-                    'Description': post[3],
-                    'Location': post[4],
-                    'PostTime': post[5],
-                    'MeetingTime': post[6]
+                    'Description': "WHAT'S UP: "+post[3],
+                    'Location': "WHERE: "+post[4],
+                    'MeetingTime': "WHEN: "+post[6].strftime("%B %d, %Y, %H:%m"),
+                    'PostTime': "Posted: "+post[5].strftime("%B %d, %Y, %H:%m")
                 }
                 posts_dict.append(post_dict)
 
