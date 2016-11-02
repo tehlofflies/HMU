@@ -43,15 +43,12 @@ N/A - to be added
 
 ### Break down into end to end tests
 
-N/A - to be added
 
 ### And coding style tests
 
-N/A - to be added
 
 ## Deployment
 
-N/A - to be added
 
 ## Built With
 
@@ -61,11 +58,11 @@ N/A - to be added
 
 ## Authors
 
-* **[Jason Lei]**(http://github.com/jason-lei) - [HMU](https://github.com/HMU)
-* **[Emily Song]**(http://github.com/emilysong) - [HMU](https://github.com/HMU)
-* **[Jiayin Tang]**(http://github.com/tehlofflies) - [HMU](https://github.com/HMU)
-* **[Monica Ting]**(http://github.com/monicating) - [HMU](https://github.com/HMU)
+* [**Jason Lei**](https://github.com/jason-lei) - [HMU](https://github.com/HMU)
+* [**Emily Song**](http://github.com/emilysong) - [HMU](https://github.com/HMU)
+* [**Jiayin Tang**](http://github.com/tehlofflies) - [HMU](https://github.com/HMU)
+* [**Monica Ting**](http://github.com/monicating) - [HMU](https://github.com/HMU)
 
 ## Acknowledgments
 
-* Initial app setup borrowed from: [here](https://code.tutsplus.com/tutorials/creating-a-web-app-from-scratch-using-python-flask-and-mysql--cms-22972)
+* Initial app setup borrowed from: [Tutsplus](https://code.tutsplus.com/tutorials/creating-a-web-app-from-scratch-using-python-flask-and-mysql--cms-22972)
