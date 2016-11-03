@@ -31,35 +31,35 @@ class tbl_post(db.Model):
     post_description = db.Column(db.String(5000))
     post_location = db.Column(db.String(45))
     post_postTime = db.Column(db.DateTime)
-    post_meetingTime = db.Column(db.String(14))
+    post_meetingTime = db.Column(db.DateTime)
 
 sp_createUser = """
 CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_createUser`(
-	IN p_name VARCHAR(45),
-	IN p_username VARCHAR(45),
-	IN p_password VARCHAR(45)
+    IN p_name VARCHAR(45),
+    IN p_username VARCHAR(45),
+    IN p_password VARCHAR(45)
 )
 BEGIN
-	if ( select exists (select 1 from tbl_user where user_username = p_username) ) THEN
-	 
-	    select 'Username Exists !!';
-	 
-	ELSE
-	 
-	    insert into tbl_user
-	    (
-	        user_name,
-	        user_username,
-	        user_password
-	    )
-	    values
-	    (
-	        p_name,
-	        p_username,
-	        p_password
-	    );
-	 
-	END IF;
+    if ( select exists (select 1 from tbl_user where user_username = p_username) ) THEN
+     
+        select 'Username Exists !!';
+     
+    ELSE
+     
+        insert into tbl_user
+        (
+            user_name,
+            user_username,
+            user_password
+        )
+        values
+        (
+            p_name,
+            p_username,
+            p_password
+        );
+     
+    END IF;
 END
 """
 
@@ -104,7 +104,10 @@ END
 sp_getPosts = """
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getPosts`()
 BEGIN
-    select * from tbl_post;
+    select p.post_id, u.user_username, p.post_headline, p.post_description, p.post_location, p.post_postTime, p.post_meetingTime
+    from tbl_post as p, tbl_user as u
+    where p.post_user_id = u.user_id;
+    
 END
 """
 
