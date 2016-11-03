@@ -1,4 +1,4 @@
-# HMU
+# HMU 
 Hit Me Up - Helping people grab meals with their friends.
 
 HMU is a web app that allows users to let their friends know when they are free to grab a meal. Save the hassle of individually messaging friends or being ignored in group messages by simply posting your availability and having your friends “hit you up”.
@@ -9,7 +9,7 @@ Our future vision is to create a stronger sense of community on the Columbia cam
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
 
@@ -21,7 +21,7 @@ Then run the following:
 python get-pip.py
 ```
 
-See [pip website](https://pip.pypa.io/en/stable/installing/)
+See [pip website](https://pip.pypa.io/en/stable/installing/) for more information.
 
 We are using Python, Flask, and MySQL.
 
