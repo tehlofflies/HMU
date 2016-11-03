@@ -13,42 +13,34 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+We are using pip to install modules and packages needed for our project. To install pip, securely download [get-pip.py](https://bootstrap.pypa.io/get-pip.py)
+
+Then run the following:
 
 ```
-Give examples
+python get-pip.py
 ```
 
-### Installing
+See [pip website](https://pip.pypa.io/en/stable/installing/)
 
-A step by step series of examples that tell you have to get a development env running
+We are using Python, Flask, and MySQL.
 
-Say what the step will be
+## Running the app
 
-```
-Give the example
-```
-
-And repeat
+Git clone our repo onto your local computer
 
 ```
-until finished
+git clone https://github.com/tehlofflies/HMU.git
+```
+Run with the following executable:
+
+```
+./runHMU
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+## Using the app
 
-## Running the tests
-
-N/A - to be added
-
-### Break down into end to end tests
-
-
-### And coding style tests
-
-
-## Deployment
-
+See our [wiki](https://github.com/tehlofflies/HMU/wiki) for more information on what features are available in our current iteration and how to use them.
 
 ## Built With
 
