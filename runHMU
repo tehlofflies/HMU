@@ -1,0 +1,9 @@
+#!/bin/bash
+pip install Flask-SQLAlchemy \
+&& pip install flask-script \
+&& pip install flask-migrate \
+&& pip install mysqlclient \
+&& python manage.py db init \
+&& python manage.py db migrate \
+&& python manage.py db upgrade \
+&& python app.py
