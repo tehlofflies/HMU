@@ -50,7 +50,7 @@ def userHome():
 		return render_template('error.html',error = 'Unauthorized Access')
 
 
-@app.route('/signUp',methods=['POST','GET'])
+@app.route('/signUp',methods=['POST'])
 def signUp():
 	try:
 		_name = request.form['inputName']
@@ -61,7 +61,8 @@ def signUp():
 		if _name and _email and _password:
 			
 			if "@" not in _email:
-				return json.dumps({'error': "Invalid email"})
+				return render_template('error.html', error = 'Invalid email')
+
 			# All Good, let's call MySQL
 			
 			conn = mysql.connect()
@@ -71,16 +72,19 @@ def signUp():
 
 			if len(data) is 0:
 				conn.commit()
-				return json.dumps({'message':'User created successfully'})
+				return render_template('error.html', error = 'User created successfully.')
 			else:
-				return json.dumps({'error': str(data[0])})
+				flash(str(data[0]), category='error')
+				return redirect('showSignUp')
 		else:
-		 	return json.dumps({'html':'<span>Enter the required fields</span>'})
+			flash("Enter the required fields", category='error')
+			return redirect('/showSignUp')
 		cursor.close()
 		conn.close()
 
 	except Exception as e:
-		return json.dumps({'error':str(e)})
+		flash(str(e), category='error')
+		return redirect('/showSignUp')
 
 @app.route('/validateLogin',methods=['POST'])
 def validateLogin():
@@ -99,9 +103,9 @@ def validateLogin():
 				session['user'] = data[0][0]
 				return redirect('/userHome')
 			else:
-				return render_template('error.html',error = 'Password is not correct.')
+				return render_template('error.html', error = 'Password is not correct.')
 		else:
-			return render_template('error.html',error = 'Email address does not exist.')
+			return render_template('error.html', error = 'Email address does not exist.')
 		cursor.close()
 		con.close()
 
@@ -126,7 +130,10 @@ def addPost():
 			_headline = request.form['inputHeadline']
 			_description = request.form['inputDescription']
 
-			_unformattedDate = form.dt.data.strftime('%x')
+			if request.form['inputMeetingDate']:
+				_unformattedDate = request.form['inputMeetingDate']
+			else: 
+				_unformattedDate = form.dt.data.strftime('%x')
 			_formattedDate = datetime.datetime.strptime(_unformattedDate, '%m/%d/%y')
 			print(_formattedDate, file=sys.stderr)
 

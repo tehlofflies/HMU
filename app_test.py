@@ -44,7 +44,7 @@ class FlaskrTestCase(unittest.TestCase):
             inputName=name, 
             inputEmail=email, 
             inputPassword=password
-            ), )
+            ), follow_redirects=True)
 
     def test_signUp(self):
         #user email has not been created
@@ -75,16 +75,38 @@ class FlaskrTestCase(unittest.TestCase):
     def test_signIn(self):
         #user email does not exist
         rv = self.signIn('testName@columbia.edu', 'password')
-        print(rv.data)
         assert "Email address does not exist" in rv.data
         #user email exists and password correct
-        rv = self.signUp('testName', 'testName@columbia.edu', 'password')
+        self.signUp('testName', 'testName@columbia.edu', 'password')
         rv = self.signIn('testName@columbia.edu', 'password')
         assert "Welcome to HMU!" in rv.data
         #user email exists but password incorrect
         rv = self.signIn('testName@columbia.edu', 'wrongpassword')
         assert "Password is not correct" in rv.data
 
+    # def addPost(self, headline, description, unformattedTime, unformattedDate, location):
+    #     return self.app.post('addPost', data=dict(
+    #         inputHeadline=headline,
+    #         inputDescription=description,
+    #         inputMeetingTime=unformattedTime,
+    #         inputMeetingdate=unformattedDate,
+    #         location='inputLocation'))
+
+    # def test_addPost(self):
+    #     self.signUp('testName', 'testName@columbia.edu', 'password')
+    #     self.signIn('testName@columbia.edu', 'password')
+        #successful post with all required fields w/ description
+        # rv = self.addPost('Lunch', 'Casual', '12:00', '2016:11:11', 'Ferris')
+        #assert "Welcome to HMU!" in rv.data
+        #successful post with all required fields w/o description
+        #missing field - date
+        #missing field - time
+        #missing field - location
+        #missing field - headline
+        #invalid field - meetup date and time entered is before current date and time
+        #invalid field - headline too long (over character limit of 45)
+        #invalid field - location too long (over character limit of 1000)
+        #invalid field - description too long (over character limit of 1000)
 
 if __name__ == '__main__':
     unittest.main()
