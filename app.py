@@ -126,16 +126,21 @@ def addPost():
 	cursor = conn.cursor()
 	try:
 		if session.get('user'):
-			form = DateForm(request.form)
 			_headline = request.form['inputHeadline']
-			_description = request.form['inputDescription']
 
-			if request.form['inputMeetingDate']:
+			if 'inputDescription' in request.form:
+				_description = request.form['inputDescription']
+			else:
+				_description = ""
+
+			if 'inputMeetingDate' in request.form:
 				_unformattedDate = request.form['inputMeetingDate']
 			else: 
+				form = DateForm(request.form)
 				_unformattedDate = form.dt.data.strftime('%x')
+			
 			_formattedDate = datetime.datetime.strptime(_unformattedDate, '%m/%d/%y')
-			print(_formattedDate, file=sys.stderr)
+			#print(_formattedDate, file=sys.stderr)
 
 			_user = session.get('user')
 			_unformattedTime = request.form['inputMeetingTime']
@@ -144,10 +149,12 @@ def addPost():
 			formattedTime = datetime.datetime.strptime(_unformattedTime, '%H:%M').time()
 			
 			_formattedDatetime = datetime.datetime.combine(_formattedDate, formattedTime)
-		
 
+			if(_formattedDatetime < datetime.datetime.today()): 
+				flash("Date/Time must be in future", category='error')
+				return redirect('/showAddPost')
+			
 			_location = request.form['inputLocation']
-
 			cursor.callproc('sp_addPost',(_headline, _description, _user, _formattedDatetime, _location))
 			data = cursor.fetchall()
 

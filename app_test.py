@@ -9,6 +9,7 @@ from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 import sqlalchemy
 
+import datetime
 
 app = Flask(__name__)
 db = SQLAlchemy(app)
@@ -84,29 +85,51 @@ class FlaskrTestCase(unittest.TestCase):
         rv = self.signIn('testName@columbia.edu', 'wrongpassword')
         assert "Password is not correct" in rv.data
 
-    # def addPost(self, headline, description, unformattedTime, unformattedDate, location):
-    #     return self.app.post('addPost', data=dict(
-    #         inputHeadline=headline,
-    #         inputDescription=description,
-    #         inputMeetingTime=unformattedTime,
-    #         inputMeetingdate=unformattedDate,
-    #         location='inputLocation'))
+    def addPost(self, headline, description, unformattedTime, unformattedDate, location):
+        return self.app.post('/addPost', data=dict(
+            inputHeadline=headline,
+            inputDescription=description,
+            inputMeetingTime=unformattedTime,
+            inputMeetingDate=unformattedDate,
+            inputLocation=location
+            ), follow_redirects=True)
 
-    # def test_addPost(self):
-    #     self.signUp('testName', 'testName@columbia.edu', 'password')
-    #     self.signIn('testName@columbia.edu', 'password')
+    def test_addPost(self):
+        self.signUp('testName', 'testName@columbia.edu', 'password')
+        self.signIn('testName@columbia.edu', 'password')
+        d = datetime.datetime.today() + datetime.timedelta(days=1)
+        tomorrow = d.strftime("%m/%d/%y")
+        d = datetime.datetime.today() - datetime.timedelta(days=1)
+        yesterday = d.strftime("%m/%d/%y")
         #successful post with all required fields w/ description
-        # rv = self.addPost('Lunch', 'Casual', '12:00', '2016:11:11', 'Ferris')
-        #assert "Welcome to HMU!" in rv.data
+        rv = self.addPost('Lunch', 'Hang out with me pls', '12:00', tomorrow, 'Ferris')
+        assert "Welcome to HMU!" in rv.data
         #successful post with all required fields w/o description
-        #missing field - date
+        rv = self.addPost('Lunch', None, '12:00', tomorrow, 'Ferris')
+        assert "Welcome to HMU!" in rv.data
         #missing field - time
+        rv = self.addPost('Lunch', 'Hang out with me pls', None, tomorrow, 'Ferris')
+        assert "400: Bad Request" in rv.data
         #missing field - location
+        rv = self.addPost('Lunch', 'Hang out with me pls', '12:00', tomorrow, None)
+        assert "400: Bad Request" in rv.data
         #missing field - headline
+        rv = self.addPost(None, 'Hang out with me pls', '12:00', tomorrow, 'Ferris')
+        assert "400: Bad Request" in rv.data
         #invalid field - meetup date and time entered is before current date and time
+        rv = self.addPost('Lunch', 'Hang out with me pls', '12:00', yesterday, None)
+        assert "Date/Time must be in future" in rv.data
         #invalid field - headline too long (over character limit of 45)
+        rv = self.addPost('Blahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh', 'Hang out with me pls', '12:00', tomorrow, 'Ferris')
+        assert "Data too long" in rv.data
         #invalid field - location too long (over character limit of 1000)
+        location = "hello" * 201
+        rv = self.addPost('Lunch', 'Hang out with me pls', '12:00', tomorrow, location)
+        assert "Data too long" in rv.data
         #invalid field - description too long (over character limit of 1000)
+        description = "hello" * 201        
+        rv = self.addPost('Lunch', description, '12:00', tomorrow, 'Ferris')
+        assert "Data too long" in rv.data
 
 if __name__ == '__main__':
     unittest.main()
