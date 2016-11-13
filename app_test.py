@@ -44,25 +44,47 @@ class FlaskrTestCase(unittest.TestCase):
             inputName=name, 
             inputEmail=email, 
             inputPassword=password
-            ), follow_redirects=True)
+            ), )
 
     def test_signUp(self):
         #user email has not been created
-        rv = self.signUp('testName', 'testName.song@columbia.edu', 'password')
-        # print(rv.data)
+        rv = self.signUp('testName', 'testName@columbia.edu', 'password')
         assert "User created successfully" in rv.data
         #user email has already been created
-        rv = self.signUp('testName', 'testName.song@columbia.edu', 'password')
-        # print (rv.data)
+        rv = self.signUp('testName', 'testName@columbia.edu', 'password')
         assert "Username Exists" in rv.data
-        #user email contains illegal characters
         #user email does not contain @
+        rv = self.signUp('newTestName', 'newTestNamecolumbia.edu', 'password')
+        assert "Invalid email" in rv.data
         #username too long
-        rv = self.signUp('blahblahblahblahblahblahblahblahblahblahblahblahblahblah', 'blah@columbia.edu', 'password')
-        # print (rv.data)
+        rv = self.signUp('Blahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh', 'blah@columbia.edu', 'blah')
+        assert "Data too long" in rv.data
+        #email too long
+        rv = self.signUp('blah', 'blahhhhhhhhhhhhhhhhhhhhhhhhhhhhhh@columbia.edu', 'blah')
         assert "Data too long" in rv.data
         #password too long
-        #email too long
+        rv = self.signUp('blah', 'blah@columbia.edu', 'blahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh')
+        assert "Data too long" in rv.data
+
+    def signIn(self, email, password):
+        return self.app.post('/validateLogin', data=dict(
+            inputEmail=email,
+            inputPassword=password
+            ), follow_redirects=True)
+
+    def test_signIn(self):
+        #user email does not exist
+        rv = self.signIn('testName@columbia.edu', 'password')
+        print(rv.data)
+        assert "Email address does not exist" in rv.data
+        #user email exists and password correct
+        rv = self.signUp('testName', 'testName@columbia.edu', 'password')
+        rv = self.signIn('testName@columbia.edu', 'password')
+        assert "Welcome to HMU!" in rv.data
+        #user email exists but password incorrect
+        rv = self.signIn('testName@columbia.edu', 'wrongpassword')
+        assert "Password is not correct" in rv.data
+
 
 if __name__ == '__main__':
     unittest.main()
