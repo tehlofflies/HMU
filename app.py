@@ -3,11 +3,8 @@ import sys
 import datetime
 import time
 
-from flask import Flask, render_template, json, request, redirect, session, jsonify
+from flask import Flask, render_template, json, request, redirect, session, jsonify, flash, Response
 from flaskext.mysql import MySQL
-from flask_sqlalchemy import SQLAlchemy
-import sqlalchemy
-#from werkzeug import generate_password_hash, check_password_hash
 
 from flask_wtf import Form
 from wtforms import DateField
@@ -53,7 +50,7 @@ def userHome():
 		return render_template('error.html',error = 'Unauthorized Access')
 
 
-@app.route('/signUp',methods=['POST','GET'])
+@app.route('/signUp',methods=['POST'])
 def signUp():
 	try:
 		_name = request.form['inputName']
@@ -63,6 +60,9 @@ def signUp():
 		# validate the received values
 		if _name and _email and _password:
 			
+			if "@" not in _email:
+				return render_template('error.html', error = 'Invalid email')
+
 			# All Good, let's call MySQL
 			
 			conn = mysql.connect()
@@ -72,16 +72,19 @@ def signUp():
 
 			if len(data) is 0:
 				conn.commit()
-				return json.dumps({'message':'User created successfully!'})
+				return render_template('error.html', error = 'User created successfully.')
 			else:
-				return json.dumps({'error':str(data[0])})
+				flash(str(data[0]), category='error')
+				return redirect('showSignUp')
 		else:
-			return json.dumps({'html':'<span>Enter the required fields</span>'})
+			flash("Enter the required fields", category='error')
+			return redirect('/showSignUp')
 		cursor.close()
 		conn.close()
 
 	except Exception as e:
-		return json.dumps({'error':str(e)})
+		flash(str(e), category='error')
+		return redirect('/showSignUp')
 
 @app.route('/validateLogin',methods=['POST'])
 def validateLogin():
@@ -100,17 +103,15 @@ def validateLogin():
 				session['user'] = data[0][0]
 				return redirect('/userHome')
 			else:
-				return render_template('error.html',error = 'Wrong Email address or Password.')
+				return render_template('error.html', error = 'Password is not correct.')
 		else:
-			return render_template('error.html',error = 'Wrong Email address or Password.')
-			
-
-	except Exception as e:
-		return render_template('error.html',error = str(e))
-	finally:
+			return render_template('error.html', error = 'Email address does not exist.')
 		cursor.close()
 		con.close()
 
+	except Exception as e:
+		return render_template('error.html',error = str(e))
+		
 @app.route('/showAddPost')
 def showAddPost():
 	form = DateForm()
@@ -125,13 +126,21 @@ def addPost():
 	cursor = conn.cursor()
 	try:
 		if session.get('user'):
-			form = DateForm(request.form)
 			_headline = request.form['inputHeadline']
-			_description = request.form['inputDescription']
 
-			_unformattedDate = form.dt.data.strftime('%x')
+			if 'inputDescription' in request.form:
+				_description = request.form['inputDescription']
+			else:
+				_description = ""
+
+			if 'inputMeetingDate' in request.form:
+				_unformattedDate = request.form['inputMeetingDate']
+			else: 
+				form = DateForm(request.form)
+				_unformattedDate = form.dt.data.strftime('%x')
+			
 			_formattedDate = datetime.datetime.strptime(_unformattedDate, '%m/%d/%y')
-			print(_formattedDate, file=sys.stderr)
+			#print(_formattedDate, file=sys.stderr)
 
 			_user = session.get('user')
 			_unformattedTime = request.form['inputMeetingTime']
@@ -140,10 +149,12 @@ def addPost():
 			formattedTime = datetime.datetime.strptime(_unformattedTime, '%H:%M').time()
 			
 			_formattedDatetime = datetime.datetime.combine(_formattedDate, formattedTime)
-		
 
+			if(_formattedDatetime < datetime.datetime.today()): 
+				flash("Date/Time must be in future", category='error')
+				return redirect('/showAddPost')
+			
 			_location = request.form['inputLocation']
-
 			cursor.callproc('sp_addPost',(_headline, _description, _user, _formattedDatetime, _location))
 			data = cursor.fetchall()
 
