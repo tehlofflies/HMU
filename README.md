@@ -23,7 +23,7 @@ python get-pip.py
 
 See [pip website](https://pip.pypa.io/en/stable/installing/) for more information.
 
-We are using Python, Flask, and MySQL.
+Install Python, Flask, and MySQL.
 
 ## Running the app
 
@@ -41,6 +41,15 @@ Run with the following executable:
 ## Using the app
 
 See our [wiki](https://github.com/tehlofflies/HMU/wiki) for more information on what features are available in our current iteration and how to use them.
+
+### Running the tests
+
+To run unit tests, run the following:
+
+```
+python app_test.py
+```
+See our [wiki](https://github.com/tehlofflies/HMU/wiki) for more information on what unit tests are available in our current iteration.
 
 ## Built With
 
