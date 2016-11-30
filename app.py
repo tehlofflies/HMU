@@ -186,15 +186,18 @@ def addPost():
 					conn.commit()
 					return redirect('/userHome')
 				else:
-					return render_template('error.html',error = 'An error occurred!')
+					flash("An error occurred!", category='error')
+					return redirect('/showAddPost')
 
 			else:
 				flash("Enter all the required fields", category='error')
 				return redirect('/showAddPost')
 		else:
-			return render_template('error.html',error = 'Unauthorized Access')
+			flash("Unauthorized Access", category='error')
+			return redirect('/showAddPost')
 	except Exception as e:
-		return render_template('error.html',error = str(e))
+		flash(str(e), category='error')
+		return redirect('/showAddPost')
 	finally:
 		cursor.close()
 		conn.close()
