@@ -59,28 +59,37 @@ def signUp():
 
 		# validate the received values
 		if _name and _email and _password:
-			
+
 			if "@" not in _email:
 				return render_template('error.html', error = 'Invalid email')
 
 			# All Good, let's call MySQL
-			
+
 			conn = mysql.connect()
 			cursor = conn.cursor()
 			cursor.callproc('sp_createUser',(_name,_email,_password))
 			data = cursor.fetchall()
 
 			if len(data) is 0:
+				# user signed up successfully
 				conn.commit()
-				return render_template('error.html', error = 'User created successfully.')
+
+				# sign the user in/get user session
+				cursor.callproc('sp_validateLogin', (_email,))
+				data1 = cursor.fetchall()
+				session['user'] = data1[0][0]
+				print(data1[0][0], file=sys.stderr)
+
+				return redirect('/userHome')
+				# return render_template('error.html', error = 'User created successfully.')
 			else:
 				flash(str(data[0]), category='error')
 				return redirect('showSignUp')
 		else:
 			flash("Enter the required fields", category='error')
 			return redirect('/showSignUp')
-		cursor.close()
-		conn.close()
+			cursor.close()
+			conn.close()
 
 	except Exception as e:
 		flash(str(e), category='error')
@@ -101,6 +110,7 @@ def validateLogin():
 		if len(data) > 0:
 			if str(data[0][3])==_password:
 				session['user'] = data[0][0]
+				print(data[0][0], file=sys.stderr)
 				return redirect('/userHome')
 			else:
 				return render_template('error.html', error = 'Password is not correct.')
