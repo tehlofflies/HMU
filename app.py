@@ -42,6 +42,13 @@ def showSignIn():
 	else:
 		return render_template('signin.html')
 
+@app.route('/showEditProfile')
+def showEditProfile():
+	if session.get('user'):
+		return render_template('editprofile.html')
+	else:
+		return render_template('error.html',error = 'Unauthorized Access')
+
 @app.route('/userHome')
 def userHome():
 	if session.get('user'):
@@ -82,7 +89,7 @@ def signUp():
 				session['user'] = data1[0][0]
 				print(data1[0][0], file=sys.stderr)
 
-				return redirect('/userHome')
+				return redirect('/showEditProfile')
 				# return render_template('error.html', error = 'User created successfully.')
 			else:
 				flash(str(data[0]), category='error')
@@ -115,7 +122,7 @@ def validateLogin():
 				if str(data[0][3])==_password:
 					session['user'] = data[0][0]
 					print(data[0][0], file=sys.stderr)
-					return redirect('/userHome')
+					return redirect('/showEditProfile')
 				else:
 					flash("Password is not correct", category='error')
 					return redirect('/showSignIn')
