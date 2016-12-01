@@ -33,6 +33,15 @@ class tbl_post(db.Model):
     post_postTime = db.Column(db.DateTime)
     post_meetingTime = db.Column(db.DateTime)
 
+class tbl_profile(db.Model):
+    profile_id = db.Column(db.Integer, primary_key=True)
+    profile_name = db.Column(db.String(45))
+    profile_bio = db.Column(db.String(5000))
+    profile_username = db.Column(db.String(45), unique=True)
+    profile_phone = db.Column(db.String(10))
+    profile_facebook = db.Column(db.String(45)) 
+
+
 sp_createUser = """
 CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_createUser`(
     IN p_name VARCHAR(45),
@@ -65,7 +74,7 @@ END
 
 sp_validateLogin = """
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_validateLogin`(
-IN p_username VARCHAR(45)
+	IN p_username VARCHAR(45)
 )
 BEGIN
     select * from tbl_user where user_username = p_username;
@@ -111,11 +120,40 @@ BEGIN
 END
 """
 
+sp_createProfile = """
+CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_createProfile`(
+    IN p_name VARCHAR(45),
+    IN p_bio VARCHAR(5000),
+    IN p_username VARCHAR(45),
+    IN p_phone VARCHAR(10),
+    IN p_facebook VARCHAR(45)
+)
+BEGIN
+ 	insert into tbl_profile
+    (
+        profile_name,
+        profile_bio,
+        profile_username,
+        profile_phone,
+        profile_facebook
+    )
+    values
+    (
+        p_name,
+        p_bio,
+        p_username,
+        p_phone,
+        p_facebook
+    );
+END
+"""
+
 engine.execute(sp_createUser)
 engine.execute(sp_validateLogin)
 engine.execute(sp_addPost)
 engine.execute(sp_getPosts)
 engine.execute("set global sql_mode = 'strict_trans_tables';")
+engine.execute(sp_createProfile)
 
 
 if __name__ == '__main__':

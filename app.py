@@ -80,8 +80,17 @@ def signUp():
 				session['user'] = data1[0][0]
 				print(data1[0][0], file=sys.stderr)
 
-				return redirect('/userHome')
-				# return render_template('error.html', error = 'User created successfully.')
+				# create a user profile
+				cursor.callproc('sp_createProfile', (_name,_email,None,None,None))
+				data2 = cursor.fetchall()
+
+				if len(data2) is 0:
+					conn.commit()
+					return redirect('/userHome') # *** please change to showEditProfile ***
+				else:
+					return render_template('error.html',error = 'An error occurred!')
+
+				#return render_template('error.html', error = 'User created successfully.')
 			else:
 				flash(str(data[0]), category='error')
 				return redirect('showSignUp')
