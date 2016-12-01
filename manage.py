@@ -115,7 +115,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getPosts`()
 BEGIN
     select p.post_id, u.user_username, p.post_headline, p.post_description, p.post_location, p.post_postTime, p.post_meetingTime
     from tbl_post as p, tbl_user as u
-    where p.post_user_id = u.user_id
+    where p.post_user_id = u.user_id AND p.post_meetingTime > NOW()
     order by p.post_meetingTime asc;
     
 END
