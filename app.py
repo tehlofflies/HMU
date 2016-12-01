@@ -54,6 +54,41 @@ def showEditProfile():
 	else:
 		return render_template('error.html',error = 'Unauthorized Access')
 
+@app.route('/getProfile')
+def getProfile():
+	conn = mysql.connect()
+	cursor = conn.cursor()
+	try:
+		if session.get('user'):
+			_user = session.get('user')
+			cursor.callproc('sp_getProfile', (_user,))
+			infos = cursor.fetchall()
+
+			infos_dict = []
+			for info in infos:
+				info_dict = {
+					'Id': info[0],
+					'Name': info[1],
+					'Bio': info[2],
+					'Email': info[3],
+					'Phone': info[4],
+					'Facebook': info[5]
+				}
+				infos_dict.append(info_dict)
+
+			return json.dumps(infos_dict)
+		else:
+			return render_template('error.html', error = 'Unauthorized Access')
+	except Exception as e:
+		return render_template('error.html', error = str(e))
+
+@app.route('/showProfile')
+def showProfile():
+	if session.get('user'):
+		return render_template('user.html')
+	else:
+		return render_template('error.html',error = 'Unauthorized Access')
+
 @app.route('/userHome')
 def userHome():
 	if session.get('user'):

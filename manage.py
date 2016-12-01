@@ -149,12 +149,22 @@ BEGIN
 END
 """
 
+sp_getProfile = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getProfile`(
+    IN p_user_id bigint
+)
+BEGIN
+    select * from tbl_profile where profile_id = p_user_id;    
+END
+"""
+
 engine.execute(sp_createUser)
 engine.execute(sp_validateLogin)
 engine.execute(sp_addPost)
 engine.execute(sp_getPosts)
 engine.execute("set global sql_mode = 'strict_trans_tables';")
 engine.execute(sp_createProfile)
+engine.execute(sp_getProfile)
 
 
 if __name__ == '__main__':
