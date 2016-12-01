@@ -45,7 +45,12 @@ def showSignIn():
 @app.route('/showEditProfile')
 def showEditProfile():
 	if session.get('user'):
-		return render_template('editprofile.html')
+		_id = session.get('user')
+		conn = mysql.connect()
+		cursor = conn.cursor()
+		cursor.execute("SELECT * FROM tbl_user WHERE user_id=" + str(_id))
+		data = cursor.fetchall()
+		return render_template('editprofile.html', name=data[0][1], email=data[0][2])
 	else:
 		return render_template('error.html',error = 'Unauthorized Access')
 
@@ -167,7 +172,7 @@ def addPost():
 				_unformattedDate = request.form['inputMeetingDate']
 			else: 
 				form = DateForm(request.form)
-				#_unformattedDate = form.dt.data.strftime('%x')
+				_unformattedDate = form.dt.data.strftime('%x')
 			
 			#print(_formattedDate, file=sys.stderr)
 
@@ -176,7 +181,7 @@ def addPost():
 			
 			#formattedTime = datetime.time(*map(int, _unformattedTime.split(':')))
 			
-			if _headline and _location and _description and _unformattedDate and _unformattedTime:
+			if _headline and not _headline.isspace() and _location and not _location.isspace() and _unformattedTime is not None and _unformattedDate is not None:
 				_formattedDate = datetime.datetime.strptime(_unformattedDate, '%m/%d/%y')
 				formattedTime = datetime.datetime.strptime(_unformattedTime, '%H:%M').time()
 				_formattedDatetime = datetime.datetime.combine(_formattedDate, formattedTime)
