@@ -63,18 +63,72 @@
         <!-- /.container-fluid -->
     </nav>
     
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="intro-text">
-                        <h1>Form will go here</h1>
+        <section id="join">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg">
+                        
+                        <form class="form-horizontal" method="post" action="/addProfile">
+                            <fieldset>
+             
+                                <!-- Form Name -->
+                                <div class="row">
+                                    <div class="col-lg-12 text-center">
+                                        <legend><h2>Edit Your Profile!</h2></legend>
+                                    </div>
+                                </div>
+             
+                                <p>{% include "flash.html" %}</p>
+                                
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="txtTitle">Name</label>
+                                    <div class="col-md-4">
+                                        <input id="txtTitle" name="inputName" required type="text" placeholder="required" class="form-control input-md" value={{name}}>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="txtTitle">About</label>
+                                    <div class="col-md-4">
+                                        <input id="txtTitle" name="inputDescription" required type="text" placeholder="required" class="form-control input-md">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="txtTitle">Email</label>
+                                    <div class="col-md-4">
+                                        <input id="txtTitle" name="inputEmail" required type="email" placeholder="required" class="form-control input-md" value={{email}} readonly>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="txtTitle">Phone</label>
+                                    <div class="col-md-4">
+                                        <input id="txtTitle" name="inputName" type="tel" placeholder="optional" class="form-control input-md">
+                                    </div>
+                                </div>
+             
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="txtTitle">Facebook</label>
+                                    <div class="col-md-4">
+                                        <input id="txtTitle" name="inputName" type="url" placeholder="optional" class="form-control input-md">
+                                    </div>
+                                </div>
+             
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="singlebutton"></label>
+                                    <div class="col-md-4">
+                                        <input id="singlebutton" name="singlebutton" class="btn btn-primary" type="submit" value="Save!" />
+                                    </div>
+                                </div>
+             
+                            </fieldset>
+                        </form>
+
                     </div>
                 </div>
             </div>
-        </div>
-    </header>
+        </section>
 
     <!-- Footer -->
     <footer class="text-center">
