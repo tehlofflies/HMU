@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <meta id="my-data" data-name="{{ user_id }}" data-other="{{other}}">
 
     <title>HMU</title>
 
@@ -15,7 +15,6 @@
     <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
     <!-- Theme CSS -->
     <link href="../static/css/freelancer.min.css" rel="stylesheet">
-    <link href="../static/css/signup.css" rel="stylesheet">
     <!-- Custom Fonts -->
     <link href="../static/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
@@ -74,11 +73,11 @@
                         <h1>Meet {{ name }}</h1>
                         {% endif %}
 
+                        <hr class="star-light">
+
                         {% if bio %}
                         <p>Bio: {{ bio }} </p>
                         {% endif %}
-
-                        <hr>
 
                         <p>Email: {{ email }} </p>
 
@@ -87,7 +86,7 @@
                         {% endif %}
 
                         {% if fb %}
-                        <p><a href={{ fb }} style="color:black">Facebook</a></p>
+                        <p><a href={{ fb }} target="_blank" style="color:black">Facebook</a></p>
                         {% endif %}
 
 
@@ -111,17 +110,6 @@
             </div>
         </div>
     </header>
-<!-- 
-    <section id="join">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 infos">
-                    
-
-                </div>
-            </div>
-        </div>
-    </section> -->
 
     <!-- Footer -->
     <footer class="text-center">

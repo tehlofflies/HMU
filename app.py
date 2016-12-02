@@ -142,6 +142,9 @@ def user(user_id):
 	cursor = conn.cursor()
 	try:
 		if session.get('user'):
+			if int(user_id) == session.get('user'):
+				return redirect('/me')
+
 			cursor.callproc('sp_getProfile', (user_id,))
 			infos = cursor.fetchall()
 
