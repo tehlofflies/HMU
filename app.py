@@ -89,6 +89,69 @@ def showProfile():
 	else:
 		return render_template('error.html',error = 'Unauthorized Access')
 
+# @app.route('/getUserProfile/<user_id>')
+# def getUserProfile(user_id):
+# 	conn = mysql.connect()
+# 	cursor = conn.cursor()
+# 	try:
+# 		if session.get('user'):
+# 			cursor.callproc('sp_getProfile', (user_id,))
+# 			infos = cursor.fetchall()
+
+# 			infos_dict = []
+# 			for info in infos:
+# 				info_dict = {
+# 					'Id': info[0],
+# 					'Name': info[1],
+# 					'Bio': info[2],
+# 					'Email': info[3],
+# 					'Phone': info[4],
+# 					'Facebook': info[5]
+# 				}
+# 				infos_dict.append(info_dict)
+
+# 			return json.dumps(infos_dict)
+# 		else:
+# 			return render_template('error.html', error = 'Unauthorized Access')
+# 	except Exception as e:
+# 		return render_template('error.html', error = str(e))
+
+# @app.route('/user/<user_id>')
+# def user(user_id):
+
+# 	if session.get('user'):
+# 		return render_template('userProfile.html', user_id = user_id)
+# 	else:
+# 		return render_template('error.html',error = 'Unauthorized Access')
+
+
+@app.route('/user/<user_id>')
+def user(user_id):
+	conn = mysql.connect()
+	cursor = conn.cursor()
+	try:
+		if session.get('user'):
+			cursor.callproc('sp_getProfile', (user_id,))
+			infos = cursor.fetchall()
+
+			print(infos, file=sys.stderr)
+			hello = json.load(infos)
+			print(hello, file=sys.stderr)
+			for info in infos:
+				# id = info[0],
+				name = info[1],
+				bio = info[2],
+				email = info[3],
+				phone = info[4],
+				fb = info[5]
+
+			return render_template('userProfile.html', user_id = user_id, name = name)
+		else:
+			return render_template('error.html', error = 'Unauthorized Access')
+	except Exception as e:
+		return render_template('error.html', error = str(e))
+
+
 @app.route('/userHome')
 def userHome():
 	if session.get('user'):
