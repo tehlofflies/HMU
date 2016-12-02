@@ -134,9 +134,9 @@ def user(user_id):
 			cursor.callproc('sp_getProfile', (user_id,))
 			infos = cursor.fetchall()
 
-			print(infos, file=sys.stderr)
-			hello = json.load(infos)
-			print(hello, file=sys.stderr)
+			# print(infos, file=sys.stderr)
+			# hello = json.load(infos)
+			# print(hello, file=sys.stderr)
 			for info in infos:
 				# id = info[0],
 				name = info[1],
