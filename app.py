@@ -48,11 +48,62 @@ def showEditProfile():
 		_id = session.get('user')
 		conn = mysql.connect()
 		cursor = conn.cursor()
-		cursor.execute("SELECT * FROM tbl_user WHERE user_id=" + str(_id))
+		cursor.callproc('sp_getProfile', str(_id))
+		#cursor.execute("SELECT * FROM tbl_user WHERE user_id=" + str(_id))
 		data = cursor.fetchall()
-		return render_template('editprofile.html', name=data[0][1], email=data[0][2])
+
+		_name = data[0][1]
+		_email = data[0][3]
+
+		if data[0][2] is None or len(data[0][2]) == 0:
+			_description = ""
+		else:
+			_description = data[0][2]
+		if data[0][4] is None or len(data[0][4]) == 0:
+			_phone = ""
+		else:
+			_phone = data[0][4]
+		if data[0][5] is None or len(data[0][5]) == 0:
+			_facebook = ""
+		else:
+			_facebook = data[0][5]
+
+		return render_template('editprofile.html', name=_name, description=_description, email=_email, phone=_phone, facebook=_facebook)
 	else:
 		return render_template('error.html',error = 'Unauthorized Access')
+
+@app.route('/editProfile',methods=['POST'])
+def editProfile():
+	conn = mysql.connect()
+	cursor = conn.cursor()
+	try:
+		if session.get('user'):
+			_name = request.form['inputName']
+			_description = request.form['inputDescription']
+			_email = request.form['inputEmail']
+			"""
+			if not request.form['inputPhone']:
+				_phone = ""
+			else:
+				_phone = request.form['inputPhone']
+			if not request.form['inputFacebook']:
+				_facebook = ""
+			else:
+				_facebook = request.form['inputFacebook']
+			"""
+			_phone = request.form['inputPhone']
+			_facebook = request.form['inputFacebook']
+			_id = session.get('user')
+			cursor.callproc('sp_editProfile', (_name, _description, _email, _phone, _facebook))
+			#cursor.execute("UPDATE tbl_profile SET profile_name='" + _name + "',profile_bio='" + _description + "',profile_phone='" + _phone + "',profile_facebook='" + _facebook + "' WHERE profile_id='" + str(_id) + "';")
+			conn.commit()
+			#cursor.execute("UPDATE tbl_profile SET profile_name = %s WHERE profile_username = %s;" % (_name, _email))
+			return redirect('/showProfile')
+	except Exception as e:
+		return render_template('error.html', error = str(e))
+	finally:
+		conn.close()
+		cursor.close()
 
 @app.route('/me')
 def userMe():
