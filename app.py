@@ -134,18 +134,21 @@ def user(user_id):
 			cursor.callproc('sp_getProfile', (user_id,))
 			infos = cursor.fetchall()
 
-			# print(infos, file=sys.stderr)
-			# hello = json.load(infos)
-			# print(hello, file=sys.stderr)
 			for info in infos:
-				# id = info[0],
-				name = info[1],
-				bio = info[2],
-				email = info[3],
-				phone = info[4],
+				name = info[1]
+				bio = info[2]
+				email = info[3]
+				phone = info[4]
 				fb = info[5]
 
-			return render_template('userProfile.html', user_id = user_id, name = name)
+			return render_template('userProfile.html', 
+				user_id = user_id, 
+				name = name,
+				bio = bio,
+				email = email,
+				phone = phone,
+				fb = fb
+			)
 		else:
 			return render_template('error.html', error = 'Unauthorized Access')
 	except Exception as e:
