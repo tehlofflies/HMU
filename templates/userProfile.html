@@ -22,7 +22,6 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
 
     <script src="../static/js/jquery-3.1.1.min.js"></script>
-    <script src="../static/js/showUserProfile.js"></script>
     
   </head>
  
@@ -52,7 +51,7 @@
                         <a href="/userHome">Newsfeed</a>
                     </li>
                     <li class="active">
-                        <a href="/showProfile">My Profile</a>
+                        <a href="/me">My Profile</a>
                     </li>
                     <li>
                         <a href="/logout">Logout</a>
@@ -69,12 +68,17 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="intro-text">
-                        <h1>User {{ user_id }} Profile</h1>
-                        <p>Name: {{ name }} </p>
+                        {% if me %}
+                        <h1>My Profile</h1>
+                        {% else %}
+                        <h1>Meet {{ name }}</h1>
+                        {% endif %}
 
                         {% if bio %}
                         <p>Bio: {{ bio }} </p>
                         {% endif %}
+
+                        <hr>
 
                         <p>Email: {{ email }} </p>
 
@@ -86,7 +90,22 @@
                         <p>Facebook: {{ fb }} </p>
                         {% endif %}
 
-                        <h6><a style="color:white;" href="/showEditProfile">Follow</a></h6>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="singlebutton"></label>
+                            <div class="col-md-4">
+                                {% if me %}
+                                <form action="/showEditProfile">
+                                    <input class="btn btn-primary" type="submit" value="Edit Profile" />
+                                </form>
+                                {% else %}
+                                <form action="/showEditProfile">
+                                    <input class="btn btn-primary" type="submit" value="Follow Me" />
+                                </form>                                
+                                {% endif %}
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

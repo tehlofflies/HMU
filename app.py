@@ -54,8 +54,8 @@ def showEditProfile():
 	else:
 		return render_template('error.html',error = 'Unauthorized Access')
 
-@app.route('/getProfile')
-def getProfile():
+@app.route('/me')
+def userMe():
 	conn = mysql.connect()
 	cursor = conn.cursor()
 	try:
@@ -64,66 +64,26 @@ def getProfile():
 			cursor.callproc('sp_getProfile', (_user,))
 			infos = cursor.fetchall()
 
-			infos_dict = []
 			for info in infos:
-				info_dict = {
-					'Id': info[0],
-					'Name': info[1],
-					'Bio': info[2],
-					'Email': info[3],
-					'Phone': info[4],
-					'Facebook': info[5]
-				}
-				infos_dict.append(info_dict)
+				name = info[1]
+				bio = info[2]
+				email = info[3]
+				phone = info[4]
+				fb = info[5]
 
-			return json.dumps(infos_dict)
+			return render_template('userProfile.html', 
+				me = 1,
+				user_id = _user, 
+				name = name,
+				bio = bio,
+				email = email,
+				phone = phone,
+				fb = fb
+			)
 		else:
 			return render_template('error.html', error = 'Unauthorized Access')
 	except Exception as e:
 		return render_template('error.html', error = str(e))
-
-@app.route('/showProfile')
-def showProfile():
-	if session.get('user'):
-		return render_template('user.html')
-	else:
-		return render_template('error.html',error = 'Unauthorized Access')
-
-# @app.route('/getUserProfile/<user_id>')
-# def getUserProfile(user_id):
-# 	conn = mysql.connect()
-# 	cursor = conn.cursor()
-# 	try:
-# 		if session.get('user'):
-# 			cursor.callproc('sp_getProfile', (user_id,))
-# 			infos = cursor.fetchall()
-
-# 			infos_dict = []
-# 			for info in infos:
-# 				info_dict = {
-# 					'Id': info[0],
-# 					'Name': info[1],
-# 					'Bio': info[2],
-# 					'Email': info[3],
-# 					'Phone': info[4],
-# 					'Facebook': info[5]
-# 				}
-# 				infos_dict.append(info_dict)
-
-# 			return json.dumps(infos_dict)
-# 		else:
-# 			return render_template('error.html', error = 'Unauthorized Access')
-# 	except Exception as e:
-# 		return render_template('error.html', error = str(e))
-
-# @app.route('/user/<user_id>')
-# def user(user_id):
-
-# 	if session.get('user'):
-# 		return render_template('userProfile.html', user_id = user_id)
-# 	else:
-# 		return render_template('error.html',error = 'Unauthorized Access')
-
 
 @app.route('/user/<user_id>')
 def user(user_id):
@@ -142,6 +102,7 @@ def user(user_id):
 				fb = info[5]
 
 			return render_template('userProfile.html', 
+				me = 0,
 				user_id = user_id, 
 				name = name,
 				bio = bio,
