@@ -149,6 +149,26 @@ BEGIN
 END
 """
 
+sp_editProfile = """
+CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_editProfile`(
+    IN p_name VARCHAR(45),
+    IN p_bio VARCHAR(5000),
+    IN p_username VARCHAR(45),
+    IN p_phone VARCHAR(10),
+    IN p_facebook VARCHAR(45)
+)
+BEGIN
+    UPDATE tbl_profile SET 
+        profile_name = p_name,
+        profile_bio = p_bio,
+        profile_phone = p_phone,
+        profile_facebook = p_facebook
+    WHERE 
+        profile_username = p_username
+    ;
+END
+"""
+
 sp_getProfile = """
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getProfile`(
     IN p_user_id bigint
@@ -164,6 +184,7 @@ engine.execute(sp_addPost)
 engine.execute(sp_getPosts)
 engine.execute("set global sql_mode = 'strict_trans_tables';")
 engine.execute(sp_createProfile)
+engine.execute(sp_editProfile)
 engine.execute(sp_getProfile)
 
 
