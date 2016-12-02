@@ -98,7 +98,7 @@ def editProfile():
 			#cursor.execute("UPDATE tbl_profile SET profile_name='" + _name + "',profile_bio='" + _description + "',profile_phone='" + _phone + "',profile_facebook='" + _facebook + "' WHERE profile_id='" + str(_id) + "';")
 			conn.commit()
 			#cursor.execute("UPDATE tbl_profile SET profile_name = %s WHERE profile_username = %s;" % (_name, _email))
-			return redirect('/showProfile')
+			return redirect('/me')
 	except Exception as e:
 		return render_template('error.html', error = str(e))
 	finally:
@@ -213,7 +213,7 @@ def signUp():
 
 				if len(data2) is 0:
 					conn.commit()
-					return redirect('/userHome') # *** please change to showEditProfile ***
+					return redirect('/showEditProfile') 
 				else:
 					return render_template('error.html',error = 'An error occurred!')
 
