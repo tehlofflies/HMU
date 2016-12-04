@@ -164,6 +164,27 @@ def user(user_id):
 				phone = phone,
 				fb = fb
 			)
+
+		else:
+			return render_template('error.html', error = 'Unauthorized Access')
+	except Exception as e:
+		return render_template('error.html', error = str(e))
+
+@app.route('/follow/<followed_user_id>')
+def addFollow(followed_user_id):
+	conn = mysql.connect()
+	cursor = conn.cursor()
+	try:
+		if session.get('user'):
+			_follower_user_id = session.get('user')
+			_followed_user_id = int(followed_user_id)
+			print(type(_follower_user_id), file=sys.stderr)
+			print(type(_followed_user_id), file=sys.stderr)
+			cursor.callproc('sp_addFollow', (_follower_user_id, _followed_user_id))
+			# cursor.callproc('sp_createUser',("jy","jy@columbia.edu","jy"))
+			cursor.close()
+			conn.close()
+			return render_template('base.html')
 		else:
 			return render_template('error.html', error = 'Unauthorized Access')
 	except Exception as e:
@@ -367,6 +388,7 @@ def getPost():
 			return render_template('error.html', error = 'Unauthorized Access')
 	except Exception as e:
 		return render_template('error.html', error = str(e))
+
 
 @app.route('/logout')
 def logout():
