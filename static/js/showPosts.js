@@ -22,12 +22,13 @@ $(function() {
 
             $.each(postObj, function(index, value) {
                 post = $(div).clone();
+                $(post).find('a').attr("href", "/user/"+value.UserId);
                 $(post).find('h2').text(value.Headline);
-                $(post).find('#user').text(value.User);
-                $(post).find('#meetingTime').text(value.MeetingTime);
-                $(post).find('#location').text(value.Location);
-                $(post).find('#desc').text(value.Description);
-                $(post).find('#postTime').text(value.PostTime);
+                $(post).find('#user').text("WHO: " +value.User);
+                $(post).find('#meetingTime').text("WHEN: " +value.MeetingTime);
+                $(post).find('#location').text("WHERE: " +value.Location);
+                $(post).find('#desc').text("WHAT'S UP: " +value.Description);
+                $(post).find('#postTime').text("Posted: " +value.PostTime);
                 $('.posts').append(post);
             });
         },
