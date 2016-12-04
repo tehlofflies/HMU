@@ -352,18 +352,18 @@ def getPost():
 			for post in posts:
 				post_dict = {
 					'Id': post[0],
-					'User': "WHO: "+post[1],
-					'Headline': post[2],
-					'Description': "WHAT'S UP: "+post[3],
-					'Location': "WHERE: "+post[4],
-					'MeetingTime': "WHEN: "+post[6].strftime("%B %d, %Y, %I:%M %p"),
-					'PostTime': "Posted: "+post[5].strftime("%B %d, %Y, %I:%M %p")
+					'User': post[1],
+					'UserId': post[2],
+					'Headline': post[3],
+					'Description': post[4],
+					'Location': post[5],
+					'MeetingTime': post[6].strftime("%B %d, %Y, %I:%M %p"),
+					'PostTime': post[7].strftime("%B %d, %Y, %I:%M %p")
 				}
 				posts_dict.append(post_dict)
 
 			return json.dumps(posts_dict)
 		else:
-			print ("poop",sys=stderr)
 			return render_template('error.html', error = 'Unauthorized Access')
 	except Exception as e:
 		return render_template('error.html', error = str(e))
