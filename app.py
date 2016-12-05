@@ -178,8 +178,6 @@ def addFollow(followed_user_id):
 		if session.get('user'):
 			_follower_user_id = session.get('user')
 			_followed_user_id = int(followed_user_id)
-			print(type(_follower_user_id), file=sys.stderr)
-			print(type(_followed_user_id), file=sys.stderr)
 			cursor.callproc('sp_addFollow', (_follower_user_id, _followed_user_id))
 			conn.commit()
 			# cursor.callproc('sp_createUser',("jy","jy@columbia.edu","jy"))
