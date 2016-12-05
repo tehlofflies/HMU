@@ -201,6 +201,18 @@ BEGIN
 END
 """
 
+sp_getFollowing = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getFollowing`(
+    IN p_user_id bigint
+)
+BEGIN
+    select f.followed_user_id, u.user_name
+    from tbl_follow as f, tbl_user as u
+    where f.follower_user_id = p_user_id and f.followed_user_id = u.user_id;
+    
+END
+"""
+
 engine.execute(sp_createUser)
 engine.execute(sp_validateLogin)
 engine.execute(sp_addPost)
@@ -210,6 +222,8 @@ engine.execute("set global sql_mode = 'strict_trans_tables';")
 engine.execute(sp_createProfile)
 engine.execute(sp_editProfile)
 engine.execute(sp_getProfile)
+engine.execute(sp_getFollowing)
+
 
 if __name__ == '__main__':
     manager.run()
