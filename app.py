@@ -479,6 +479,37 @@ def deletePost(post_id):
 	except Exception as e:
 		return render_template('error.html', error = str(e))
 
+@app.route('/following')
+def showFollowing():
+	if session.get('user'):
+		return render_template('following.html')
+	else:
+		return render_template('error.html',error = 'Unauthorized Access')
+ 
+@app.route('/getFollowing')
+def getFollowing():
+	conn = mysql.connect()
+	cursor = conn.cursor()
+	try:
+		if session.get('user'):
+			_user = session.get('user')
+			cursor.callproc('sp_getFollowing', (_user,))
+			followings = cursor.fetchall()
+
+			followings_dict = []
+			for following in followings:
+				following_dict = {
+					'FollowedId': following[0],
+					'FollowedName': following[1]
+				}
+				followings_dict.append(following_dict)
+
+			return json.dumps(followings_dict)
+		else:
+			return render_template('error.html', error = 'Unauthorized Access')
+	except Exception as e:
+		return render_template('error.html', error = str(e))
+
 @app.route('/users')
 def showUsers():
 	if session.get('user'):
