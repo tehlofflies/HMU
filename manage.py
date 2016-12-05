@@ -41,6 +41,10 @@ class tbl_profile(db.Model):
     profile_phone = db.Column(db.String(10))
     profile_facebook = db.Column(db.String(45)) 
 
+class tbl_follow(db.Model):
+    follow_id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
+    follower_user_id = db.Column(db.Integer, nullable=False)
+    followed_user_id = db.Column(db.Integer, nullable=False)
 
 sp_createUser = """
 CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_createUser`(
@@ -178,15 +182,34 @@ BEGIN
 END
 """
 
+sp_addFollow = """
+CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_addFollow`(
+    IN p_follower_user_id bigint,
+    IN p_followed_user_id bigint
+)
+BEGIN
+    insert into tbl_follow
+    (
+        follower_user_id,
+        followed_user_id
+    )
+    values
+    (
+        p_follower_user_id,
+        p_followed_user_id
+    );
+END
+"""
+
 engine.execute(sp_createUser)
 engine.execute(sp_validateLogin)
 engine.execute(sp_addPost)
 engine.execute(sp_getPosts)
+engine.execute(sp_addFollow)
 engine.execute("set global sql_mode = 'strict_trans_tables';")
 engine.execute(sp_createProfile)
 engine.execute(sp_editProfile)
 engine.execute(sp_getProfile)
-
 
 if __name__ == '__main__':
     manager.run()
