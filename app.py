@@ -178,11 +178,8 @@ def addFollow(followed_user_id):
 		if session.get('user'):
 			_follower_user_id = session.get('user')
 			_followed_user_id = int(followed_user_id)
-			print(type(_follower_user_id), file=sys.stderr)
-			print(type(_followed_user_id), file=sys.stderr)
 			cursor.callproc('sp_addFollow', (_follower_user_id, _followed_user_id))
 			conn.commit()
-			# cursor.callproc('sp_createUser',("jy","jy@columbia.edu","jy"))
 			cursor.close()
 			conn.close()
 			return render_template('base.html')
@@ -390,6 +387,36 @@ def getPost():
 	except Exception as e:
 		return render_template('error.html', error = str(e))
 
+@app.route('/following')
+def showFollowing():
+	if session.get('user'):
+		return render_template('following.html')
+	else:
+		return render_template('error.html',error = 'Unauthorized Access')
+
+@app.route('/getFollowing')
+def getFollowing():
+	conn = mysql.connect()
+	cursor = conn.cursor()
+	try:
+		if session.get('user'):
+			_user = session.get('user')
+			cursor.callproc('sp_getFollowing', (_user,))
+			followings = cursor.fetchall()
+
+			followings_dict = []
+			for following in followings:
+				following_dict = {
+					'FollowedId': following[0],
+					'FollowedName': following[1]
+				}
+				followings_dict.append(following_dict)
+
+			return json.dumps(followings_dict)
+		else:
+			return render_template('error.html', error = 'Unauthorized Access')
+	except Exception as e:
+		return render_template('error.html', error = str(e))
 
 @app.route('/logout')
 def logout():
