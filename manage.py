@@ -125,6 +125,28 @@ BEGIN
 END
 """
 
+sp_getPostInfo = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getPostInfo`(
+    IN p_id bigint
+)
+BEGIN
+    select * from tbl_post
+    where post_id = p_id 
+    ;   
+END
+"""
+
+sp_deletePost = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_deletePost`(
+    IN p_id bigint
+)
+BEGIN
+    delete from tbl_post
+    where post_id = p_id
+    ;
+END
+"""
+
 sp_createProfile = """
 CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_createProfile`(
     IN p_name VARCHAR(45),
@@ -251,6 +273,8 @@ engine.execute(sp_createUser)
 engine.execute(sp_validateLogin)
 engine.execute(sp_addPost)
 engine.execute(sp_getPosts)
+engine.execute(sp_getPostInfo)
+engine.execute(sp_deletePost)
 engine.execute(sp_addFollow)
 engine.execute(sp_deleteFollow)
 engine.execute("set global sql_mode = 'strict_trans_tables';")

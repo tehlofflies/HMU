@@ -454,6 +454,23 @@ def getPost():
 	except Exception as e:
 		return render_template('error.html', error = str(e))
 
+@app.route('/deletePost/<post_id>')
+def deletePost(post_id):
+	conn = mysql.connect()
+	cursor = conn.cursor()
+	try:
+		if session.get('user'):
+			cursor.callproc('sp_getPostInfo', (post_id,))
+			results = cursor.fetchall()
+			post_user = results[0][1]
+			if post_user == session.get('user'):
+				cursor.callproc('sp_deletePost', (post_id,))
+				conn.commit()
+				return redirect('/userHome')
+		else:
+			return render_template('error.html', error = 'Unauthorized Access')
+	except Exception as e:
+		return render_template('error.html', error = str(e))
 
 @app.route('/users')
 def showUsers():
