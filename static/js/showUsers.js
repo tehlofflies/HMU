@@ -11,9 +11,6 @@ $(function() {
                     .append(
                         $('<h2>').attr('class', 'list-group-item-heading'),
                         $('<p id="bio">').attr('class', 'list-group-item-text'),
-                        $('<p id="email">').attr('class', 'list-group-item-text'),
-                        $('<p id="phone">').attr('class', 'list-group-item-text'),
-                        $('<p id="fb">').attr('class', 'list-group-item-text')
                     ));
 
             var userObj = JSON.parse(res);
@@ -24,9 +21,6 @@ $(function() {
                 $(user).find('a').attr("href", "/user/"+value.Id);
                 $(user).find('h2').text(value.Name);
                 $(user).find('#bio').text("ABOUT: " +value.Bio);
-                $(user).find('#email').text("EMAIL: " +value.Email);
-                $(user).find('#phone').text("PHONE: " +value.Phone);
-                $(user).find('#fb').text("FACEBOOK: " +value.Fb);
                 $('.users').append(user);
             });
         },
