@@ -155,8 +155,16 @@ def user(user_id):
 				phone = info[4]
 				fb = info[5]
 
+			cursor.callproc('sp_getFollowingIds', str((session.get('user'))))
+			results = cursor.fetchall()
+			following = 0
+			for result in results:
+				if result[2] == int(user_id):
+					following = 1
+
 			return render_template('userProfile.html', 
 				me = 0,
+				following = following,
 				user_id = user_id, 
 				name = name,
 				bio = bio,
