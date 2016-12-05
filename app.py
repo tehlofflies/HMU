@@ -183,14 +183,34 @@ def addFollow(followed_user_id):
 			cursor.callproc('sp_addFollow', (_follower_user_id, _followed_user_id))
 			conn.commit()
 			# cursor.callproc('sp_createUser',("jy","jy@columbia.edu","jy"))
-			cursor.close()
-			conn.close()
-			return render_template('base.html')
+			
+			cursor.callproc('sp_getProfile', (_followed_user_id,))
+			infos = cursor.fetchall()
+
+			for info in infos:
+				name = info[1]
+				bio = info[2]
+				email = info[3]
+				phone = info[4]
+				fb = info[5]
+
+			return render_template('userProfile.html', 
+				me = 0,
+				user_id = _followed_user_id, 
+				name = name,
+				bio = bio,
+				email = email,
+				phone = phone,
+				fb = fb,
+				following = 1
+			)
 		else:
 			return render_template('error.html', error = 'Unauthorized Access')
 	except Exception as e:
 		return render_template('error.html', error = str(e))
-
+	finally:
+		cursor.close()
+		conn.close()
 
 @app.route('/userHome')
 def userHome():

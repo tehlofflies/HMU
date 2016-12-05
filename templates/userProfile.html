@@ -89,7 +89,6 @@
                         <p><a href={{ fb }} target="_blank" style="color:black">Facebook</a></p>
                         {% endif %}
 
-
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="singlebutton"></label>
                             <div class="col-md-4">
@@ -97,10 +96,14 @@
                                 <form action="/showEditProfile">
                                     <input class="btn btn-primary" type="submit" value="Edit Profile" />
                                 </form>
+                                {% elif following %}
+                                <form action="/unfollow/{{user_id}}">
+                                    <input class="btn btn-primary" type="submit" value="Unfollow Me" />
+                                </form>       
                                 {% else %}
-                                <form action="/showEditProfile">
+                                <form action="/follow/{{user_id}}">
                                     <input class="btn btn-primary" type="submit" value="Follow Me" />
-                                </form>                                
+                                </form>                              
                                 {% endif %}
                             </div>
                         </div>
