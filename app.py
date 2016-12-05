@@ -330,7 +330,7 @@ def validateLogin():
 				if str(data[0][3])==_password:
 					session['user'] = data[0][0]
 					print(data[0][0], file=sys.stderr)
-					return redirect('/showEditProfile')
+					return redirect('/userHome')
 				else:
 					flash("Password is not correct", category='error')
 					return redirect('/showSignIn')
