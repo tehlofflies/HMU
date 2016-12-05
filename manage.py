@@ -203,6 +203,18 @@ BEGIN
     select * from tbl_profile where profile_id = p_user_id;    
 END
 """
+sp_checkFollow = """
+CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_checkFollow`(
+    IN p_follower_user_id bigint,
+    IN p_followed_user_id bigint
+)
+BEGIN
+    select * from tbl_follow
+    where follower_user_id = p_follower_user_id
+    and followed_user_id = p_followed_user_id
+    ;
+END
+"""
 
 sp_addFollow = """
 CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_addFollow`(
@@ -275,6 +287,7 @@ engine.execute(sp_addPost)
 engine.execute(sp_getPosts)
 engine.execute(sp_getPostInfo)
 engine.execute(sp_deletePost)
+engine.execute(sp_checkFollow)
 engine.execute(sp_addFollow)
 engine.execute(sp_deleteFollow)
 engine.execute("set global sql_mode = 'strict_trans_tables';")
