@@ -226,6 +226,18 @@ BEGIN
 END
 """
 
+sp_getFollowingIds = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getFollowingIds`(
+    IN p_user_id bigint
+)
+BEGIN
+    select *
+    from tbl_follow
+    where follower_user_id = p_user_id
+    ;
+END
+"""
+
 sp_getUsers = """
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getUsers`()
 BEGIN
@@ -246,6 +258,7 @@ engine.execute(sp_createProfile)
 engine.execute(sp_editProfile)
 engine.execute(sp_getProfile)
 engine.execute(sp_getFollowing)
+engine.execute(sp_getFollowingIds)
 engine.execute(sp_getUsers)
 
 if __name__ == '__main__':
