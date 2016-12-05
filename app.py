@@ -447,6 +447,40 @@ def getPost():
 		return render_template('error.html', error = str(e))
 
 
+@app.route('/users')
+def showUsers():
+	if session.get('user'):
+		return render_template('users.html')
+	else:
+		return render_template('error.html',error = 'Unauthorized Access')
+
+@app.route('/getUsers')
+def getUsers():
+	conn = mysql.connect()
+	cursor = conn.cursor()
+	try:
+		if session.get('user'):
+			cursor.callproc('sp_getUsers')
+			users = cursor.fetchall()
+
+			users_dict = []
+			for user in users:
+				user_dict = {
+					'Id': user[0],
+					'Name': user[1],
+					'Bio': user[2],
+					'Email': user[3],
+					'Phone': user[4],
+					'Fb': user[5]
+				}
+				users_dict.append(user_dict)
+
+			return json.dumps(users_dict)
+		else:
+			return render_template('error.html', error = 'Unauthorized Access')
+	except Exception as e:
+		return render_template('error.html', error = str(e))
+
 @app.route('/logout')
 def logout():
 	session.pop('user',None)

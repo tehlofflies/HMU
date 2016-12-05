@@ -226,6 +226,15 @@ BEGIN
 END
 """
 
+sp_getUsers = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getUsers`()
+BEGIN
+    select * from tbl_profile
+    order by profile_name asc;
+    
+END
+"""
+
 engine.execute(sp_createUser)
 engine.execute(sp_validateLogin)
 engine.execute(sp_addPost)
@@ -237,6 +246,7 @@ engine.execute(sp_createProfile)
 engine.execute(sp_editProfile)
 engine.execute(sp_getProfile)
 engine.execute(sp_getFollowing)
+engine.execute(sp_getUsers)
 
 if __name__ == '__main__':
     manager.run()
