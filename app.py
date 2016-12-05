@@ -180,7 +180,6 @@ def addFollow(followed_user_id):
 			_followed_user_id = int(followed_user_id)
 			cursor.callproc('sp_addFollow', (_follower_user_id, _followed_user_id))
 			conn.commit()
-			# cursor.callproc('sp_createUser',("jy","jy@columbia.edu","jy"))
 			
 			cursor.callproc('sp_getProfile', (_followed_user_id,))
 			infos = cursor.fetchall()
@@ -201,6 +200,45 @@ def addFollow(followed_user_id):
 				phone = phone,
 				fb = fb,
 				following = 1
+			)
+		else:
+			return render_template('error.html', error = 'Unauthorized Access')
+	except Exception as e:
+		return render_template('error.html', error = str(e))
+	finally:
+		cursor.close()
+		conn.close()
+
+@app.route('/unfollow/<followed_user_id>')
+def deleteFollow(followed_user_id):
+	conn = mysql.connect()
+	cursor = conn.cursor()
+	try:
+		if session.get('user'):
+			_follower_user_id = session.get('user')
+			_followed_user_id = int(followed_user_id)
+			cursor.callproc('sp_deleteFollow', (_follower_user_id, _followed_user_id))
+			conn.commit()
+			
+			cursor.callproc('sp_getProfile', (_followed_user_id,))
+			infos = cursor.fetchall()
+
+			for info in infos:
+				name = info[1]
+				bio = info[2]
+				email = info[3]
+				phone = info[4]
+				fb = info[5]
+
+			return render_template('userProfile.html', 
+				me = 0,
+				user_id = _followed_user_id, 
+				name = name,
+				bio = bio,
+				email = email,
+				phone = phone,
+				fb = fb,
+				following = 0
 			)
 		else:
 			return render_template('error.html', error = 'Unauthorized Access')

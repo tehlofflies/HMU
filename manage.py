@@ -201,6 +201,19 @@ BEGIN
 END
 """
 
+sp_deleteFollow = """
+CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_deleteFollow`(
+    IN p_follower_user_id bigint,
+    IN p_followed_user_id bigint
+)
+BEGIN
+    delete from tbl_follow
+    where follower_user_id=p_follower_user_id
+    and followed_user_id=p_followed_user_id
+    ;
+END
+"""
+
 sp_getFollowing = """
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getFollowing`(
     IN p_user_id bigint
@@ -218,12 +231,12 @@ engine.execute(sp_validateLogin)
 engine.execute(sp_addPost)
 engine.execute(sp_getPosts)
 engine.execute(sp_addFollow)
+engine.execute(sp_deleteFollow)
 engine.execute("set global sql_mode = 'strict_trans_tables';")
 engine.execute(sp_createProfile)
 engine.execute(sp_editProfile)
 engine.execute(sp_getProfile)
 engine.execute(sp_getFollowing)
-
 
 if __name__ == '__main__':
     manager.run()
