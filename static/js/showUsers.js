@@ -10,7 +10,7 @@ $(function() {
                     .attr('class', 'list-group-item')
                     .append(
                         $('<h2>').attr('class', 'list-group-item-heading'),
-                        $('<p id="bio">').attr('class', 'list-group-item-text')
+                        $('<p id="email">').attr('class', 'list-group-item-text')
                     ));
 
             var userObj = JSON.parse(res);
@@ -20,7 +20,7 @@ $(function() {
                 user = $(div).clone();
                 $(user).find('a').attr("href", "/user/"+value.Id);
                 $(user).find('h2').text(value.Name);
-                $(user).find('#bio').text("ABOUT: " +value.Bio);
+                $(user).find('#email').text(value.Email);
                 $('.users').append(user);
             });
         },
