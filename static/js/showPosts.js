@@ -14,7 +14,7 @@ $(function() {
                         $('<p id="meetingTime">').attr('class', 'list-group-item-text'),
                         $('<p id="location">').attr('class', 'list-group-item-text'),
                         $('<p id="desc">').attr('class', 'list-group-item-text'),
-                        $('<p id="postTime">').attr('class', 'list-group-item-text')
+                        $('<p id="postTime" style="font-size:12px; text-align:right">').attr('class', 'list-group-item-text')
                     ));
 
             var postObj = JSON.parse(res);
