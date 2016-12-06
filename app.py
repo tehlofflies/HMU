@@ -59,7 +59,6 @@ def signUp():
                 cursor.callproc('sp_validateLogin', (_email,))
                 data1 = cursor.fetchall()
                 session['user'] = data1[0][0]
-                print(data1[0][0], file=sys.stderr)
 
                 # create a user profile
                 cursor.callproc('sp_createProfile', (_name, "", _email, None, None))
@@ -108,7 +107,6 @@ def validateLogin():
             if len(data) > 0:
                 if str(data[0][3])==_password:
                     session['user'] = data[0][0]
-                    print(data[0][0], file=sys.stderr)
                     return redirect('/userHome')
                 else:
                     flash("Password is not correct", category='error')
