@@ -4,7 +4,7 @@ $(function() {
         type: 'GET',
         success: function(res) {
             console.log(res);
-            var div = $('<div id="display">')
+            var div = $('<div>')
                 .attr('class', 'list-group')
                 .append($('<a>')
                     .attr('class', 'list-group-item')
@@ -22,7 +22,7 @@ $(function() {
 
             $.each(postObj, function(index, value) {
                 post = $(div).clone();
-                document.getElementById('display').className += ' ' + value.Filter;
+                $(post).addClass(value.Filter);
                 $(post).find('a').attr("href", "/user/"+value.UserId);
                 $(post).find('h2').text(value.Headline);
                 $(post).find('#user').text("WHO: " +value.User);

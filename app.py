@@ -475,6 +475,7 @@ def getPost():
 					'Filter': display_option
 				}
 				posts_dict.append(post_dict)
+				print(post_dict)
 
 			return json.dumps(posts_dict)
 		else:

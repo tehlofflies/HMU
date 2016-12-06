@@ -22,6 +22,20 @@
 
     <script src="../static/js/jquery-3.1.1.min.js"></script>
     <script src="../static/js/showPosts.js"></script>
+
+    <script type="text/javascript">
+        $('input').click(function() {
+
+            if(document.getElementById('filter-following').checked){
+                $('.filter').hide();
+                console.log("ok");
+            }
+            else {
+                $('.filter').show();
+            }
+
+        }); 
+    </script>
     
   </head>
  
@@ -82,6 +96,16 @@
     <!-- Join Section -->
     <section id="join">
         <div class="container">
+
+            <div class="row">
+                <ul id="filters">
+                    <li>
+                        <input type="checkbox" value="Following" id="filter-following" />
+                        <label for="filter-following">Following</label>
+                    </li>
+                </ul>
+            </div>
+
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 posts">
                     
