@@ -304,7 +304,7 @@ def signUp():
 				print(data1[0][0], file=sys.stderr)
 
 				# create a user profile
-				cursor.callproc('sp_createProfile', (_name,None,_email,None,None))
+				cursor.callproc('sp_createProfile', (_name,"",_email,None,None))
 				data2 = cursor.fetchall()
 
 				if len(data2) is 0:
