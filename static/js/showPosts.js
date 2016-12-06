@@ -38,3 +38,18 @@ $(function() {
         }
     });
 });
+
+
+$(document).ready(function() {
+    $('#filter-following').click(function() {
+
+        if(document.getElementById('filter-following').checked) {
+            $('.filter').hide(200);
+            console.log("ok");
+        }
+        else {
+            $('.filter').show(200);
+        }
+
+    }); 
+});
