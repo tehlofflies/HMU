@@ -438,11 +438,12 @@ def getPost():
 	cursor = conn.cursor()
 	try:
 		if session.get('user'):
-			cursor.callproc('sp_getPosts')
+			cursor.callproc('sp_getPostsFollowing', str(session.get('user'))) 
 			posts = cursor.fetchall()
 
 			posts_dict = []
 			for post in posts:
+				print(post)
 				post_dict = {
 					'Id': post[0],
 					'User': post[1],
