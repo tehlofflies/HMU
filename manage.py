@@ -131,7 +131,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getPostsFollowing`(
 )
 BEGIN
     select p.post_id, u.user_name, u.user_id, p.post_headline, p.post_description, p.post_location, p.post_postTime, p.post_meetingTime from
-    (tbl_post as p join tbl_follow as f on p.post_user_id = f.followed_user_id or p.post_user_id = user_id) join tbl_user as u on p.post_user_id = u.user_id
+    (tbl_user as u join tbl_post as p on u.user_id = p.post_user_id) left join tbl_follow as f on p.post_user_id = f.followed_user_id
     where f.follower_user_id = user_id or p.post_user_id = user_id
     ;
 END
