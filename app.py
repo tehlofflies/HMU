@@ -438,12 +438,31 @@ def getPost():
 	cursor = conn.cursor()
 	try:
 		if session.get('user'):
-			cursor.callproc('sp_getPostsFollowing', str(session.get('user'))) 
+
+			# is the user following the authors of the posts?
+			_user = session.get('user')
+			cursor.callproc('sp_getFollowing', (_user,))
+			followings = cursor.fetchall()
+
+			followings_dict = {}
+			for following in followings:
+				followings_dict[following[0]] = True
+
+			# get posts
+			cursor.callproc('sp_getPosts')
 			posts = cursor.fetchall()
 
 			posts_dict = []
 			for post in posts:
-				print(post)
+
+				# set a display or no display option if the post author is being followed
+				# this dict entry gets used for css styling, see showPosts.js
+				display_option = "filter"
+				if post[2] in followings_dict:
+					display_option = "no-filter"
+				if post[2] == _user:
+					display_option = "no-filter"
+
 				post_dict = {
 					'Id': post[0],
 					'User': post[1],
@@ -452,7 +471,8 @@ def getPost():
 					'Description': post[4],
 					'Location': post[5],
 					'MeetingTime': post[6].strftime("%B %d, %Y, %I:%M %p"),
-					'PostTime': post[7].strftime("%B %d, %Y, %I:%M %p")
+					'PostTime': post[7].strftime("%B %d, %Y, %I:%M %p"),
+					'Filter': display_option
 				}
 				posts_dict.append(post_dict)
 

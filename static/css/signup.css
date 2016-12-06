@@ -7,6 +7,8 @@ body {
   transition: all 0.2s ease;
 }
 
+
+/* posts */
 .list-group-item { 
   background-color: #ccc; 
   transition: all 0.5s ease;
@@ -16,8 +18,19 @@ body {
 }
 .list-group-item-heading { padding: 10px 0; }
 .list-group-item-text { color: white; }
+
+.filter-options { padding-bottom: 4em; }
+h4 { display: inline-block; }
+ul { 
+  list-style: none; 
+  display: inline-block;
+}
+
+
 #postTime { padding-bottom: 20px; }
 
+
+/* sign in */
 .form-signin {
   max-width: 330px;
   padding: 15px;

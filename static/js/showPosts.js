@@ -22,6 +22,7 @@ $(function() {
 
             $.each(postObj, function(index, value) {
                 post = $(div).clone();
+                $(post).addClass(value.Filter);
                 $(post).find('a').attr("href", "/user/"+value.UserId);
                 $(post).find('h2').text(value.Headline);
                 $(post).find('#user').text("WHO: " +value.User);
@@ -36,4 +37,19 @@ $(function() {
             console.log(error);
         }
     });
+});
+
+
+$(document).ready(function() {
+    $('#filter-following').click(function() {
+
+        if(document.getElementById('filter-following').checked) {
+            $('.filter').hide(200);
+            console.log("ok");
+        }
+        else {
+            $('.filter').show(200);
+        }
+
+    }); 
 });

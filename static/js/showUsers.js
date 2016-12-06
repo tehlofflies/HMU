@@ -10,7 +10,7 @@ $(function() {
                     .attr('class', 'list-group-item')
                     .append(
                         $('<h2>').attr('class', 'list-group-item-heading'),
-                        $('<p id="bio">').attr('class', 'list-group-item-text'),
+                        $('<p id="bio">').attr('class', 'list-group-item-text')
                     ));
 
             var userObj = JSON.parse(res);
