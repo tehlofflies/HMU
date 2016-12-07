@@ -33,6 +33,19 @@ class tbl_post(db.Model):
     post_postTime = db.Column(db.DateTime)
     post_meetingTime = db.Column(db.DateTime)
 
+class tbl_profile(db.Model):
+    profile_id = db.Column(db.Integer, primary_key=True)
+    profile_name = db.Column(db.String(45))
+    profile_bio = db.Column(db.String(5000))
+    profile_username = db.Column(db.String(45), unique=True)
+    profile_phone = db.Column(db.String(10))
+    profile_facebook = db.Column(db.String(45)) 
+
+class tbl_follow(db.Model):
+    follow_id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
+    follower_user_id = db.Column(db.Integer, nullable=False)
+    followed_user_id = db.Column(db.Integer, nullable=False)
+
 sp_createUser = """
 CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_createUser`(
     IN p_name VARCHAR(45),
