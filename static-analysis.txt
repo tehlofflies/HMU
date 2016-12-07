@@ -1,0 +1,983 @@
+************* Module app
+W: 27, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 32, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 36, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 40, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 41, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 42, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 43, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 47, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 48, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 49, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 50, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 51, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 53, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 55, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 56, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 58, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 59, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 60, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 61, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 62, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 63, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 64, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 65, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 66, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 67, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 68, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 69, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C: 71, 0: Line too long (130/100) (line-too-long)
+W: 71, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 72, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 73, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C: 73, 0: Exactly one space required after comma
+		return render_template('error.html',error = 'Unauthorized Access')
+                                     ^ (bad-whitespace)
+C: 73, 0: No space allowed around keyword argument assignment
+		return render_template('error.html',error = 'Unauthorized Access')
+                                            ^ (bad-whitespace)
+C: 75, 0: Exactly one space required after comma
+@app.route('/editProfile',methods=['POST'])
+                         ^ (bad-whitespace)
+W: 77, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 78, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 79, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 80, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 81, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 82, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 83, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 84, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 94, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 95, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 96, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W: 97, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C: 98, 0: Line too long (213/100) (line-too-long)
+W: 99, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:100, 0: Line too long (109/100) (line-too-long)
+W:101, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:102, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:103, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:103, 0: No space allowed around keyword argument assignment
+		return render_template('error.html', error = str(e))
+                                             ^ (bad-whitespace)
+W:104, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:105, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:106, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:110, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:111, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:112, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:113, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:114, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:115, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:116, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:118, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:119, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:120, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:121, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:122, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:123, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:125, 0: Trailing whitespace (trailing-whitespace)
+W:125, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:126, 0: Wrong continued indentation (add 22 spaces).
+				me = 1,
+    ^                     | (bad-continuation)
+C:126, 0: No space allowed around keyword argument assignment
+				me = 1,
+       ^ (bad-whitespace)
+C:127, 0: Wrong continued indentation (add 22 spaces).
+				user_id = _user, 
+    ^                     | (bad-continuation)
+C:127, 0: Trailing whitespace (trailing-whitespace)
+C:127, 0: No space allowed around keyword argument assignment
+				user_id = _user, 
+            ^ (bad-whitespace)
+C:128, 0: Wrong continued indentation (add 22 spaces).
+				name = name,
+    ^                     | (bad-continuation)
+C:128, 0: No space allowed around keyword argument assignment
+				name = name,
+         ^ (bad-whitespace)
+C:129, 0: Wrong continued indentation (add 22 spaces).
+				bio = bio,
+    ^                     | (bad-continuation)
+C:129, 0: No space allowed around keyword argument assignment
+				bio = bio,
+        ^ (bad-whitespace)
+C:130, 0: Wrong continued indentation (add 22 spaces).
+				email = email,
+    ^                     | (bad-continuation)
+C:130, 0: No space allowed around keyword argument assignment
+				email = email,
+          ^ (bad-whitespace)
+C:131, 0: Wrong continued indentation (add 22 spaces).
+				phone = phone,
+    ^                     | (bad-continuation)
+C:131, 0: No space allowed around keyword argument assignment
+				phone = phone,
+          ^ (bad-whitespace)
+C:132, 0: Wrong continued indentation (add 22 spaces).
+				fb = fb
+    ^                     | (bad-continuation)
+C:132, 0: No space allowed around keyword argument assignment
+				fb = fb
+       ^ (bad-whitespace)
+C:133, 0: Wrong continued indentation (add 22 spaces).
+			)
+   ^                     | (bad-continuation)
+W:134, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:135, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:135, 0: No space allowed around keyword argument assignment
+			return render_template('error.html', error = 'Unauthorized Access')
+                                              ^ (bad-whitespace)
+W:136, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:137, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:137, 0: No space allowed around keyword argument assignment
+		return render_template('error.html', error = str(e))
+                                             ^ (bad-whitespace)
+W:141, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:142, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:143, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:144, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:145, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:146, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:148, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:149, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:151, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:152, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:153, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:154, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:155, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:156, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:158, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:159, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:160, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:161, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:162, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:163, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:165, 0: Trailing whitespace (trailing-whitespace)
+W:165, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:166, 0: Wrong continued indentation (add 22 spaces).
+				me = 0,
+    ^                     | (bad-continuation)
+C:166, 0: No space allowed around keyword argument assignment
+				me = 0,
+       ^ (bad-whitespace)
+C:167, 0: Wrong continued indentation (add 22 spaces).
+				following = following,
+    ^                     | (bad-continuation)
+C:167, 0: No space allowed around keyword argument assignment
+				following = following,
+              ^ (bad-whitespace)
+C:168, 0: Wrong continued indentation (add 22 spaces).
+				user_id = user_id, 
+    ^                     | (bad-continuation)
+C:168, 0: Trailing whitespace (trailing-whitespace)
+C:168, 0: No space allowed around keyword argument assignment
+				user_id = user_id, 
+            ^ (bad-whitespace)
+C:169, 0: Wrong continued indentation (add 22 spaces).
+				name = name,
+    ^                     | (bad-continuation)
+C:169, 0: No space allowed around keyword argument assignment
+				name = name,
+         ^ (bad-whitespace)
+C:170, 0: Wrong continued indentation (add 22 spaces).
+				bio = bio,
+    ^                     | (bad-continuation)
+C:170, 0: No space allowed around keyword argument assignment
+				bio = bio,
+        ^ (bad-whitespace)
+C:171, 0: Wrong continued indentation (add 22 spaces).
+				email = email,
+    ^                     | (bad-continuation)
+C:171, 0: No space allowed around keyword argument assignment
+				email = email,
+          ^ (bad-whitespace)
+C:172, 0: Wrong continued indentation (add 22 spaces).
+				phone = phone,
+    ^                     | (bad-continuation)
+C:172, 0: No space allowed around keyword argument assignment
+				phone = phone,
+          ^ (bad-whitespace)
+C:173, 0: Wrong continued indentation (add 22 spaces).
+				fb = fb
+    ^                     | (bad-continuation)
+C:173, 0: No space allowed around keyword argument assignment
+				fb = fb
+       ^ (bad-whitespace)
+C:174, 0: Wrong continued indentation (add 22 spaces).
+			)
+   ^                     | (bad-continuation)
+W:176, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:177, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:177, 0: No space allowed around keyword argument assignment
+			return render_template('error.html', error = 'Unauthorized Access')
+                                              ^ (bad-whitespace)
+W:178, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:179, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:179, 0: No space allowed around keyword argument assignment
+		return render_template('error.html', error = str(e))
+                                             ^ (bad-whitespace)
+W:183, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:184, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:185, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:186, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:187, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:188, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:191, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:192, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:193, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:194, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:195, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:196, 0: Trailing whitespace (trailing-whitespace)
+W:197, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:198, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:200, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:201, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:202, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:203, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:204, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:205, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:207, 0: Trailing whitespace (trailing-whitespace)
+W:207, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:208, 0: Wrong continued indentation (add 22 spaces).
+					me = 0,
+     ^                     | (bad-continuation)
+C:208, 0: No space allowed around keyword argument assignment
+					me = 0,
+        ^ (bad-whitespace)
+C:209, 0: Wrong continued indentation (add 22 spaces).
+					user_id = _followed_user_id, 
+     ^                     | (bad-continuation)
+C:209, 0: Trailing whitespace (trailing-whitespace)
+C:209, 0: No space allowed around keyword argument assignment
+					user_id = _followed_user_id, 
+             ^ (bad-whitespace)
+C:210, 0: Wrong continued indentation (add 22 spaces).
+					name = name,
+     ^                     | (bad-continuation)
+C:210, 0: No space allowed around keyword argument assignment
+					name = name,
+          ^ (bad-whitespace)
+C:211, 0: Wrong continued indentation (add 22 spaces).
+					bio = bio,
+     ^                     | (bad-continuation)
+C:211, 0: No space allowed around keyword argument assignment
+					bio = bio,
+         ^ (bad-whitespace)
+C:212, 0: Wrong continued indentation (add 22 spaces).
+					email = email,
+     ^                     | (bad-continuation)
+C:212, 0: No space allowed around keyword argument assignment
+					email = email,
+           ^ (bad-whitespace)
+C:213, 0: Wrong continued indentation (add 22 spaces).
+					phone = phone,
+     ^                     | (bad-continuation)
+C:213, 0: No space allowed around keyword argument assignment
+					phone = phone,
+           ^ (bad-whitespace)
+C:214, 0: Wrong continued indentation (add 22 spaces).
+					fb = fb,
+     ^                     | (bad-continuation)
+C:214, 0: No space allowed around keyword argument assignment
+					fb = fb,
+        ^ (bad-whitespace)
+C:215, 0: Wrong continued indentation (add 22 spaces).
+					following = 1
+     ^                     | (bad-continuation)
+C:215, 0: No space allowed around keyword argument assignment
+					following = 1
+               ^ (bad-whitespace)
+C:216, 0: Wrong continued indentation (add 22 spaces).
+				)
+    ^                     | (bad-continuation)
+W:217, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:218, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:218, 0: No space allowed around keyword argument assignment
+				return render_template('error.html', error = 'Already following')
+                                               ^ (bad-whitespace)
+W:219, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:220, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:220, 0: No space allowed around keyword argument assignment
+			return render_template('error.html', error = 'Unauthorized Access')
+                                              ^ (bad-whitespace)
+W:221, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:222, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:222, 0: No space allowed around keyword argument assignment
+		return render_template('error.html', error = str(e))
+                                             ^ (bad-whitespace)
+W:223, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:224, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:225, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:229, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:230, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:231, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:232, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:233, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:234, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:235, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:236, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:237, 0: Trailing whitespace (trailing-whitespace)
+W:238, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:239, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:241, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:242, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:243, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:244, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:245, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:246, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:248, 0: Trailing whitespace (trailing-whitespace)
+W:248, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:249, 0: Wrong continued indentation (add 22 spaces).
+				me = 0,
+    ^                     | (bad-continuation)
+C:249, 0: No space allowed around keyword argument assignment
+				me = 0,
+       ^ (bad-whitespace)
+C:250, 0: Wrong continued indentation (add 22 spaces).
+				user_id = _followed_user_id, 
+    ^                     | (bad-continuation)
+C:250, 0: Trailing whitespace (trailing-whitespace)
+C:250, 0: No space allowed around keyword argument assignment
+				user_id = _followed_user_id, 
+            ^ (bad-whitespace)
+C:251, 0: Wrong continued indentation (add 22 spaces).
+				name = name,
+    ^                     | (bad-continuation)
+C:251, 0: No space allowed around keyword argument assignment
+				name = name,
+         ^ (bad-whitespace)
+C:252, 0: Wrong continued indentation (add 22 spaces).
+				bio = bio,
+    ^                     | (bad-continuation)
+C:252, 0: No space allowed around keyword argument assignment
+				bio = bio,
+        ^ (bad-whitespace)
+C:253, 0: Wrong continued indentation (add 22 spaces).
+				email = email,
+    ^                     | (bad-continuation)
+C:253, 0: No space allowed around keyword argument assignment
+				email = email,
+          ^ (bad-whitespace)
+C:254, 0: Wrong continued indentation (add 22 spaces).
+				phone = phone,
+    ^                     | (bad-continuation)
+C:254, 0: No space allowed around keyword argument assignment
+				phone = phone,
+          ^ (bad-whitespace)
+C:255, 0: Wrong continued indentation (add 22 spaces).
+				fb = fb,
+    ^                     | (bad-continuation)
+C:255, 0: No space allowed around keyword argument assignment
+				fb = fb,
+       ^ (bad-whitespace)
+C:256, 0: Wrong continued indentation (add 22 spaces).
+				following = 0
+    ^                     | (bad-continuation)
+C:256, 0: No space allowed around keyword argument assignment
+				following = 0
+              ^ (bad-whitespace)
+C:257, 0: Wrong continued indentation (add 22 spaces).
+			)
+   ^                     | (bad-continuation)
+W:258, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:259, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:259, 0: No space allowed around keyword argument assignment
+			return render_template('error.html', error = 'Unauthorized Access')
+                                              ^ (bad-whitespace)
+W:260, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:261, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:261, 0: No space allowed around keyword argument assignment
+		return render_template('error.html', error = str(e))
+                                             ^ (bad-whitespace)
+W:262, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:263, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:264, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:268, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:269, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:270, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:271, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:271, 0: Exactly one space required after comma
+		return render_template('error.html',error = 'Unauthorized Access')
+                                     ^ (bad-whitespace)
+C:271, 0: No space allowed around keyword argument assignment
+		return render_template('error.html',error = 'Unauthorized Access')
+                                            ^ (bad-whitespace)
+C:274, 0: Exactly one space required after comma
+@app.route('/signUp',methods=['POST'])
+                    ^ (bad-whitespace)
+W:276, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:277, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:278, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:279, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:282, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:284, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:285, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:286, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:291, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:292, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:293, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:293, 0: Exactly one space required after comma
+			cursor.callproc('sp_createUser',(_name,_email,_password))
+                                  ^ (bad-whitespace)
+C:293, 0: Exactly one space required after comma
+			cursor.callproc('sp_createUser',(_name,_email,_password))
+                                         ^ (bad-whitespace)
+C:293, 0: Exactly one space required after comma
+			cursor.callproc('sp_createUser',(_name,_email,_password))
+                                                ^ (bad-whitespace)
+W:294, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:296, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:298, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:301, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:302, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:303, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:304, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:307, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:307, 0: Exactly one space required after comma
+				cursor.callproc('sp_createProfile', (_name,"",_email,None,None))
+                                              ^ (bad-whitespace)
+C:307, 0: Exactly one space required after comma
+				cursor.callproc('sp_createProfile', (_name,"",_email,None,None))
+                                                 ^ (bad-whitespace)
+C:307, 0: Exactly one space required after comma
+				cursor.callproc('sp_createProfile', (_name,"",_email,None,None))
+                                                        ^ (bad-whitespace)
+C:307, 0: Exactly one space required after comma
+				cursor.callproc('sp_createProfile', (_name,"",_email,None,None))
+                                                             ^ (bad-whitespace)
+W:308, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:310, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:311, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:312, 0: Trailing whitespace (trailing-whitespace)
+W:312, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:313, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:314, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:314, 0: Exactly one space required after comma
+					return render_template('error.html',error = 'An error occurred!')
+                                        ^ (bad-whitespace)
+C:314, 0: No space allowed around keyword argument assignment
+					return render_template('error.html',error = 'An error occurred!')
+                                               ^ (bad-whitespace)
+W:317, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:318, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:319, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:321, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:322, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:323, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:324, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:325, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:326, 0: Trailing whitespace (trailing-whitespace)
+W:327, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:328, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:329, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:331, 0: Exactly one space required after comma
+@app.route('/validateLogin',methods=['POST'])
+                           ^ (bad-whitespace)
+W:333, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:334, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:335, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:336, 0: Trailing whitespace (trailing-whitespace)
+W:337, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:339, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:340, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:341, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:341, 0: Exactly one space required after comma
+			cursor.callproc('sp_validateLogin',(_username,))
+                                     ^ (bad-whitespace)
+W:342, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:344, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:345, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:345, 0: Exactly one space required around comparison
+				if str(data[0][3])==_password:
+                      ^^ (bad-whitespace)
+W:346, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:347, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:348, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:349, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:350, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:351, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:353, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:354, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:355, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:357, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:358, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:360, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:361, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:362, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:364, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:365, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:365, 0: Exactly one space required after comma
+		return render_template('error.html',error = str(e))
+                                     ^ (bad-whitespace)
+C:365, 0: No space allowed around keyword argument assignment
+		return render_template('error.html',error = str(e))
+                                            ^ (bad-whitespace)
+C:366, 0: Trailing whitespace (trailing-whitespace)
+W:369, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:373, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:375, 0: Exactly one space required after comma
+@app.route('/addPost',methods=['POST'])
+                     ^ (bad-whitespace)
+W:377, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:378, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:379, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:380, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:381, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:382, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:384, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:385, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:386, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:387, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:389, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:390, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:391, 0: Trailing whitespace (trailing-whitespace)
+W:391, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:392, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:393, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:394, 0: Trailing whitespace (trailing-whitespace)
+W:397, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:398, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:399, 0: Trailing whitespace (trailing-whitespace)
+C:401, 0: Trailing whitespace (trailing-whitespace)
+C:402, 0: Line too long (152/100) (line-too-long)
+W:402, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:403, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:404, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:405, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:407, 0: Trailing whitespace (trailing-whitespace)
+W:407, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:407, 0: Unnecessary parens after 'if' keyword (superfluous-parens)
+W:408, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:409, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:410, 0: Trailing whitespace (trailing-whitespace)
+C:411, 0: Trailing whitespace (trailing-whitespace)
+W:412, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:412, 0: Exactly one space required after comma
+				cursor.callproc('sp_addPost',(_headline, _description, _user, _formattedDatetime, _location))
+                                ^ (bad-whitespace)
+W:413, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:415, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:416, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:417, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:418, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:419, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:420, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:422, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:423, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:424, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:425, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:426, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:427, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:428, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:429, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:430, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:431, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:432, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:433, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:437, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:438, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:439, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:440, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:443, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:444, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:445, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:447, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:448, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:449, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:452, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:453, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:455, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:456, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:460, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:461, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:462, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:463, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:464, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:466, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:467, 0: Wrong hanging indentation (add 31 spaces).
+					'Id': post[0],
+     ^                              | (bad-continuation)
+C:468, 0: Wrong hanging indentation (add 31 spaces).
+					'User': post[1],
+     ^                              | (bad-continuation)
+C:469, 0: Wrong hanging indentation (add 31 spaces).
+					'UserId': post[2],
+     ^                              | (bad-continuation)
+C:470, 0: Wrong hanging indentation (add 31 spaces).
+					'Headline': post[3],
+     ^                              | (bad-continuation)
+C:471, 0: Wrong hanging indentation (add 31 spaces).
+					'Description': post[4],
+     ^                              | (bad-continuation)
+C:472, 0: Wrong hanging indentation (add 31 spaces).
+					'Location': post[5],
+     ^                              | (bad-continuation)
+C:473, 0: Wrong hanging indentation (add 31 spaces).
+					'MeetingTime': post[6].strftime("%B %d, %Y, %I:%M %p"),
+     ^                              | (bad-continuation)
+C:474, 0: Wrong hanging indentation (add 31 spaces).
+					'PostTime': post[7].strftime("%B %d, %Y, %I:%M %p"),
+     ^                              | (bad-continuation)
+C:475, 0: Wrong hanging indentation (add 31 spaces).
+					'Filter': display_option
+     ^                              | (bad-continuation)
+C:476, 0: Wrong hanging indentation.
+				}
+    ^                           |   | (bad-continuation)
+W:477, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:479, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:480, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:481, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:481, 0: No space allowed around keyword argument assignment
+			return render_template('error.html', error = 'Unauthorized Access')
+                                              ^ (bad-whitespace)
+W:482, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:483, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:483, 0: No space allowed around keyword argument assignment
+		return render_template('error.html', error = str(e))
+                                             ^ (bad-whitespace)
+W:487, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:488, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:489, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:490, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:491, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:492, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:493, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:494, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:495, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:496, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:497, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:498, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:499, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:499, 0: No space allowed around keyword argument assignment
+			return render_template('error.html', error = 'Unauthorized Access')
+                                              ^ (bad-whitespace)
+W:500, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:501, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:501, 0: No space allowed around keyword argument assignment
+		return render_template('error.html', error = str(e))
+                                             ^ (bad-whitespace)
+W:505, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:506, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:507, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:508, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:508, 0: Exactly one space required after comma
+		return render_template('error.html',error = 'Unauthorized Access')
+                                     ^ (bad-whitespace)
+C:508, 0: No space allowed around keyword argument assignment
+		return render_template('error.html',error = 'Unauthorized Access')
+                                            ^ (bad-whitespace)
+C:509, 0: Trailing whitespace (trailing-whitespace)
+W:512, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:513, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:514, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:515, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:516, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:517, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:518, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:520, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:521, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:522, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:523, 0: Wrong hanging indentation (add 31 spaces).
+					'FollowedId': following[0],
+     ^                              | (bad-continuation)
+C:524, 0: Wrong hanging indentation (add 31 spaces).
+					'FollowedName': following[1]
+     ^                              | (bad-continuation)
+C:525, 0: Wrong hanging indentation.
+				}
+    ^                           |   | (bad-continuation)
+W:526, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:528, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:529, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:530, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:530, 0: No space allowed around keyword argument assignment
+			return render_template('error.html', error = 'Unauthorized Access')
+                                              ^ (bad-whitespace)
+W:531, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:532, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:532, 0: No space allowed around keyword argument assignment
+		return render_template('error.html', error = str(e))
+                                             ^ (bad-whitespace)
+W:536, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:537, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:538, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:539, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:539, 0: Exactly one space required after comma
+		return render_template('error.html',error = 'Unauthorized Access')
+                                     ^ (bad-whitespace)
+C:539, 0: No space allowed around keyword argument assignment
+		return render_template('error.html',error = 'Unauthorized Access')
+                                            ^ (bad-whitespace)
+W:543, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:544, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:545, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:546, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:547, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:548, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:550, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:551, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:552, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:553, 0: Wrong hanging indentation (add 31 spaces).
+					'Id': user[0],
+     ^                              | (bad-continuation)
+C:554, 0: Wrong hanging indentation (add 31 spaces).
+					'Name': user[1],
+     ^                              | (bad-continuation)
+C:555, 0: Wrong hanging indentation (add 31 spaces).
+					'Bio': user[2],
+     ^                              | (bad-continuation)
+C:556, 0: Wrong hanging indentation (add 31 spaces).
+					'Email': user[3],
+     ^                              | (bad-continuation)
+C:557, 0: Wrong hanging indentation (add 31 spaces).
+					'Phone': user[4],
+     ^                              | (bad-continuation)
+C:558, 0: Wrong hanging indentation (add 31 spaces).
+					'Fb': user[5]
+     ^                              | (bad-continuation)
+C:559, 0: Wrong hanging indentation.
+				}
+    ^                           |   | (bad-continuation)
+W:560, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:562, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:563, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:564, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:564, 0: No space allowed around keyword argument assignment
+			return render_template('error.html', error = 'Unauthorized Access')
+                                              ^ (bad-whitespace)
+W:565, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+W:566, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:566, 0: No space allowed around keyword argument assignment
+		return render_template('error.html', error = str(e))
+                                             ^ (bad-whitespace)
+W:570, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:570, 0: Exactly one space required after comma
+	session.pop('user',None)
+                   ^ (bad-whitespace)
+W:571, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:574, 0: Final newline missing (missing-final-newline)
+W:574, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+C:574, 0: No space allowed around keyword argument assignment
+	app.run(debug = True)
+               ^ (bad-whitespace)
+C:  1, 0: Missing module docstring (missing-docstring)
+C: 13, 0: Invalid constant name "mysql" (invalid-name)
+C: 14, 0: Invalid constant name "app" (invalid-name)
+C: 26, 0: Missing class docstring (missing-docstring)
+C: 27, 1: Invalid class attribute name "dt" (invalid-name)
+C: 31, 0: Missing function docstring (missing-docstring)
+C: 35, 0: Invalid function name "showSignUp" (invalid-name)
+C: 35, 0: Missing function docstring (missing-docstring)
+C: 39, 0: Invalid function name "showSignIn" (invalid-name)
+C: 39, 0: Missing function docstring (missing-docstring)
+C: 46, 0: Invalid function name "showEditProfile" (invalid-name)
+C: 46, 0: Missing function docstring (missing-docstring)
+C: 76, 0: Invalid function name "editProfile" (invalid-name)
+C: 76, 0: Missing function docstring (missing-docstring)
+W:102, 8: Catching too general exception Exception (broad-except)
+W: 93,-1: String statement has no effect (pointless-string-statement)
+C:102,21: Invalid variable name "e" (invalid-name)
+C:109, 0: Invalid function name "userMe" (invalid-name)
+C:109, 0: Missing function docstring (missing-docstring)
+W:136, 8: Catching too general exception Exception (broad-except)
+C:123, 4: Invalid variable name "fb" (invalid-name)
+C:136,21: Invalid variable name "e" (invalid-name)
+C:140, 0: Missing function docstring (missing-docstring)
+W:178, 8: Catching too general exception Exception (broad-except)
+C:156, 4: Invalid variable name "fb" (invalid-name)
+C:178,21: Invalid variable name "e" (invalid-name)
+C:182, 0: Invalid function name "addFollow" (invalid-name)
+C:182, 0: Missing function docstring (missing-docstring)
+W:221, 8: Catching too general exception Exception (broad-except)
+C:205, 5: Invalid variable name "fb" (invalid-name)
+C:221,21: Invalid variable name "e" (invalid-name)
+C:228, 0: Invalid function name "deleteFollow" (invalid-name)
+C:228, 0: Missing function docstring (missing-docstring)
+W:260, 8: Catching too general exception Exception (broad-except)
+C:246, 4: Invalid variable name "fb" (invalid-name)
+C:260,21: Invalid variable name "e" (invalid-name)
+C:267, 0: Invalid function name "userHome" (invalid-name)
+C:267, 0: Missing function docstring (missing-docstring)
+C:275, 0: Invalid function name "signUp" (invalid-name)
+C:275, 0: Missing function docstring (missing-docstring)
+W:327, 8: Catching too general exception Exception (broad-except)
+C:327,21: Invalid variable name "e" (invalid-name)
+C:332, 0: Invalid function name "validateLogin" (invalid-name)
+C:332, 0: Missing function docstring (missing-docstring)
+W:364, 8: Catching too general exception Exception (broad-except)
+C:364,21: Invalid variable name "e" (invalid-name)
+C:368, 0: Invalid function name "showAddPost" (invalid-name)
+C:368, 0: Missing function docstring (missing-docstring)
+C:376, 0: Invalid function name "addPost" (invalid-name)
+C:376, 0: Missing function docstring (missing-docstring)
+W:428, 8: Catching too general exception Exception (broad-except)
+C:390, 4: Invalid variable name "_unformattedDate" (invalid-name)
+C:393, 4: Invalid variable name "_unformattedDate" (invalid-name)
+C:398, 3: Invalid variable name "_unformattedTime" (invalid-name)
+R:402, 6: Too many boolean expressions in if statement (6/5) (too-many-boolean-expressions)
+C:403, 4: Invalid variable name "_formattedDate" (invalid-name)
+C:404, 4: Invalid variable name "formattedTime" (invalid-name)
+C:405, 4: Invalid variable name "_formattedDatetime" (invalid-name)
+C:428,21: Invalid variable name "e" (invalid-name)
+R:376, 0: Too many branches (14/12) (too-many-branches)
+C:436, 0: Invalid function name "getPost" (invalid-name)
+C:436, 0: Missing function docstring (missing-docstring)
+W:482, 8: Catching too general exception Exception (broad-except)
+C:482,21: Invalid variable name "e" (invalid-name)
+C:486, 0: Invalid function name "deletePost" (invalid-name)
+C:486, 0: Missing function docstring (missing-docstring)
+W:500, 8: Catching too general exception Exception (broad-except)
+C:500,21: Invalid variable name "e" (invalid-name)
+C:504, 0: Invalid function name "showFollowing" (invalid-name)
+C:504, 0: Missing function docstring (missing-docstring)
+C:511, 0: Invalid function name "getFollowing" (invalid-name)
+C:511, 0: Missing function docstring (missing-docstring)
+W:531, 8: Catching too general exception Exception (broad-except)
+C:531,21: Invalid variable name "e" (invalid-name)
+C:535, 0: Invalid function name "showUsers" (invalid-name)
+C:535, 0: Missing function docstring (missing-docstring)
+W:551, 7: Redefining name 'user' from outer scope (line 140) (redefined-outer-name)
+C:542, 0: Invalid function name "getUsers" (invalid-name)
+C:542, 0: Missing function docstring (missing-docstring)
+W:565, 8: Catching too general exception Exception (broad-except)
+C:565,21: Invalid variable name "e" (invalid-name)
+C:569, 0: Missing function docstring (missing-docstring)
+W:  4, 0: Unused import time (unused-import)
+W:  6, 0: Unused jsonify imported from flask (unused-import)
+W:  6, 0: Unused Response imported from flask (unused-import)
+W: 11, 0: Unused date imported from datetime (unused-import)
+C: 11, 0: standard import "from datetime import date" comes before "from flask import Flask, render_template, json, request, redirect, session, jsonify, flash, Response" (wrong-import-order)
+C: 11, 0: Imports from package datetime are not grouped (ungrouped-imports)
+
+
+Report
+======
+352 statements analysed.
+
+Statistics by type
+------------------
+
++---------+-------+-----------+-----------+------------+---------+
+|type     |number |old number |difference |%documented |%badname |
++=========+=======+===========+===========+============+=========+
+|module   |1      |1          |=          |0.00        |0.00     |
++---------+-------+-----------+-----------+------------+---------+
+|class    |1      |1          |=          |0.00        |0.00     |
++---------+-------+-----------+-----------+------------+---------+
+|method   |0      |0          |=          |0           |0        |
++---------+-------+-----------+-----------+------------+---------+
+|function |21     |21         |=          |0.00        |85.71    |
++---------+-------+-----------+-----------+------------+---------+
+
+
+
+External dependencies
+---------------------
+::
+
+    flask (app)
+      \-json (app)
+    flask_wtf (app)
+    flaskext 
+      \-mysql (app)
+    wtforms (app)
+
+
+
+Raw metrics
+-----------
+
++----------+-------+------+---------+-----------+
+|type      |number |%     |previous |difference |
++==========+=======+======+=========+===========+
+|code      |439    |76.35 |439      |=          |
++----------+-------+------+---------+-----------+
+|docstring |27     |4.70  |27       |=          |
++----------+-------+------+---------+-----------+
+|comment   |24     |4.17  |24       |=          |
++----------+-------+------+---------+-----------+
+|empty     |85     |14.78 |85       |=          |
++----------+-------+------+---------+-----------+
+
+
+
+Duplication
+-----------
+
++-------------------------+------+---------+-----------+
+|                         |now   |previous |difference |
++=========================+======+=========+===========+
+|nb duplicated lines      |0     |0        |=          |
++-------------------------+------+---------+-----------+
+|percent duplicated lines |0.000 |0.000    |=          |
++-------------------------+------+---------+-----------+
+
+
+
+Messages by category
+--------------------
+
++-----------+-------+---------+-----------+
+|type       |number |previous |difference |
++===========+=======+=========+===========+
+|convention |228    |228      |=          |
++-----------+-------+---------+-----------+
+|refactor   |2      |2        |=          |
++-----------+-------+---------+-----------+
+|warning    |358    |358      |=          |
++-----------+-------+---------+-----------+
+|error      |0      |0        |=          |
++-----------+-------+---------+-----------+
+
+
+
+Messages
+--------
+
++-----------------------------+------------+
+|message id                   |occurrences |
++=============================+============+
+|mixed-indentation            |340         |
++-----------------------------+------------+
+|bad-whitespace               |77          |
++-----------------------------+------------+
+|bad-continuation             |55          |
++-----------------------------+------------+
+|invalid-name                 |43          |
++-----------------------------+------------+
+|missing-docstring            |23          |
++-----------------------------+------------+
+|trailing-whitespace          |22          |
++-----------------------------+------------+
+|broad-except                 |12          |
++-----------------------------+------------+
+|unused-import                |4           |
++-----------------------------+------------+
+|line-too-long                |4           |
++-----------------------------+------------+
+|wrong-import-order           |1           |
++-----------------------------+------------+
+|ungrouped-imports            |1           |
++-----------------------------+------------+
+|too-many-branches            |1           |
++-----------------------------+------------+
+|too-many-boolean-expressions |1           |
++-----------------------------+------------+
+|superfluous-parens           |1           |
++-----------------------------+------------+
+|redefined-outer-name         |1           |
++-----------------------------+------------+
+|pointless-string-statement   |1           |
++-----------------------------+------------+
+|missing-final-newline        |1           |
++-----------------------------+------------+
+
+
+
+Global evaluation
+-----------------
+Your code has been rated at -6.70/10 (previous run: -6.70/10, +0.00)
+

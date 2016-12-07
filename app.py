@@ -24,13 +24,24 @@ mysql.init_app(app)
 class DateForm(Form):
     dt = DateField('Pick a Date', format="%m/%d/%Y")
 
+
 @app.route('/')
 def main():
     return render_template('index.html')
 
+
+@app.route('/userHome')
+def userHome():
+    if session.get('user'):
+        return render_template('userHome.html')
+    else:
+        return render_template('error.html', error='Unauthorized Access')
+
+
 @app.route('/showSignUp')
 def showSignUp():
     return render_template('signup.html')
+
 
 @app.route('/signUp', methods=['POST'])
 def signUp():
@@ -84,12 +95,14 @@ def signUp():
         flash(str(e), category='error')
         return redirect('/showSignUp')
 
+
 @app.route('/showSignIn')
 def showSignIn():
     if session.get('user'):
         return render_template('userHome.html')
     else:
         return render_template('signin.html')
+
 
 @app.route('/validateLogin', methods=['POST'])
 def validateLogin():
@@ -123,11 +136,163 @@ def validateLogin():
 
     except Exception as e:
         return render_template('error.html', error=str(e))
-        
+
+
+@app.route('/showEditProfile')
+def showEditProfile():
+    if session.get('user'):
+        _id = session.get('user')
+        conn = mysql.connect()
+        cursor = conn.cursor()
+        cursor.callproc('sp_getProfile', (str(_id),))
+        data = cursor.fetchall()
+
+        _name = data[0][1]
+        _email = data[0][3]
+
+        if data[0][2] is None or len(data[0][2]) == 0:
+            _description = ""
+        else:
+            _description = data[0][2]
+        if data[0][4] is None or len(data[0][4]) == 0:
+            _phone = ""
+        else:
+            _phone = data[0][4]
+        if data[0][5] is None or len(data[0][5]) == 0:
+            _facebook = ""
+        else:
+            _facebook = data[0][5]
+
+        return render_template('editprofile.html', 
+            name=_name, 
+            description=_description, 
+            email=_email, 
+            phone=_phone, 
+            facebook=_facebook
+        )
+
+        cursor.close()
+        conn.close()
+    else:
+        return render_template('error.html', error='Unauthorized Access')
+
+
+@app.route('/editProfile', methods=['POST'])
+def editProfile():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    try:
+        if session.get('user'):
+            _name = request.form['inputName']
+            _description = request.form['inputDescription']
+            _email = request.form['inputEmail']
+            _phone = request.form['inputPhone']
+            _facebook = request.form['inputFacebook']
+            _id = session.get('user')
+
+            # error check for all inputs
+            if not _name.isspace() and not _description.isspace() \
+            and not _email.isspace() and _phone and not _phone.isspace() and len(_phone) == 10 \
+            and _facebook and not _facebook.isspace():
+                cursor.callproc('sp_editProfile', (_name, _description, _email, _phone, _facebook))
+                conn.commit()
+                return redirect('/me')
+            else:
+                flash("Please enter valid inputs", category='error')
+                return redirect('/showEditProfile')
+    except Exception as e:
+        return render_template('error.html', error=str(e))
+    finally:
+        conn.close()
+        cursor.close()
+
+
+@app.route('/me')
+def userMe():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    try:
+        if session.get('user'):
+            _user = session.get('user')
+            cursor.callproc('sp_getProfile', (str(_user),))
+            infos = cursor.fetchall()
+
+            for info in infos:
+                name = info[1]
+                bio = info[2]
+                email = info[3]
+                phone = info[4]
+                fb = info[5]
+
+            return render_template('userProfile.html', 
+                me = 1,
+                user_id = _user, 
+                name = name,
+                bio = bio,
+                email = email,
+                phone = phone,
+                fb = fb
+            )
+        else:
+            return render_template('error.html', error='Unauthorized Access')
+    except Exception as e:
+        return render_template('error.html', error=str(e))
+    finally:
+        cursor.close()
+        conn.close()
+
+
+@app.route('/user/<user_id>')
+def user(user_id):
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    try:
+        if session.get('user'):
+            if int(user_id) == session.get('user'):
+                return redirect('/me')
+
+            cursor.callproc('sp_getProfile', (user_id,))
+            infos = cursor.fetchall()
+
+            for info in infos:
+                name = info[1]
+                bio = info[2]
+                email = info[3]
+                phone = info[4]
+                fb = info[5]
+
+            cursor.callproc('sp_getFollowingIds', (str(session.get('user')),))
+            results = cursor.fetchall()
+            following = 0
+            for result in results:
+                if result[2] == int(user_id):
+                    following = 1
+
+            return render_template('userProfile.html', 
+                me = 0,
+                following = following,
+                user_id = user_id, 
+                name = name,
+                bio = bio,
+                email = email,
+                phone = phone,
+                fb = fb
+            )
+
+        else:
+            return render_template('error.html', error='Unauthorized Access')
+    except Exception as e:
+        return render_template('error.html', error=str(e))
+    finally:
+        cursor.close()
+        conn.close()
+
+
 @app.route('/showAddPost')
 def showAddPost():
     form = DateForm()
     return render_template('addPost.html', form=form)
+
 
 @app.route('/addPost', methods=['POST'])
 def addPost():
@@ -159,7 +324,7 @@ def addPost():
                 formattedTime = datetime.datetime.strptime(_unformattedTime, '%H:%M').time()
                 _formattedDatetime = datetime.datetime.combine(_formattedDate, formattedTime)
 
-                if(_formattedDatetime < datetime.datetime.today()): 
+                if (_formattedDatetime < datetime.datetime.today()): 
                     flash("Date/Time must be in future", category='error')
                     return redirect('/showAddPost')
                 
@@ -186,12 +351,6 @@ def addPost():
         cursor.close()
         conn.close()
 
-@app.route('/userHome')
-def userHome():
-    if session.get('user'):
-        return render_template('userHome.html')
-    else:
-        return render_template('error.html', error='Unauthorized Access')
 
 @app.route('/getPost')
 def getPost():
@@ -246,6 +405,7 @@ def getPost():
         cursor.close()
         conn.close()
 
+
 @app.route('/deletePost/<post_id>')
 def deletePost(post_id):
     conn = mysql.connect()
@@ -265,155 +425,8 @@ def deletePost(post_id):
         return render_template('error.html', error=str(e))
     finally:
         cursor.close()
-        conn.close()        
-
-@app.route('/showEditProfile')
-def showEditProfile():
-    if session.get('user'):
-        _id = session.get('user')
-        conn = mysql.connect()
-        cursor = conn.cursor()
-        cursor.callproc('sp_getProfile', (str(_id),))
-        data = cursor.fetchall()
-
-        _name = data[0][1]
-        _email = data[0][3]
-
-        if data[0][2] is None or len(data[0][2]) == 0:
-            _description = ""
-        else:
-            _description = data[0][2]
-        if data[0][4] is None or len(data[0][4]) == 0:
-            _phone = ""
-        else:
-            _phone = data[0][4]
-        if data[0][5] is None or len(data[0][5]) == 0:
-            _facebook = ""
-        else:
-            _facebook = data[0][5]
-
-        return render_template('editprofile.html', 
-            name=_name, 
-            description=_description, 
-            email=_email, 
-            phone=_phone, 
-            facebook=_facebook
-        )
-
-        cursor.close()
-        conn.close()
-    else:
-        return render_template('error.html', error='Unauthorized Access')
-
-@app.route('/editProfile', methods=['POST'])
-def editProfile():
-    conn = mysql.connect()
-    cursor = conn.cursor()
-    try:
-        if session.get('user'):
-            _name = request.form['inputName']
-            _description = request.form['inputDescription']
-            _email = request.form['inputEmail']
-            """
-            if not request.form['inputPhone']:
-                _phone = ""
-            else:
-                _phone = request.form['inputPhone']
-            if not request.form['inputFacebook']:
-                _facebook = ""
-            else:
-                _facebook = request.form['inputFacebook']
-            """
-            _phone = request.form['inputPhone']
-            _facebook = request.form['inputFacebook']
-            _id = session.get('user')
-            cursor.callproc('sp_editProfile', (_name, _description, _email, _phone, _facebook))
-            conn.commit()
-            return redirect('/me')
-    except Exception as e:
-        return render_template('error.html', error=str(e))
-    finally:
-        conn.close()
-        cursor.close()
-
-@app.route('/me')
-def userMe():
-    conn = mysql.connect()
-    cursor = conn.cursor()
-    try:
-        if session.get('user'):
-            _user = session.get('user')
-            cursor.callproc('sp_getProfile', (str(_user),))
-            infos = cursor.fetchall()
-
-            for info in infos:
-                name = info[1]
-                bio = info[2]
-                email = info[3]
-                phone = info[4]
-                fb = info[5]
-
-            return render_template('userProfile.html', 
-                me = 1,
-                user_id = _user, 
-                name = name,
-                bio = bio,
-                email = email,
-                phone = phone,
-                fb = fb
-            )
-        else:
-            return render_template('error.html', error='Unauthorized Access')
-    except Exception as e:
-        return render_template('error.html', error=str(e))
-    finally:
-        cursor.close()
         conn.close()
 
-@app.route('/user/<user_id>')
-def user(user_id):
-    conn = mysql.connect()
-    cursor = conn.cursor()
-    try:
-        if session.get('user'):
-            if int(user_id) == session.get('user'):
-                return redirect('/me')
-
-            cursor.callproc('sp_getProfile', (user_id,))
-            infos = cursor.fetchall()
-
-            for info in infos:
-                name = info[1]
-                bio = info[2]
-                email = info[3]
-                phone = info[4]
-                fb = info[5]
-
-            cursor.callproc('sp_getFollowingIds', (str(session.get('user')),))
-            results = cursor.fetchall()
-            following = 0
-            for result in results:
-                if result[2] == int(user_id):
-                    following = 1
-
-            return render_template('userProfile.html', 
-                me = 0,
-                following = following,
-                user_id = user_id, 
-                name = name,
-                bio = bio,
-                email = email,
-                phone = phone,
-                fb = fb
-            )
-
-        else:
-            return render_template('error.html', error='Unauthorized Access')
-    except Exception as e:
-        return render_template('error.html', error=str(e))
-    finally:
-        cursor.close()
-        conn.close()
 
 @app.route('/follow/<followed_user_id>')
 def addFollow(followed_user_id):
@@ -461,6 +474,7 @@ def addFollow(followed_user_id):
         cursor.close()
         conn.close()
 
+
 @app.route('/unfollow/<followed_user_id>')
 def deleteFollow(followed_user_id):
     conn = mysql.connect()
@@ -500,12 +514,14 @@ def deleteFollow(followed_user_id):
         cursor.close()
         conn.close()
 
+
 @app.route('/following')
 def showFollowing():
     if session.get('user'):
         return render_template('following.html')
     else:
         return render_template('error.html', error='Unauthorized Access')
+
  
 @app.route('/getFollowing')
 def getFollowing():
