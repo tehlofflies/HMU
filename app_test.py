@@ -82,10 +82,42 @@ class FlaskrTestCase(unittest.TestCase):
 
 
     def test_editProfile(self):
-        self.signUp('test', 'test@columbia.edu', 'password')
+        self.signUp('testName', 'testName@columbia.edu', 'password')
         # keep name and email the same and add required field bio
-        rv = self.editProfile('testName', 'hi i\'m test', 'testName@columbia.edu', None, None)
-        # assert "" in rv.data
+        rv = self.editProfile('testName', 'bio', 'testName@columbia.edu', '', '')
+        assert "My Profile" in rv.data
+        # enter a bad name
+        rv = self.editProfile('   ', 'bio', 'testName@columbia.edu', '', '')
+        assert "Please give valid entries for required fields" in rv.data
+        # remove name
+        rv = self.editProfile('', 'bio', 'testName@columbia.edu', '', '')
+        assert "Please give valid entries for required fields" in rv.data
+        # enter a bad bio
+        rv = self.editProfile('testName', '   ', 'testName@columbia.edu', '', '')
+        assert "Please give valid entries for required fields" in rv.data
+        # remove bio
+        rv = self.editProfile('testName', '', 'testName@columbia.edu', '', '')
+        assert "Please give valid entries for required fields" in rv.data
+        # somehow try to change your email
+        rv = self.editProfile('testName', 'bio', 'new@columbia.edu', '', '')
+        assert "testName@columbia.edu" in rv.data
+        # remove email
+        rv = self.editProfile('testName', 'bio', '', '', '')
+        assert "Please give valid entries for required fields" in rv.data
+        # enter a phone number that isn't 10 digits
+        rv = self.editProfile('testName', 'bio', 'testName@columbia.edu', '123', '')
+        assert "Not a valid phone number" in rv.data
+        rv = self.editProfile('testName', 'bio', 'testName@columbia.edu', '00123456789', '')
+        assert "Not a valid phone number" in rv.data
+        # enter a phone number with characters other than numbers
+        rv = self.editProfile('testName', 'bio', 'testName@columbia.edu', '0a23!5d7e9', '')
+        assert "Not a valid phone number" in rv.data
+        # enter a proper phone number
+        rv = self.editProfile('testName', 'bio', 'testName@columbia.edu', '0123456789', '')
+        assert "My Profile" in rv.data
+        # enter a bad facebook url
+        rv = self.editProfile('testName', 'bio', 'testName@columbia.edu', '', '   ')
+        assert "Not a valid Facebook URL" in rv.data
 
 
     def logout(self):

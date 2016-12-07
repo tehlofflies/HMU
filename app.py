@@ -191,14 +191,20 @@ def editProfile():
             _id = session.get('user')
 
             # error check for all inputs
-            if not _name.isspace() and not _description.isspace() \
-            and not _email.isspace() and _phone and not _phone.isspace() and len(_phone) == 10 \
-            and _facebook and not _facebook.isspace():
-                cursor.callproc('sp_editProfile', (_name, _description, _email, _phone, _facebook))
-                conn.commit()
-                return redirect('/me')
+            if _name and not _name.isspace() and _description and not _description.isspace() \
+            and _email and not _email.isspace():
+                if _phone and (_phone.isspace() or len(_phone) != 10 or not _phone.isdigit()):
+                    flash("Not a valid phone number", category='error')
+                    return redirect('/showEditProfile')
+                elif _facebook and _facebook.isspace():
+                    flash("Not a valid Facebook URL", category='error')
+                    return redirect('/showEditProfile')
+                else:
+                    cursor.callproc('sp_editProfile', (_name, _description, _email, str(_phone), _facebook))
+                    conn.commit()
+                    return redirect('/me')
             else:
-                flash("Please enter valid inputs", category='error')
+                flash("Please give valid entries for required fields", category='error')
                 return redirect('/showEditProfile')
     except Exception as e:
         return render_template('error.html', error=str(e))
