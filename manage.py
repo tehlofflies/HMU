@@ -204,6 +204,8 @@ BEGIN
     select * from tbl_profile where profile_id = p_user_id;    
 END
 """
+
+
 sp_checkFollow = """
 CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_checkFollow`(
     IN p_follower_user_id bigint,

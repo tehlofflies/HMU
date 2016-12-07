@@ -28,16 +28,18 @@ class FlaskrTestCase(unittest.TestCase):
         #     flaskr.init_db()
 
         self.app.engine = sqlalchemy.create_engine('mysql://root:mysql@127.0.0.1')
-        # self.app.engine.execute("DROP SCHEMA IF EXISTS HMU_TEST") 
-        # self.app.engine.execute("CREATE SCHEMA HMU_TEST") 
+        #self.app.engine.execute("DROP SCHEMA IF EXISTS HMU_TEST") 
+        #self.app.engine.execute("CREATE SCHEMA HMU_TEST") 
         self.app.engine.execute("USE HMU_TEST")
 
         flaskr.app.config['MYSQL_DATABASE_DB'] = 'HMU_TEST'
         flaskr.app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:mysql@127.0.0.1/HMU_TEST'
 
+
     def tearDown(self):
         self.app.engine.execute("TRUNCATE TABLE TBL_USER")
         self.app.engine.execute("TRUNCATE TABLE TBL_POST")
+        self.app.engine.execute("TRUNCATE TABLE TBL_PROFILE")
 
         
     def signUp(self, name, email, password):
@@ -47,10 +49,11 @@ class FlaskrTestCase(unittest.TestCase):
             inputPassword=password
             ), follow_redirects=True)
 
+
     def test_signUp(self):
         #user email has not been created
         rv = self.signUp('testName', 'testName@columbia.edu', 'password')
-        assert "User created successfully" in rv.data
+        assert "Edit Your Profile!" in rv.data
         #user email has already been created
         rv = self.signUp('testName', 'testName@columbia.edu', 'password')
         assert "Username Exists" in rv.data
@@ -67,23 +70,48 @@ class FlaskrTestCase(unittest.TestCase):
         rv = self.signUp('blah', 'blah@columbia.edu', 'blahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh')
         assert "Data too long" in rv.data
 
+
+    def editProfile(self, name, bio, email, phone, facebook):
+        return self.app.post('/editProfile', data=dict(
+            inputName=name,
+            inputDescription=bio,
+            inputEmail=email,
+            inputPhone=phone,
+            inputFacebook=facebook
+            ), follow_redirects=True)
+
+
+    def test_editProfile(self):
+        self.signUp('test', 'test@columbia.edu', 'password')
+        # keep name and email the same and add required field bio
+        rv = self.editProfile('testName', 'hi i\'m test', 'testName@columbia.edu', None, None)
+        # assert "" in rv.data
+
+
+    def logout(self):
+        return self.app.get('/logout', follow_redirects=True)
+
+
     def signIn(self, email, password):
         return self.app.post('/validateLogin', data=dict(
             inputEmail=email,
             inputPassword=password
             ), follow_redirects=True)
 
+
     def test_signIn(self):
         #user email does not exist
         rv = self.signIn('testName@columbia.edu', 'password')
         assert "Email address does not exist" in rv.data
-        #user email exists and password correct
-        self.signUp('testName', 'testName@columbia.edu', 'password')
-        rv = self.signIn('testName@columbia.edu', 'password')
-        assert "Welcome to HMU!" in rv.data
         #user email exists but password incorrect
+        self.signUp('testName', 'testName@columbia.edu', 'password')
+        self.logout()
         rv = self.signIn('testName@columbia.edu', 'wrongpassword')
         assert "Password is not correct" in rv.data
+        #user email exists and password correct
+        rv = self.signIn('testName@columbia.edu', 'password')
+        assert "Welcome to HMU!" in rv.data
+
 
     def addPost(self, headline, description, unformattedTime, unformattedDate, location):
         return self.app.post('/addPost', data=dict(
@@ -94,9 +122,9 @@ class FlaskrTestCase(unittest.TestCase):
             inputLocation=location
             ), follow_redirects=True)
 
+
     def test_addPost(self):
         self.signUp('testName', 'testName@columbia.edu', 'password')
-        self.signIn('testName@columbia.edu', 'password')
         d = datetime.datetime.today() + datetime.timedelta(days=1)
         tomorrow = d.strftime("%m/%d/%y")
         d = datetime.datetime.today() - datetime.timedelta(days=1)
@@ -130,6 +158,7 @@ class FlaskrTestCase(unittest.TestCase):
         description = "hello" * 201        
         rv = self.addPost('Lunch', description, '12:00', tomorrow, 'Ferris')
         assert "Data too long" in rv.data
+
 
 if __name__ == '__main__':
     unittest.main()

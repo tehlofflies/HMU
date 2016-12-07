@@ -41,10 +41,6 @@ class tbl_profile(db.Model):
     profile_phone = db.Column(db.String(10))
     profile_facebook = db.Column(db.String(45)) 
 
-class tbl_follow(db.Model):
-    follow_id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
-    follower_user_id = db.Column(db.Integer, nullable=False)
-    followed_user_id = db.Column(db.Integer, nullable=False)
 
 sp_createUser = """
 CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_createUser`(
@@ -78,7 +74,7 @@ END
 
 sp_validateLogin = """
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_validateLogin`(
-IN p_username VARCHAR(45)
+    IN p_username VARCHAR(45)
 )
 BEGIN
     select * from tbl_user where user_username = p_username;
@@ -124,10 +120,71 @@ BEGIN
 END
 """
 
+sp_createProfile = """
+CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_createProfile`(
+    IN p_name VARCHAR(45),
+    IN p_bio VARCHAR(5000),
+    IN p_username VARCHAR(45),
+    IN p_phone VARCHAR(10),
+    IN p_facebook VARCHAR(45)
+)
+BEGIN
+    insert into tbl_profile
+    (
+        profile_name,
+        profile_bio,
+        profile_username,
+        profile_phone,
+        profile_facebook
+    )
+    values
+    (
+        p_name,
+        p_bio,
+        p_username,
+        p_phone,
+        p_facebook
+    );
+END
+"""
+
+sp_editProfile = """
+CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_editProfile`(
+    IN p_name VARCHAR(45),
+    IN p_bio VARCHAR(5000),
+    IN p_username VARCHAR(45),
+    IN p_phone VARCHAR(10),
+    IN p_facebook VARCHAR(45)
+)
+BEGIN
+    UPDATE tbl_profile SET 
+        profile_name = p_name,
+        profile_bio = p_bio,
+        profile_phone = p_phone,
+        profile_facebook = p_facebook
+    WHERE 
+        profile_username = p_username
+    ;
+END
+"""
+
+
+sp_getProfile = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getProfile`(
+    IN p_user_id bigint
+)
+BEGIN
+    select * from tbl_profile where profile_id = p_user_id;    
+END
+"""
+
 engine.execute(sp_createUser)
 engine.execute(sp_validateLogin)
 engine.execute(sp_addPost)
 engine.execute(sp_getPosts)
+engine.execute(sp_createProfile)
+engine.execute(sp_editProfile)
+engine.execute(sp_getProfile)
 
 
 if __name__ == '__main__':
