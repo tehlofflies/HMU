@@ -981,3 +981,466 @@ Global evaluation
 -----------------
 Your code has been rated at -6.70/10 (previous run: -6.70/10, +0.00)
 
+
+
+
+
+************* Module app
+C: 80, 0: Trailing whitespace (trailing-whitespace)
+C: 93, 0: Trailing whitespace (trailing-whitespace)
+C:112, 0: Trailing whitespace (trailing-whitespace)
+C:121, 0: Exactly one space required around comparison
+                if str(data[0][3])==_password:
+                                  ^^ (bad-whitespace)
+C:166, 0: Trailing whitespace (trailing-whitespace)
+C:167, 0: Wrong continued indentation (add 19 spaces).
+            name=_name, 
+            ^                  | (bad-continuation)
+C:167, 0: Trailing whitespace (trailing-whitespace)
+C:168, 0: Wrong continued indentation (add 19 spaces).
+            description=_description, 
+            ^                  | (bad-continuation)
+C:168, 0: Trailing whitespace (trailing-whitespace)
+C:169, 0: Wrong continued indentation (add 19 spaces).
+            email=_email, 
+            ^                  | (bad-continuation)
+C:169, 0: Trailing whitespace (trailing-whitespace)
+C:170, 0: Wrong continued indentation (add 19 spaces).
+            phone=_phone, 
+            ^                  | (bad-continuation)
+C:170, 0: Trailing whitespace (trailing-whitespace)
+C:171, 0: Wrong continued indentation (add 19 spaces).
+            facebook=_facebook
+            ^                  | (bad-continuation)
+C:172, 0: Wrong continued indentation (add 22 spaces).
+        )
+        ^                     | (bad-continuation)
+C:227, 0: Trailing whitespace (trailing-whitespace)
+C:228, 0: Wrong continued indentation (add 19 spaces).
+                me = 1,
+                ^                  | (bad-continuation)
+C:228, 0: No space allowed around keyword argument assignment
+                me = 1,
+                   ^ (bad-whitespace)
+C:229, 0: Wrong continued indentation (add 19 spaces).
+                user_id = _user, 
+                ^                  | (bad-continuation)
+C:229, 0: Trailing whitespace (trailing-whitespace)
+C:229, 0: No space allowed around keyword argument assignment
+                user_id = _user, 
+                        ^ (bad-whitespace)
+C:230, 0: Wrong continued indentation (add 19 spaces).
+                name = name,
+                ^                  | (bad-continuation)
+C:230, 0: No space allowed around keyword argument assignment
+                name = name,
+                     ^ (bad-whitespace)
+C:231, 0: Wrong continued indentation (add 19 spaces).
+                bio = bio,
+                ^                  | (bad-continuation)
+C:231, 0: No space allowed around keyword argument assignment
+                bio = bio,
+                    ^ (bad-whitespace)
+C:232, 0: Wrong continued indentation (add 19 spaces).
+                email = email,
+                ^                  | (bad-continuation)
+C:232, 0: No space allowed around keyword argument assignment
+                email = email,
+                      ^ (bad-whitespace)
+C:233, 0: Wrong continued indentation (add 19 spaces).
+                phone = phone,
+                ^                  | (bad-continuation)
+C:233, 0: No space allowed around keyword argument assignment
+                phone = phone,
+                      ^ (bad-whitespace)
+C:234, 0: Wrong continued indentation (add 19 spaces).
+                fb = fb
+                ^                  | (bad-continuation)
+C:234, 0: No space allowed around keyword argument assignment
+                fb = fb
+                   ^ (bad-whitespace)
+C:235, 0: Wrong continued indentation (add 22 spaces).
+            )
+            ^                     | (bad-continuation)
+C:271, 0: Trailing whitespace (trailing-whitespace)
+C:272, 0: Wrong continued indentation (add 19 spaces).
+                me = 0,
+                ^                  | (bad-continuation)
+C:272, 0: No space allowed around keyword argument assignment
+                me = 0,
+                   ^ (bad-whitespace)
+C:273, 0: Wrong continued indentation (add 19 spaces).
+                following = following,
+                ^                  | (bad-continuation)
+C:273, 0: No space allowed around keyword argument assignment
+                following = following,
+                          ^ (bad-whitespace)
+C:274, 0: Wrong continued indentation (add 19 spaces).
+                user_id = user_id, 
+                ^                  | (bad-continuation)
+C:274, 0: Trailing whitespace (trailing-whitespace)
+C:274, 0: No space allowed around keyword argument assignment
+                user_id = user_id, 
+                        ^ (bad-whitespace)
+C:275, 0: Wrong continued indentation (add 19 spaces).
+                name = name,
+                ^                  | (bad-continuation)
+C:275, 0: No space allowed around keyword argument assignment
+                name = name,
+                     ^ (bad-whitespace)
+C:276, 0: Wrong continued indentation (add 19 spaces).
+                bio = bio,
+                ^                  | (bad-continuation)
+C:276, 0: No space allowed around keyword argument assignment
+                bio = bio,
+                    ^ (bad-whitespace)
+C:277, 0: Wrong continued indentation (add 19 spaces).
+                email = email,
+                ^                  | (bad-continuation)
+C:277, 0: No space allowed around keyword argument assignment
+                email = email,
+                      ^ (bad-whitespace)
+C:278, 0: Wrong continued indentation (add 19 spaces).
+                phone = phone,
+                ^                  | (bad-continuation)
+C:278, 0: No space allowed around keyword argument assignment
+                phone = phone,
+                      ^ (bad-whitespace)
+C:279, 0: Wrong continued indentation (add 19 spaces).
+                fb = fb
+                ^                  | (bad-continuation)
+C:279, 0: No space allowed around keyword argument assignment
+                fb = fb
+                   ^ (bad-whitespace)
+C:280, 0: Wrong continued indentation (add 22 spaces).
+            )
+            ^                     | (bad-continuation)
+C:313, 0: Trailing whitespace (trailing-whitespace)
+C:316, 0: Trailing whitespace (trailing-whitespace)
+C:319, 0: Trailing whitespace (trailing-whitespace)
+C:327, 0: Trailing whitespace (trailing-whitespace)
+C:327, 0: Unnecessary parens after 'if' keyword (superfluous-parens)
+C:330, 0: Trailing whitespace (trailing-whitespace)
+C:447, 0: Trailing whitespace (trailing-whitespace)
+C:458, 0: Trailing whitespace (trailing-whitespace)
+C:459, 0: Wrong continued indentation (add 19 spaces).
+                    me = 0,
+                    ^                  | (bad-continuation)
+C:459, 0: No space allowed around keyword argument assignment
+                    me = 0,
+                       ^ (bad-whitespace)
+C:460, 0: Wrong continued indentation (add 19 spaces).
+                    user_id = _followed_user_id, 
+                    ^                  | (bad-continuation)
+C:460, 0: Trailing whitespace (trailing-whitespace)
+C:460, 0: No space allowed around keyword argument assignment
+                    user_id = _followed_user_id, 
+                            ^ (bad-whitespace)
+C:461, 0: Wrong continued indentation (add 19 spaces).
+                    name = name,
+                    ^                  | (bad-continuation)
+C:461, 0: No space allowed around keyword argument assignment
+                    name = name,
+                         ^ (bad-whitespace)
+C:462, 0: Wrong continued indentation (add 19 spaces).
+                    bio = bio,
+                    ^                  | (bad-continuation)
+C:462, 0: No space allowed around keyword argument assignment
+                    bio = bio,
+                        ^ (bad-whitespace)
+C:463, 0: Wrong continued indentation (add 19 spaces).
+                    email = email,
+                    ^                  | (bad-continuation)
+C:463, 0: No space allowed around keyword argument assignment
+                    email = email,
+                          ^ (bad-whitespace)
+C:464, 0: Wrong continued indentation (add 19 spaces).
+                    phone = phone,
+                    ^                  | (bad-continuation)
+C:464, 0: No space allowed around keyword argument assignment
+                    phone = phone,
+                          ^ (bad-whitespace)
+C:465, 0: Wrong continued indentation (add 19 spaces).
+                    fb = fb,
+                    ^                  | (bad-continuation)
+C:465, 0: No space allowed around keyword argument assignment
+                    fb = fb,
+                       ^ (bad-whitespace)
+C:466, 0: Wrong continued indentation (add 19 spaces).
+                    following = 1
+                    ^                  | (bad-continuation)
+C:466, 0: No space allowed around keyword argument assignment
+                    following = 1
+                              ^ (bad-whitespace)
+C:467, 0: Wrong continued indentation (add 22 spaces).
+                )
+                ^                     | (bad-continuation)
+C:473, 0: No space allowed around keyword argument assignment
+        return render_template('error.html', error = str(e))
+                                                   ^ (bad-whitespace)
+C:489, 0: Trailing whitespace (trailing-whitespace)
+C:500, 0: Trailing whitespace (trailing-whitespace)
+C:501, 0: Wrong continued indentation (add 19 spaces).
+                me = 0,
+                ^                  | (bad-continuation)
+C:501, 0: No space allowed around keyword argument assignment
+                me = 0,
+                   ^ (bad-whitespace)
+C:502, 0: Wrong continued indentation (add 19 spaces).
+                user_id = _followed_user_id, 
+                ^                  | (bad-continuation)
+C:502, 0: Trailing whitespace (trailing-whitespace)
+C:502, 0: No space allowed around keyword argument assignment
+                user_id = _followed_user_id, 
+                        ^ (bad-whitespace)
+C:503, 0: Wrong continued indentation (add 19 spaces).
+                name = name,
+                ^                  | (bad-continuation)
+C:503, 0: No space allowed around keyword argument assignment
+                name = name,
+                     ^ (bad-whitespace)
+C:504, 0: Wrong continued indentation (add 19 spaces).
+                bio = bio,
+                ^                  | (bad-continuation)
+C:504, 0: No space allowed around keyword argument assignment
+                bio = bio,
+                    ^ (bad-whitespace)
+C:505, 0: Wrong continued indentation (add 19 spaces).
+                email = email,
+                ^                  | (bad-continuation)
+C:505, 0: No space allowed around keyword argument assignment
+                email = email,
+                      ^ (bad-whitespace)
+C:506, 0: Wrong continued indentation (add 19 spaces).
+                phone = phone,
+                ^                  | (bad-continuation)
+C:506, 0: No space allowed around keyword argument assignment
+                phone = phone,
+                      ^ (bad-whitespace)
+C:507, 0: Wrong continued indentation (add 19 spaces).
+                fb = fb,
+                ^                  | (bad-continuation)
+C:507, 0: No space allowed around keyword argument assignment
+                fb = fb,
+                   ^ (bad-whitespace)
+C:508, 0: Wrong continued indentation (add 19 spaces).
+                following = 0
+                ^                  | (bad-continuation)
+C:508, 0: No space allowed around keyword argument assignment
+                following = 0
+                          ^ (bad-whitespace)
+C:509, 0: Wrong continued indentation (add 22 spaces).
+            )
+            ^                     | (bad-continuation)
+C:526, 0: Trailing whitespace (trailing-whitespace)
+C:593, 0: Exactly one space required after comma
+    session.pop('user',None)
+                      ^ (bad-whitespace)
+C:597, 0: Final newline missing (missing-final-newline)
+C:  1, 0: Missing module docstring (missing-docstring)
+C: 11, 0: Invalid constant name "mysql" (invalid-name)
+C: 12, 0: Invalid constant name "app" (invalid-name)
+C: 24, 0: Missing class docstring (missing-docstring)
+C: 25, 4: Invalid class attribute name "dt" (invalid-name)
+C: 29, 0: Missing function docstring (missing-docstring)
+C: 34, 0: Invalid function name "userHome" (invalid-name)
+C: 34, 0: Missing function docstring (missing-docstring)
+C: 42, 0: Invalid function name "showSignUp" (invalid-name)
+C: 42, 0: Missing function docstring (missing-docstring)
+C: 47, 0: Invalid function name "signUp" (invalid-name)
+C: 47, 0: Missing function docstring (missing-docstring)
+W: 94,11: Catching too general exception Exception (broad-except)
+C: 94,24: Invalid variable name "e" (invalid-name)
+C:100, 0: Invalid function name "showSignIn" (invalid-name)
+C:100, 0: Missing function docstring (missing-docstring)
+C:108, 0: Invalid function name "validateLogin" (invalid-name)
+C:108, 0: Missing function docstring (missing-docstring)
+W:137,11: Catching too general exception Exception (broad-except)
+C:137,24: Invalid variable name "e" (invalid-name)
+C:142, 0: Invalid function name "showEditProfile" (invalid-name)
+C:142, 0: Missing function docstring (missing-docstring)
+W:174, 8: Unreachable code (unreachable)
+C:181, 0: Invalid function name "editProfile" (invalid-name)
+C:181, 0: Missing function docstring (missing-docstring)
+W:203,11: Catching too general exception Exception (broad-except)
+R:194,15: Too many boolean expressions in if statement (8/5) (too-many-boolean-expressions)
+C:203,24: Invalid variable name "e" (invalid-name)
+C:211, 0: Invalid function name "userMe" (invalid-name)
+C:211, 0: Missing function docstring (missing-docstring)
+W:238,11: Catching too general exception Exception (broad-except)
+C:225,16: Invalid variable name "fb" (invalid-name)
+C:238,24: Invalid variable name "e" (invalid-name)
+C:246, 0: Missing function docstring (missing-docstring)
+W:284,11: Catching too general exception Exception (broad-except)
+C:262,16: Invalid variable name "fb" (invalid-name)
+C:284,24: Invalid variable name "e" (invalid-name)
+C:292, 0: Invalid function name "showAddPost" (invalid-name)
+C:292, 0: Missing function docstring (missing-docstring)
+C:298, 0: Invalid function name "addPost" (invalid-name)
+C:298, 0: Missing function docstring (missing-docstring)
+W:348,11: Catching too general exception Exception (broad-except)
+C:312,16: Invalid variable name "_unformattedDate" (invalid-name)
+C:315,16: Invalid variable name "_unformattedDate" (invalid-name)
+C:318,12: Invalid variable name "_unformattedTime" (invalid-name)
+R:320,15: Too many boolean expressions in if statement (6/5) (too-many-boolean-expressions)
+C:323,16: Invalid variable name "_formattedDate" (invalid-name)
+C:324,16: Invalid variable name "formattedTime" (invalid-name)
+C:325,16: Invalid variable name "_formattedDatetime" (invalid-name)
+C:348,24: Invalid variable name "e" (invalid-name)
+R:298, 0: Too many branches (14/12) (too-many-branches)
+C:357, 0: Invalid function name "getPost" (invalid-name)
+C:357, 0: Missing function docstring (missing-docstring)
+W:403,11: Catching too general exception Exception (broad-except)
+C:403,24: Invalid variable name "e" (invalid-name)
+C:411, 0: Invalid function name "deletePost" (invalid-name)
+C:411, 0: Missing function docstring (missing-docstring)
+W:425,11: Catching too general exception Exception (broad-except)
+C:425,24: Invalid variable name "e" (invalid-name)
+C:433, 0: Invalid function name "addFollow" (invalid-name)
+C:433, 0: Missing function docstring (missing-docstring)
+W:472,11: Catching too general exception Exception (broad-except)
+C:456,20: Invalid variable name "fb" (invalid-name)
+C:472,24: Invalid variable name "e" (invalid-name)
+C:480, 0: Invalid function name "deleteFollow" (invalid-name)
+C:480, 0: Missing function docstring (missing-docstring)
+W:512,11: Catching too general exception Exception (broad-except)
+C:498,16: Invalid variable name "fb" (invalid-name)
+C:512,24: Invalid variable name "e" (invalid-name)
+C:520, 0: Invalid function name "showFollowing" (invalid-name)
+C:520, 0: Missing function docstring (missing-docstring)
+C:528, 0: Invalid function name "getFollowing" (invalid-name)
+C:528, 0: Missing function docstring (missing-docstring)
+W:548,11: Catching too general exception Exception (broad-except)
+C:548,24: Invalid variable name "e" (invalid-name)
+C:555, 0: Invalid function name "showUsers" (invalid-name)
+C:555, 0: Missing function docstring (missing-docstring)
+W:571,16: Redefining name 'user' from outer scope (line 246) (redefined-outer-name)
+C:562, 0: Invalid function name "getUsers" (invalid-name)
+C:562, 0: Missing function docstring (missing-docstring)
+W:585,11: Catching too general exception Exception (broad-except)
+C:585,24: Invalid variable name "e" (invalid-name)
+C:592, 0: Missing function docstring (missing-docstring)
+W:  2, 0: Unused import sys (unused-import)
+
+
+Report
+======
+370 statements analysed.
+
+Statistics by type
+------------------
+
++---------+-------+-----------+-----------+------------+---------+
+|type     |number |old number |difference |%documented |%badname |
++=========+=======+===========+===========+============+=========+
+|module   |1      |1          |=          |0.00        |0.00     |
++---------+-------+-----------+-----------+------------+---------+
+|class    |1      |1          |=          |0.00        |0.00     |
++---------+-------+-----------+-----------+------------+---------+
+|method   |0      |0          |=          |0           |0        |
++---------+-------+-----------+-----------+------------+---------+
+|function |21     |21         |=          |0.00        |85.71    |
++---------+-------+-----------+-----------+------------+---------+
+
+
+
+External dependencies
+---------------------
+::
+
+    flask (app)
+      \-json (app)
+    flask_wtf (app)
+    flaskext 
+      \-mysql (app)
+    wtforms (app)
+
+
+
+Raw metrics
+-----------
+
++----------+-------+------+---------+-----------+
+|type      |number |%     |previous |difference |
++==========+=======+======+=========+===========+
+|code      |470    |78.60 |470      |=          |
++----------+-------+------+---------+-----------+
+|docstring |17     |2.84  |17       |=          |
++----------+-------+------+---------+-----------+
+|comment   |12     |2.01  |12       |=          |
++----------+-------+------+---------+-----------+
+|empty     |99     |16.56 |99       |=          |
++----------+-------+------+---------+-----------+
+
+
+
+Duplication
+-----------
+
++-------------------------+------+---------+-----------+
+|                         |now   |previous |difference |
++=========================+======+=========+===========+
+|nb duplicated lines      |0     |0        |=          |
++-------------------------+------+---------+-----------+
+|percent duplicated lines |0.000 |0.000    |=          |
++-------------------------+------+---------+-----------+
+
+
+
+Messages by category
+--------------------
+
++-----------+-------+---------+-----------+
+|type       |number |previous |difference |
++===========+=======+=========+===========+
+|convention |167    |167      |=          |
++-----------+-------+---------+-----------+
+|refactor   |3      |3        |=          |
++-----------+-------+---------+-----------+
+|warning    |15     |15       |=          |
++-----------+-------+---------+-----------+
+|error      |0      |0        |=          |
++-----------+-------+---------+-----------+
+
+
+
+Messages
+--------
+
++-----------------------------+------------+
+|message id                   |occurrences |
++=============================+============+
+|invalid-name                 |43          |
++-----------------------------+------------+
+|bad-continuation             |41          |
++-----------------------------+------------+
+|bad-whitespace               |34          |
++-----------------------------+------------+
+|trailing-whitespace          |24          |
++-----------------------------+------------+
+|missing-docstring            |23          |
++-----------------------------+------------+
+|broad-except                 |12          |
++-----------------------------+------------+
+|too-many-boolean-expressions |2           |
++-----------------------------+------------+
+|unused-import                |1           |
++-----------------------------+------------+
+|unreachable                  |1           |
++-----------------------------+------------+
+|too-many-branches            |1           |
++-----------------------------+------------+
+|superfluous-parens           |1           |
++-----------------------------+------------+
+|redefined-outer-name         |1           |
++-----------------------------+------------+
+|missing-final-newline        |1           |
++-----------------------------+------------+
+
+
+
+Global evaluation
+-----------------
+Your code has been rated at 5.00/10 (previous run: -6.70/10, +11.70)
+
+
