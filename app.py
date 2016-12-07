@@ -328,7 +328,8 @@ def addPost():
                     flash("Date/Time must be in future", category='error')
                     return redirect('/showAddPost')
                 
-                cursor.callproc('sp_addPost', (_headline, _description, _user, _formattedDatetime, _location))
+                cursor.callproc('sp_addPost', (_headline, _description, _user, \
+                    _formattedDatetime, _location))
                 data = cursor.fetchall()
 
                 if len(data) is 0:
