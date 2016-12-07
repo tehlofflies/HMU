@@ -1,0 +1,21 @@
+Code Inspection
+Jiayin-Emily
+	* Reader: Emily
+	* Recorder: Jiayin
+	* Component Inspected: Profiles
+* Files inspected:
+	o app.py
+	o userProfile.html
+	o editProfile.html
+* General Notes
+	o app.py is a bit cluttered and lacking in comments, hard to find what you’re looking for and a little hard to understand what you’re reading
+	o HTML files could use jinja templating, to shorten and simplify the amount of code while keeping the style consistent - code for static files, nav bar, etc are constantly being repeated in each HTML file (base.html)
+	o Nav bar links can be cleaned up a little, perhaps user profile, edit profile, and logout links can go in a drop down menu under the user profile link
+	o Current method of checking for inputs consisting only of spaces is a little bit convoluted, should try to cut down on the content within the if-else statements (lines too long)
+	o Calling different stored procedures with similar names; might want to consider making existing stored procedures more general so they can be reused
+* Problems
+	o app.py
+		* Application should not accept empty or null values - fixed
+		* Phone field should only accept digits, with no alphabetic characters or other invalid characters - fixed
+		* Phone field should only accept 10 digits
+
