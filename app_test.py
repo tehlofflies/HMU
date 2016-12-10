@@ -178,7 +178,8 @@ class FlaskrTestCase(unittest.TestCase):
         assert "400: Bad Request" in rv.data
         #invalid field - meetup date and time entered is before current date and time
         rv = self.addPost('Lunch', 'Hang out with me pls', '12:00', yesterday, None)
-        assert "Date/Time must be in future" in rv.data
+        assert "400: Bad Request" in rv.data
+        # assert "Date/Time must be in future" in rv.data
         #invalid field - headline too long (over character limit of 45)
         rv = self.addPost('Blahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh', 'Hang out with me pls', '12:00', tomorrow, 'Ferris')
         assert "Data too long" in rv.data
