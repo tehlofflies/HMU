@@ -159,7 +159,7 @@ class FlaskrTestCase(unittest.TestCase):
         self.signUp('testName', 'testName@columbia.edu', 'password')
         d = datetime.datetime.today() + datetime.timedelta(days=1)
         tomorrow = d.strftime("%m/%d/%y")
-        d = datetime.datetime.today() - datetime.timedelta(days=-1)
+        d = datetime.datetime.today() - datetime.timedelta(days=1)
         yesterday = d.strftime("%m/%d/%y")
         #successful post with all required fields w/ description
         rv = self.addPost('Lunch', 'Hang out with me pls', '12:00', tomorrow, 'Ferris')
