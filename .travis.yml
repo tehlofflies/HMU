@@ -1,5 +1,7 @@
 language: python
 python: "2.7"
+services:
+	- mysql
 script:
   - ./runHMU
   - python app_test.py
