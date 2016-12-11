@@ -151,6 +151,33 @@ class FlaskrTestCase(unittest.TestCase):
         self.logout()
         rv = self.app.get('/userHome')
         assert "Unauthorized Access" in rv.data
+        rv = self.app.get('/following')
+        assert "Unauthorized Access" in rv.data
+        rv = self.app.get('/getFollowing')
+        assert "Unauthorized Access" in rv.data
+        rv = self.app.get('/follow/1')
+        assert "Unauthorized Access" in rv.data
+        rv = self.app.get('/unfollow/1')
+        assert "Unauthorized Access" in rv.data
+        rv = self.app.get('/deletePost/1')
+        assert "Unauthorized Access" in rv.data
+        rv = self.app.get('/getPost')
+        assert "Unauthorized Access" in rv.data
+        rv = self.app.get('/showAddPost')
+        print(rv.data)
+        assert "Unauthorized Access" in rv.data
+        rv = self.app.get('/user/1')
+        assert "Unauthorized Access" in rv.data
+        rv = self.app.get('/me')
+        assert "Unauthorized Access" in rv.data
+        rv = self.app.get('/getFollowing')
+        assert "Unauthorized Access" in rv.data
+        rv = self.app.get('/showEditProfile')
+        assert "Unauthorized Access" in rv.data
+        rv = self.app.get('/getUsers')
+        assert "Unauthorized Access" in rv.data
+        rv = self.app.get('/users')
+        assert "Unauthorized Access" in rv.data
         # user is logged out and unable to view newsfeed
 
 
