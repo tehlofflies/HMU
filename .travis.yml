@@ -14,4 +14,4 @@ python:
 # command to run tests
 script:
   - ./runHMU
-  - app_test.py
+  - python app_test.py
