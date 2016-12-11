@@ -192,6 +192,48 @@ class FlaskrTestCase(unittest.TestCase):
         rv = self.addPost('Lunch', description, '12:00', tomorrow, 'Ferris')
         assert "Data too long" in rv.data
 
+    def deletePost(self, post_id):
+        return self.app.get('/deletePost/'+ str(post_id), follow_redirects=True)
+
+    def test_deletePost(self):
+        self.signUp('testName', 'testName@columbia.edu', 'password')
+        d = datetime.datetime.today() + datetime.timedelta(days=1)
+        tomorrow = d.strftime("%m/%d/%y")
+        rv = self.addPost('Lunch', 'Hang out with me pls', '12:00', tomorrow, 'Ferris')
+        assert "Welcome to HMU!" in rv.data
+        #successful post with all required fields w/ description
+        rv = self.deletePost(1)
+        assert "Welcome to HMU!" in rv.data
+        # successful post deletion, return to newsfeed
+        rv = self.deletePost(1)
+        assert "tuple index out of range" in rv.data
+        # post has already been deleted
+
+    #  add user -> show user has been added to directory
+    #  delete user account -> show user has been deleted 
+
+    # def signIn(self, email, password):
+    #     return self.app.post('/validateLogin', data=dict(
+    #         inputEmail=email,
+    #         inputPassword=password
+    #         ), follow_redirects=True)
+
+
+    # def test_signIn(self):
+    #     #user email does not exist
+    #     rv = self.signIn('testName@columbia.edu', 'password')
+    #     assert "Email address does not exist" in rv.data
+    #     #user email exists but password incorrect
+    #     self.signUp('testName', 'testName@columbia.edu', 'password')
+    #     self.logout()
+    #     rv = self.signIn('testName@columbia.edu', 'wrongpassword')
+    #     assert "Password is not correct" in rv.data
+    #     #user email exists and password correct
+    #     rv = self.signIn('testName@columbia.edu', 'password')
+    #     assert "Welcome to HMU!" in rv.data
+
+
+
 
 if __name__ == '__main__':
     unittest.main()
