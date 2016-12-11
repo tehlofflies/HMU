@@ -6,6 +6,7 @@ pip install Flask-SQLAlchemy \
 && pip install flask-script \
 && pip install flask-migrate \
 && pip install mysqlclient \
+&& pip install pymysql \
 && python managetest.py db init \
 && python managetest.py db migrate \
 && python managetest.py db upgrade
