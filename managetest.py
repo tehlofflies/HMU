@@ -6,11 +6,11 @@ import sqlalchemy
 
 app = Flask(__name__)
 
-engine = sqlalchemy.create_engine('mysql://root:mysql@127.0.0.1') # connect to server
+engine = sqlalchemy.create_engine('mysql://root:@127.0.0.1') # connect to server
 engine.execute("DROP SCHEMA IF EXISTS HMU_TEST") 
 engine.execute("CREATE SCHEMA HMU_TEST") 
 engine.execute("USE HMU_TEST")
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:mysql@127.0.0.1/HMU_TEST'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@127.0.0.1/HMU_TEST'
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
@@ -46,8 +46,9 @@ class tbl_follow(db.Model):
     follower_user_id = db.Column(db.Integer, nullable=False)
     followed_user_id = db.Column(db.Integer, nullable=False)
 
+
 sp_createUser = """
-CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_createUser`(
+CREATE DEFINER = `root`@`127.0.0.1` PROCEDURE `sp_createUser`(
     IN p_name VARCHAR(45),
     IN p_username VARCHAR(45),
     IN p_password VARCHAR(45)
@@ -77,7 +78,7 @@ END
 """
 
 sp_validateLogin = """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_validateLogin`(
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_validateLogin`(
     IN p_username VARCHAR(45)
 )
 BEGIN
@@ -86,7 +87,7 @@ END
 """
 
 sp_addPost = """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_addPost`(
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_addPost`(
     IN p_headline varchar(45),
     IN p_description varchar(1000),
     IN p_user_id bigint,
@@ -115,7 +116,7 @@ END
 """
 
 sp_getPosts = """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getPosts`()
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_getPosts`()
 BEGIN
     select p.post_id, u.user_name, u.user_id, p.post_headline, p.post_description, p.post_location, p.post_postTime, p.post_meetingTime
     from tbl_post as p, tbl_user as u
@@ -127,7 +128,7 @@ END
 
 
 sp_getPostInfo = """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getPostInfo`(
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_getPostInfo`(
     IN p_id bigint
 )
 BEGIN
@@ -138,7 +139,7 @@ END
 """
 
 sp_deletePost = """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_deletePost`(
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_deletePost`(
     IN p_id bigint
 )
 BEGIN
@@ -149,7 +150,7 @@ END
 """
 
 sp_createProfile = """
-CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_createProfile`(
+CREATE DEFINER = `root`@`127.0.0.1` PROCEDURE `sp_createProfile`(
     IN p_name VARCHAR(45),
     IN p_bio VARCHAR(5000),
     IN p_username VARCHAR(45),
@@ -177,7 +178,7 @@ END
 """
 
 sp_editProfile = """
-CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_editProfile`(
+CREATE DEFINER = `root`@`127.0.0.1` PROCEDURE `sp_editProfile`(
     IN p_name VARCHAR(45),
     IN p_bio VARCHAR(5000),
     IN p_username VARCHAR(45),
@@ -197,7 +198,7 @@ END
 """
 
 sp_getProfile = """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getProfile`(
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_getProfile`(
     IN p_user_id bigint
 )
 BEGIN
@@ -207,7 +208,7 @@ END
 
 
 sp_checkFollow = """
-CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_checkFollow`(
+CREATE DEFINER = `root`@`127.0.0.1` PROCEDURE `sp_checkFollow`(
     IN p_follower_user_id bigint,
     IN p_followed_user_id bigint
 )
@@ -220,7 +221,7 @@ END
 """
 
 sp_addFollow = """
-CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_addFollow`(
+CREATE DEFINER = `root`@`127.0.0.1` PROCEDURE `sp_addFollow`(
     IN p_follower_user_id bigint,
     IN p_followed_user_id bigint
 )
@@ -239,7 +240,7 @@ END
 """
 
 sp_deleteFollow = """
-CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_deleteFollow`(
+CREATE DEFINER = `root`@`127.0.0.1` PROCEDURE `sp_deleteFollow`(
     IN p_follower_user_id bigint,
     IN p_followed_user_id bigint
 )
@@ -252,7 +253,7 @@ END
 """
 
 sp_getFollowing = """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getFollowing`(
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_getFollowing`(
     IN p_user_id bigint
 )
 BEGIN
@@ -264,7 +265,7 @@ END
 """
 
 sp_getFollowingIds = """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getFollowingIds`(
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_getFollowingIds`(
     IN p_user_id bigint
 )
 BEGIN
@@ -276,7 +277,7 @@ END
 """
 
 sp_getUsers = """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getUsers`()
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_getUsers`()
 BEGIN
     select * from tbl_profile
     order by profile_name asc;
