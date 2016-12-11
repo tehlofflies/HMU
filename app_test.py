@@ -230,27 +230,45 @@ class FlaskrTestCase(unittest.TestCase):
         assert "new testName" in rv.data
         # directory contains new user that was created
 
-    # def signIn(self, email, password):
-    #     return self.app.post('/validateLogin', data=dict(
-    #         inputEmail=email,
-    #         inputPassword=password
-    #         ), follow_redirects=True)
+
+### Newsfeed/Posts tests
+    def getPost(self):
+        return self.app.get('/getPost', follow_redirects=True)
+
+    def test_getPost(self):
+        self.signUp('testName', 'testName@columbia.edu', 'password')
+        d = datetime.datetime.today() + datetime.timedelta(days=1)
+        tomorrow = d.strftime("%m/%d/%y")
+        #successful post with all required fields w/ description
+        self.addPost('Lunch', 'Hang out with me pls', '12:00', tomorrow, 'Ferris')
+        rv = self.getPost()
+        assert "Ferris" in rv.data
 
 
-    # def test_signIn(self):
-    #     #user email does not exist
-    #     rv = self.signIn('testName@columbia.edu', 'password')
-    #     assert "Email address does not exist" in rv.data
-    #     #user email exists but password incorrect
-    #     self.signUp('testName', 'testName@columbia.edu', 'password')
-    #     self.logout()
-    #     rv = self.signIn('testName@columbia.edu', 'wrongpassword')
-    #     assert "Password is not correct" in rv.data
-    #     #user email exists and password correct
-    #     rv = self.signIn('testName@columbia.edu', 'password')
-    #     assert "Welcome to HMU!" in rv.data
+### User Profile tests
+    def getUser(self, user_id):
+        return self.app.get('/user/'+user_id, follow_redirects=True)
 
+    def getMe(self):
+        return self.app.get('/me', follow_redirects=True)
 
+    def test_getProfile(self):
+        self.signUp('User1', 'user1@columbia.edu', 'password')
+        self.editProfile('User1', 'bio', 'user1@columbia.edu', '', '')
+        self.logout
+        self.signUp('User2', 'user2@columbia.edu', 'password')
+        self.editProfile('User2', 'bio', 'user2@columbia.edu', '', '')
+        # Get another user's profile page
+        rv = self.getUser('1')
+        assert "Meet User1" in rv.data
+        # Redirect to get my own profile page
+        rv = self.getUser('2')
+        assert "user2@columbia.edu" in rv.data
+        assert "My Profile" in rv.data
+        # Get my profile page through /me
+        rv = self.getMe()
+        assert "user2@columbia.edu" in rv.data
+        assert "My Profile" in rv.data
 
 
 if __name__ == '__main__':
