@@ -18,3 +18,6 @@ script:
   - ./runHMUtest
   - python app_test.py
 sudo: required
+before-install:
+  - mysql -e 'CREATE SCHEMA HMU_TEST'
+  - mysql -e 'USE HMU_TEST'
