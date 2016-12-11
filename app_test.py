@@ -271,5 +271,38 @@ class FlaskrTestCase(unittest.TestCase):
         assert "My Profile" in rv.data
 
 
+### Follow tests
+    def addFollow(self, user_id):
+        return self.app.get('/follow/'+user_id, follow_redirects=True)
+
+    def deleteFollow(self, user_id):
+        return self.app.get('/unfollow/'+user_id, follow_redirects=True)
+
+    def getFollowing(self):
+        return self.app.get('/getFollowing', follow_redirects=True)
+
+    def test_following(self):
+        self.signUp('User1', 'user1@columbia.edu', 'password')
+        self.editProfile('User1', 'bio', 'user1@columbia.edu', '', '')
+        self.logout()
+        self.signUp('User2', 'user2@columbia.edu', 'password')
+        self.editProfile('User2', 'bio', 'user2@columbia.edu', '', '')
+        # Follow user 1
+        rv = self.addFollow('1')
+        # User 1's profile page should now show option to unfollow
+        assert "Unfollow Me" in rv.data
+        # Check user 1 is in following list
+        rv = self.getFollowing()
+        assert "User1" in rv.data
+        # Unfollow user 1
+        rv = self.deleteFollow('1')
+        # User 1's profile page should now show option to follow again
+        assert "Follow Me" in rv.data
+        # Check user 1 is not following list anymore
+        rv = self.getFollowing()
+        assert "User1" not in rv.data
+        self.logout()        
+
+
 if __name__ == '__main__':
     unittest.main()
