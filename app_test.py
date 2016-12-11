@@ -31,7 +31,7 @@ class FlaskrTestCase(unittest.TestCase):
         #self.app.engine.execute("DROP SCHEMA IF EXISTS HMU_TEST") 
         #self.app.engine.execute("CREATE SCHEMA HMU_TEST") 
         self.app.engine.execute("USE HMU_TEST")
-
+        
         flaskr.app.config['MYSQL_DATABASE_DB'] = 'HMU_TEST'
         flaskr.app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://travis:mysql@127.0.0.1/HMU_TEST'
 

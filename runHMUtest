@@ -1,0 +1,14 @@
+#!/bin/bash
+if [ -d "migrations" ]; then
+	rm -r migrations
+fi
+pip install Flask-SQLAlchemy \
+&& pip install flask-script \
+&& pip install flask-migrate \
+&& pip install mysqlclient \
+&& python managetest.py db init \
+&& python managetest.py db migrate \
+&& python managetest.py db upgrade
+
+
+
