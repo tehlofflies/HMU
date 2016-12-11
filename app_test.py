@@ -37,6 +37,8 @@ class FlaskrTestCase(unittest.TestCase):
 
 
     def tearDown(self):
+        self.app.engine = sqlalchemy.create_engine('mysql://root:mysql@127.0.0.1')
+        self.app.engine.execute("USE HMU_TEST")
         self.app.engine.execute("TRUNCATE TABLE TBL_USER")
         self.app.engine.execute("TRUNCATE TABLE TBL_POST")
         self.app.engine.execute("TRUNCATE TABLE TBL_PROFILE")
@@ -122,6 +124,15 @@ class FlaskrTestCase(unittest.TestCase):
 
     def logout(self):
         return self.app.get('/logout', follow_redirects=True)
+
+    def test_logout(self):
+        rv = self.signUp('testName', 'testName@columbia.edu', 'password')
+        assert "Edit Your Profile!" in rv.data
+        # user is successfully logged in
+        self.logout()
+        rv = self.app.get('/userHome')
+        assert "Unauthorized Access" in rv.data
+        # user is logged out and unable to view newsfeed
 
 
     def signIn(self, email, password):
@@ -209,8 +220,15 @@ class FlaskrTestCase(unittest.TestCase):
         assert "tuple index out of range" in rv.data
         # post has already been deleted
 
-    #  add user -> show user has been added to directory
-    #  delete user account -> show user has been deleted 
+    def test_directory(self):
+        self.signUp('testName', 'testName@columbia.edu', 'password')
+        rv = self.app.get('/getUsers')
+        assert "new testName" not in rv.data
+        # directory contains only users that have been created
+        self.signUp('new testName', 'newTestName@columbia.edu', 'password')
+        rv = self.app.get('/getUsers')
+        assert "new testName" in rv.data
+        # directory contains new user that was created
 
     # def signIn(self, email, password):
     #     return self.app.post('/validateLogin', data=dict(
