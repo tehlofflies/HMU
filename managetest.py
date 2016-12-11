@@ -41,6 +41,10 @@ class tbl_profile(db.Model):
     profile_phone = db.Column(db.String(10))
     profile_facebook = db.Column(db.String(45)) 
 
+class tbl_follow(db.Model):
+    follow_id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
+    follower_user_id = db.Column(db.Integer, nullable=False)
+    followed_user_id = db.Column(db.Integer, nullable=False)
 
 sp_createUser = """
 CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_createUser`(
@@ -113,10 +117,34 @@ END
 sp_getPosts = """
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getPosts`()
 BEGIN
-    select p.post_id, u.user_username, p.post_headline, p.post_description, p.post_location, p.post_postTime, p.post_meetingTime
+    select p.post_id, u.user_name, u.user_id, p.post_headline, p.post_description, p.post_location, p.post_postTime, p.post_meetingTime
     from tbl_post as p, tbl_user as u
-    where p.post_user_id = u.user_id;
+    where p.post_user_id = u.user_id AND p.post_meetingTime > NOW()
+    order by p.post_meetingTime asc;
     
+END
+"""
+
+
+sp_getPostInfo = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getPostInfo`(
+    IN p_id bigint
+)
+BEGIN
+    select * from tbl_post
+    where post_id = p_id 
+    ;   
+END
+"""
+
+sp_deletePost = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_deletePost`(
+    IN p_id bigint
+)
+BEGIN
+    delete from tbl_post
+    where post_id = p_id
+    ;
 END
 """
 
@@ -168,7 +196,6 @@ BEGIN
 END
 """
 
-
 sp_getProfile = """
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getProfile`(
     IN p_user_id bigint
@@ -178,13 +205,101 @@ BEGIN
 END
 """
 
+
+sp_checkFollow = """
+CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_checkFollow`(
+    IN p_follower_user_id bigint,
+    IN p_followed_user_id bigint
+)
+BEGIN
+    select * from tbl_follow
+    where follower_user_id = p_follower_user_id
+    and followed_user_id = p_followed_user_id
+    ;
+END
+"""
+
+sp_addFollow = """
+CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_addFollow`(
+    IN p_follower_user_id bigint,
+    IN p_followed_user_id bigint
+)
+BEGIN
+    insert into tbl_follow
+    (
+        follower_user_id,
+        followed_user_id
+    )
+    values
+    (
+        p_follower_user_id,
+        p_followed_user_id
+    );
+END
+"""
+
+sp_deleteFollow = """
+CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_deleteFollow`(
+    IN p_follower_user_id bigint,
+    IN p_followed_user_id bigint
+)
+BEGIN
+    delete from tbl_follow
+    where follower_user_id=p_follower_user_id
+    and followed_user_id=p_followed_user_id
+    ;
+END
+"""
+
+sp_getFollowing = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getFollowing`(
+    IN p_user_id bigint
+)
+BEGIN
+    select f.followed_user_id, u.user_name
+    from tbl_follow as f, tbl_user as u
+    where f.follower_user_id = p_user_id and f.followed_user_id = u.user_id;
+    
+END
+"""
+
+sp_getFollowingIds = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getFollowingIds`(
+    IN p_user_id bigint
+)
+BEGIN
+    select *
+    from tbl_follow
+    where follower_user_id = p_user_id
+    ;
+END
+"""
+
+sp_getUsers = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getUsers`()
+BEGIN
+    select * from tbl_profile
+    order by profile_name asc;
+    
+END
+"""
+
 engine.execute(sp_createUser)
 engine.execute(sp_validateLogin)
 engine.execute(sp_addPost)
 engine.execute(sp_getPosts)
+engine.execute(sp_getPostInfo)
+engine.execute(sp_deletePost)
+engine.execute(sp_checkFollow)
+engine.execute(sp_addFollow)
+engine.execute(sp_deleteFollow)
+engine.execute("set global sql_mode = 'strict_trans_tables';")
 engine.execute(sp_createProfile)
 engine.execute(sp_editProfile)
 engine.execute(sp_getProfile)
+engine.execute(sp_getFollowing)
+engine.execute(sp_getFollowingIds)
+engine.execute(sp_getUsers)
 
 
 if __name__ == '__main__':
