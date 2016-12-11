@@ -71,6 +71,15 @@ class FlaskrTestCase(unittest.TestCase):
         #password too long
         rv = self.signUp('blah', 'blah@columbia.edu', 'blahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh')
         assert "Data too long" in rv.data
+        #missing name
+        rv = self.signUp('', 'testName@columbia.edu', 'password')
+        assert "Enter all the required fields" in rv.data
+        #missing email
+        rv = self.signUp('testName', '', 'password')
+        assert "Enter all the required fields" in rv.data
+        #missing password
+        rv = self.signUp('testName', 'testName@columbia.edu', '')
+        assert "Enter all the required fields" in rv.data
 
 
     def editProfile(self, name, bio, email, phone, facebook):
@@ -120,6 +129,13 @@ class FlaskrTestCase(unittest.TestCase):
         # enter a bad facebook url
         rv = self.editProfile('testName', 'bio', 'testName@columbia.edu', '', '   ')
         assert "Not a valid Facebook URL" in rv.data
+        # successful edit profile
+        rv = self.editProfile('testName', 'bio', 'testName@columbia.edu', '0123456789', 'http://facebook.com')
+        assert "Edit Profile" in rv.data
+
+        self.logout()
+        #rv = self.editProfile('testName', 'bio', 'testName@columbia.edu', '', '')
+        #print(rv.data)
 
 
     def logout(self):
@@ -143,6 +159,12 @@ class FlaskrTestCase(unittest.TestCase):
 
 
     def test_signIn(self):
+        #missing email
+        rv = self.signIn('', 'password')
+        assert "Enter the required fields" in rv.data
+        #missing password
+        rv = self.signIn('testName@columbia.edu', '')
+        assert "Enter the required fields" in rv.data
         #user email does not exist
         rv = self.signIn('testName@columbia.edu', 'password')
         assert "Email address does not exist" in rv.data
@@ -222,7 +244,7 @@ class FlaskrTestCase(unittest.TestCase):
 
     def test_directory(self):
         self.signUp('testName', 'testName@columbia.edu', 'password')
-        rv = self.app.get('/getUsers')
+        rv = self.app.get('/users')
         assert "new testName" not in rv.data
         # directory contains only users that have been created
         self.signUp('new testName', 'newTestName@columbia.edu', 'password')
@@ -263,12 +285,10 @@ class FlaskrTestCase(unittest.TestCase):
         assert "Meet User1" in rv.data
         # Redirect to get my own profile page
         rv = self.getUser('2')
-        assert "user2@columbia.edu" in rv.data
-        assert "My Profile" in rv.data
+        assert "Edit Profile" in rv.data
         # Get my profile page through /me
         rv = self.getMe()
-        assert "user2@columbia.edu" in rv.data
-        assert "My Profile" in rv.data
+        assert "Edit Profile" in rv.data
 
 
 ### Follow tests
@@ -279,6 +299,9 @@ class FlaskrTestCase(unittest.TestCase):
         return self.app.get('/unfollow/'+user_id, follow_redirects=True)
 
     def getFollowing(self):
+        rv = self.app.get('/following', follow_redirects=True)
+        assert "Who I'm Following" in rv.data
+        assert "User1" not in rv.data
         return self.app.get('/getFollowing', follow_redirects=True)
 
     def test_following(self):
@@ -294,6 +317,9 @@ class FlaskrTestCase(unittest.TestCase):
         # Check user 1 is in following list
         rv = self.getFollowing()
         assert "User1" in rv.data
+        # Try to follow user 1 again
+        rv = self.addFollow('1')
+        assert "Already following" in rv.data
         # Unfollow user 1
         rv = self.deleteFollow('1')
         # User 1's profile page should now show option to follow again
