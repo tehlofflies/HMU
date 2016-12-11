@@ -45,6 +45,9 @@ def showSignUp():
 
 @app.route('/signUp', methods=['POST'])
 def signUp():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+
     try:
         _name = request.form['inputName']
         _email = request.form['inputEmail']
@@ -57,8 +60,6 @@ def signUp():
                 flash("Invalid email", category='error')
                 return redirect('/showSignUp')
 
-            conn = mysql.connect()
-            cursor = conn.cursor()
             cursor.callproc('sp_createUser', (_name, _email, _password))
             data = cursor.fetchall()
 
@@ -85,8 +86,6 @@ def signUp():
                 flash(str(data[0]), category='error')
                 return redirect('/showSignUp')
 
-            cursor.close()
-            conn.close()
         else:
             flash("Enter all the required fields", category='error')
             return redirect('/showSignUp')
@@ -94,6 +93,10 @@ def signUp():
     except Exception as e:
         flash(str(e), category='error')
         return redirect('/showSignUp')
+
+    finally:
+        cursor.close()
+        conn.close()
 
 
 @app.route('/showSignIn')
@@ -106,14 +109,13 @@ def showSignIn():
 
 @app.route('/validateLogin', methods=['POST'])
 def validateLogin():
+    con = mysql.connect()
+    cursor = con.cursor()
     try:
         _username = request.form['inputEmail']
         _password = request.form['inputPassword']
        
         if _username and _password and not _password.isspace():
-            # connect to mysql
-            con = mysql.connect()
-            cursor = con.cursor()
             cursor.callproc('sp_validateLogin', (_username,))
             data = cursor.fetchall()
 
@@ -127,15 +129,15 @@ def validateLogin():
             else:
                 flash("Email address does not exist", category='error')
                 return redirect('/showSignIn')
-            cursor.close()
-            con.close()
-
         else:
             flash("Enter the required fields", category='error')
             return redirect('/showSignIn')
 
     except Exception as e:
         return render_template('error.html', error=str(e))
+    finally:
+        cursor.close()
+        con.close()
 
 
 @app.route('/showEditProfile')
@@ -163,6 +165,9 @@ def showEditProfile():
         else:
             _facebook = data[0][5]
 
+        cursor.close()
+        conn.close()
+        
         return render_template('editprofile.html', 
             name=_name, 
             description=_description, 
@@ -171,8 +176,6 @@ def showEditProfile():
             facebook=_facebook
         )
 
-        cursor.close()
-        conn.close()
     else:
         return render_template('error.html', error='Unauthorized Access')
 
@@ -297,7 +300,11 @@ def user(user_id):
 @app.route('/showAddPost')
 def showAddPost():
     form = DateForm()
-    return render_template('addPost.html', form=form)
+    if session.get('user'):
+        return render_template('addPost.html', form=form)
+    else:
+        return render_template('error.html', error='Unauthorized Access')
+
 
 
 @app.route('/addPost', methods=['POST'])
@@ -349,8 +356,9 @@ def addPost():
                 flash("Enter all the required fields", category='error')
                 return redirect('/showAddPost')
         else:
-            flash("Unauthorized Access", category='error')
-            return redirect('/showAddPost')
+            # flash("Unauthorized Access", category='Unauthorized Access')
+            # return redirect('/showAddPost')
+            return redirect('/')
     except Exception as e:
         flash(str(e), category='error')
         return redirect('/showAddPost')

@@ -1,0 +1,27 @@
+Code Inspection
+Jason-Monica
+* Reader: Monica
+* Recorder: Jason
+* Component Inspected: Posts 
+* Files inspected:
+	o app.py
+	o userHome.html
+	o showPosts.js
+	o addPost.html
+* General Notes
+	o Could use some better documentation -- might be hard for someone unfamiliar with code to get caught up
+	o Should newsfeed button just be home button?
+* Problems
+	o App.py
+		* Not all connections with mySQL are closed at the end of each method - fixed
+		* Functions not in a logical order/not that readable - fixed
+	o userHome.html
+		* If user does not fill out optional description field, posts on newsfeed display an empty string after “What’s up” - known issue
+	o app.py
+		* Lines too long (over 80 characters) - fixed
+		* Meetup time and time posted were switched - fixed
+	o showPosts.js
+		* Nicer display of information in posts on newsfeed - for example, time posted isn’t as important, so text can be smaller - fixed
+	o addPost.html
+		* If there is an error submitting the form, form should pre-populate previous information in fields instead of making users retype everything
+
