@@ -126,6 +126,9 @@ class FlaskrTestCase(unittest.TestCase):
         # enter a proper phone number
         rv = self.editProfile('testName', 'bio', 'testName@columbia.edu', '0123456789', '')
         assert "My Profile" in rv.data
+        # enter a proper phone number with optional facebook
+        rv = self.editProfile('testName', 'bio', 'testName@columbia.edu', '0123456789', 'https:facebook.com')
+        assert "My Profile" in rv.data
         # enter a bad facebook url
         rv = self.editProfile('testName', 'bio', 'testName@columbia.edu', '', '   ')
         assert "Not a valid Facebook URL" in rv.data
@@ -168,6 +171,9 @@ class FlaskrTestCase(unittest.TestCase):
         #user email does not exist
         rv = self.signIn('testName@columbia.edu', 'password')
         assert "Email address does not exist" in rv.data
+        #user password is a space
+        rv = self.signIn('testName@columbia.edu', ' ')
+        assert "Enter the required fields" in rv.data
         #user email exists but password incorrect
         self.signUp('testName', 'testName@columbia.edu', 'password')
         self.logout()
