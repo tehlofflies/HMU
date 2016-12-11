@@ -300,7 +300,11 @@ def user(user_id):
 @app.route('/showAddPost')
 def showAddPost():
     form = DateForm()
-    return render_template('addPost.html', form=form)
+    if session.get('user'):
+        return render_template('addPost.html', form=form)
+    else:
+        return render_template('error.html', error='Unauthorized Access')
+
 
 
 @app.route('/addPost', methods=['POST'])
@@ -352,8 +356,9 @@ def addPost():
                 flash("Enter all the required fields", category='error')
                 return redirect('/showAddPost')
         else:
-            flash("Unauthorized Access", category='error')
-            return redirect('/showAddPost')
+            # flash("Unauthorized Access", category='Unauthorized Access')
+            # return redirect('/showAddPost')
+            return redirect('/')
     except Exception as e:
         flash(str(e), category='error')
         return redirect('/showAddPost')
