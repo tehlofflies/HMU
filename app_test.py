@@ -136,11 +136,6 @@ class FlaskrTestCase(unittest.TestCase):
         rv = self.editProfile('testName', 'bio', 'testName@columbia.edu', '0123456789', 'http://facebook.com')
         assert "Edit Profile" in rv.data
 
-        self.logout()
-        #rv = self.editProfile('testName', 'bio', 'testName@columbia.edu', '', '')
-        #print(rv.data)
-
-
     def logout(self):
         return self.app.get('/logout', follow_redirects=True)
 
@@ -164,7 +159,6 @@ class FlaskrTestCase(unittest.TestCase):
         rv = self.app.get('/getPost')
         assert "Unauthorized Access" in rv.data
         rv = self.app.get('/showAddPost')
-        print(rv.data)
         assert "Unauthorized Access" in rv.data
         rv = self.app.get('/user/1')
         assert "Unauthorized Access" in rv.data
