@@ -1,0 +1,23 @@
+*** Showcase Demo Script ***
+
+General outline of what is being demo-ed:
+1. Latest file versions (everything including and after all commits with comments that are prefixed with “demo 2 -”
+2. Very basic functionalities of the app: sign up, sign in, logout
+3. The core features of the app: add a post, view everyone else’s posts
+4. The interactive, more social features of the app: follow friends, see all users, view user contact information
+
+
+Presentation:
+Every member on the team will take turns presenting and talking about each bullet point.
+
+* As outlined in our README.md, users who clone the app need to install some plugins and dependencies (Flask, MySQL, etc). As we will be demo-ing on our personal computers, we will be skipping this step. Next, we will be showing how to run the app through the command line with the command “./runHMU”. 
+
+* As soon as the app starts running, the user can go to run the app port 5000. The homepage has extra information about the app itself and the team members, but we will be skipping straight ahead to the sign-up portion. There are three fields, please fill out all three of them. As you can see, after sign-up, you are automatically signed in and you are redirected to fill out some basic profile information. Some fields are required so make sure you fill out these fields and put some personality in this! Let’s test the basic features of this app by clicking the logout button. Now let’s sign back in. 
+
+* Now that we are signed in, we can see that the homepage says “Welcome to HMU!” and nothing else. That is because no one has posted anything yet. You can be first the post to do so by clicking on the “Add Post” tab. On this Add Post page, you can see that some fields are indicated in gray as being required fields. You will not be able to submit a post without providing valid information for each field. Are you free anytime soon and wouldn’t mind some company? Perhaps you can try adding a post inviting friends to come join you for some dinner while doing homework. Make sure the date and time you have in mind are both entered correctly! Past times/dates won’t work!
+
+* Okay, your post has been successfully added! You can now see it in the newsfeed section. Since you’re currently the only user, let’s logout and let someone else sign up. - someone else should repeat the above process by signing up, filling out the profile, and adding a post - Okay, user number 2, you can now see your post and another friend’s post on the newsfeed! Are you interested in meeting up with your friend for their study session-slash-dinner? If so, you should click on the post, and here you are on your friend’s profile page! You can copy their email address to contact, or you can contact them with Facebook. You can also click on the “Follow” button to better keep track of what your friend has been posting. Go back to the newsfeed, and if you click the filter checkbox, you should only be see posts by people you follow.  
+
+
+* Sign out, and you’re good to go! Make plans, and have fun!
+
