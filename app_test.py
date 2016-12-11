@@ -27,17 +27,17 @@ class FlaskrTestCase(unittest.TestCase):
         # with flaskr.app.app_context():
         #     flaskr.init_db()
 
-        self.app.engine = sqlalchemy.create_engine('mysql://root:mysql@127.0.0.1')
+        self.app.engine = sqlalchemy.create_engine('mysql://travis:mysql@127.0.0.1')
         #self.app.engine.execute("DROP SCHEMA IF EXISTS HMU_TEST") 
         #self.app.engine.execute("CREATE SCHEMA HMU_TEST") 
         self.app.engine.execute("USE HMU_TEST")
 
         flaskr.app.config['MYSQL_DATABASE_DB'] = 'HMU_TEST'
-        flaskr.app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:mysql@127.0.0.1/HMU_TEST'
+        flaskr.app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://travis:mysql@127.0.0.1/HMU_TEST'
 
 
     def tearDown(self):
-        self.app.engine = sqlalchemy.create_engine('mysql://root:mysql@127.0.0.1')
+        self.app.engine = sqlalchemy.create_engine('mysql://travis:mysql@127.0.0.1')
         self.app.engine.execute("USE HMU_TEST")
         self.app.engine.execute("TRUNCATE TABLE TBL_USER")
         self.app.engine.execute("TRUNCATE TABLE TBL_POST")
