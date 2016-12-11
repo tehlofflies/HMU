@@ -11,13 +11,14 @@ python:
   - "nightly" # currently points to 3.7-dev
 # command to install dependencies
 # install: "pip install -r requirements.txt"
-# command to run tests
 services:
   - mysql
+# command to run tests
 script:
   - ./runHMUtest
   - python app_test.py
 sudo: required
 before-install:
-  - mysql -e 'CREATE SCHEMA HMU_TEST'
-  - mysql -e 'USE HMU_TEST'
+  - mysql -e "DROP SCHEMA IF EXISTS HMU_TEST"
+  - mysql -e "CREATE SCHEMA HMU_TEST"
+  - mysql -e "USE HMU_TEST"
