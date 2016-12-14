@@ -319,6 +319,32 @@ BEGIN
 END
 """
 
+sp_removeInterest = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_removeInterest`(
+    IN p_user_id bigint,
+    IN p_post_id bigint
+)
+BEGIN
+    delete from tbl_interested
+    where interested_user_id=p_user_id
+    and interested_post_id=p_post_id
+    ;
+END
+"""
+
+sp_getPostInterest= """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getPostInterest`(
+    IN p_user_id bigint,
+    IN p_post_id bigint
+)
+BEGIN
+    select * from tbl_interested
+    where interested_user_id = p_user_id
+    and interested_post_id = p_post_id
+    ;
+END
+"""
+
 sp_getPostInfo = """
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getPostInfo`(
     IN p_user_id bigint
@@ -349,6 +375,8 @@ engine.execute(sp_getFollowers)
 engine.execute(sp_getFollowingIds)
 engine.execute(sp_getUsers)
 engine.execute(sp_addInterest)
+engine.execute(sp_removeInterest)
+engine.execute(sp_getPostInterest)
 engine.execute(sp_getPostInfo)
 
 if __name__ == '__main__':
