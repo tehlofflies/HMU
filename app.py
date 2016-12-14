@@ -395,8 +395,8 @@ def getPost():
                 display_option = "filter"
                 if post[2] in followings_dict:
                     display_option = "no-filter"
-                if post[2] == _user:
-                    display_option = "no-filter"
+                #if post[2] == _user:
+                    #display_option = "no-filter"
 
                 post_dict = {
                     'PostId': post[0],
@@ -672,8 +672,9 @@ def getPostInfo(post_id):
                 _posttime = post[3].strftime("%B %d, %Y, %I:%M %p")
                 _meetingtime = post[4].strftime("%B %d, %Y, %I:%M %p")
                 _location = post[5]
+                _link = "/user/" + str(post[6])
             return render_template('post.html', user=_user, headline=_headline, description=_description, posttime=_posttime,
-                meetingtime=_meetingtime, location=_location)
+                meetingtime=_meetingtime, location=_location, link=_link)
         else:
             return render_template('error.html', error='Unauthorized Access')
     except Exception as e:
