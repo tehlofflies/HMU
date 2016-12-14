@@ -647,7 +647,47 @@ def addInterest(post_id):
             _user_id = session.get('user')
             cursor.callproc('sp_addInterest', (_user_id, post_id))
             conn.commit()
-            return redirect("/userHome")
+            cursor.callproc('sp_getPostInfo', (_user_id,))
+            posts = cursor.fetchall()
+            for post in posts:
+                _user = post[0]
+                _headline = post[1]
+                _description = post[2]
+                _posttime = post[3].strftime("%B %d, %Y, %I:%M %p")
+                _meetingtime = post[4].strftime("%B %d, %Y, %I:%M %p")
+                _location = post[5]
+                _link = "/user/" + str(post[6])
+            return render_template('post.html', user=_user, headline=_headline, description=_description, posttime=_posttime,
+                meetingtime=_meetingtime, location=_location, link=_link, post_id=post_id, interested=1)
+        else:
+            return render_template('error.html', error='Unauthorized Access')
+    except Exception as e:
+        return render_template('error.html', error=str(e))
+    finally:
+        cursor.close()
+        conn.close()
+
+@app.route('/uninterested/<post_id>')
+def removeInterest(post_id):
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    try:
+        if session.get('user'):
+            _user_id = session.get('user')
+            cursor.callproc('sp_removeInterest', (_user_id, post_id))
+            conn.commit()
+            cursor.callproc('sp_getPostInfo', (_user_id,))
+            posts = cursor.fetchall()
+            for post in posts:
+                _user = post[0]
+                _headline = post[1]
+                _description = post[2]
+                _posttime = post[3].strftime("%B %d, %Y, %I:%M %p")
+                _meetingtime = post[4].strftime("%B %d, %Y, %I:%M %p")
+                _location = post[5]
+                _link = "/user/" + str(post[6])
+            return render_template('post.html', user=_user, headline=_headline, description=_description, posttime=_posttime,
+                meetingtime=_meetingtime, location=_location, link=_link, post_id=post_id, interested=0)
         else:
             return render_template('error.html', error='Unauthorized Access')
     except Exception as e:
@@ -673,8 +713,16 @@ def getPostInfo(post_id):
                 _meetingtime = post[4].strftime("%B %d, %Y, %I:%M %p")
                 _location = post[5]
                 _link = "/user/" + str(post[6])
+
+            cursor.callproc("sp_getPostInterest", (_user_id, post_id))
+            results = cursor.fetchall()
+            if len(results) > 0:
+                interested = 1
+            else:
+                interested = 0
+                
             return render_template('post.html', user=_user, headline=_headline, description=_description, posttime=_posttime,
-                meetingtime=_meetingtime, location=_location, link=_link, post_id=post_id)
+                meetingtime=_meetingtime, location=_location, link=_link, post_id=post_id, interested=interested)
         else:
             return render_template('error.html', error='Unauthorized Access')
     except Exception as e:

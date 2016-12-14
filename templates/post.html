@@ -76,9 +76,15 @@
                         <p>Post Time: {{ posttime }}</p>
                         <p>Meet Time: {{ meetingtime }}</p>
                         <p>Location: {{ location }}</p>
-                        <form action="/interested/{{ post_id }}">
+                        {% if interested %}
+                        <form action="/uninterested/{{ post_id }}">
+                            <input class="btn btn-primary" type="submit" value="I'm no longer interested!" />
+                        </form>
+                        {% else %}
+                        <form action="/interested/{{post_id}}">
                             <input class="btn btn-primary" type="submit" value="I'm interested!" />
                         </form>
+                        {% endif %}
                     </div>
                 </div>
             </div>
