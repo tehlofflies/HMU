@@ -84,7 +84,7 @@
 
                         <h1>People interested in attending:</h1>
                         {% for user in user_list %}
-                            <p><a href="/user/{{ user[0] }}" style="color:white">User: {{ user[1] }}</a></p>
+                            <p><a href="/user/{{ user[0] }}" style="color:white">{{ user[1] }}</a></p>
                         {% endfor %} 
 
                         {% if interested %}
