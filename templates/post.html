@@ -76,6 +76,9 @@
                         <p>Post Time: {{ posttime }}</p>
                         <p>Meet Time: {{ meetingtime }}</p>
                         <p>Location: {{ location }}</p>
+                        <form action="/interested/{{ post_id }}">
+                            <input class="btn btn-primary" type="submit" value="I'm interested!" />
+                        </form>
                     </div>
                 </div>
             </div>
