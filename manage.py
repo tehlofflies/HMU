@@ -122,10 +122,12 @@ END
 sp_getPosts = """
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getPosts`()
 BEGIN
-    select p.post_id, u.user_name, u.user_id, p.post_headline, p.post_description, p.post_location, p.post_postTime, p.post_meetingTime
+    select *
+from
+(select p.post_id, u.user_name, u.user_id, p.post_headline, p.post_description, p.post_location, p.post_postTime, p.post_meetingTime
     from tbl_post as p, tbl_user as u
-    where p.post_user_id = u.user_id AND p.post_meetingTime > NOW()
-    order by p.post_meetingTime asc;
+    where p.post_user_id = u.user_id) x join
+(select interested_post_id, count(interested_user_id) from tbl_interested group by interested_post_id) i on x.post_id = i.interested_post_id;
     
 END
 """
@@ -394,6 +396,15 @@ BEGIN
 END
 """
 
+sp_getNewestPostId = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getNewestPostId`()
+BEGIN
+    select MAX(post_id)
+    from tbl_post
+    ;
+END
+"""
+
 engine.execute(sp_createUser)
 engine.execute(sp_validateLogin)
 engine.execute(sp_addPost)
@@ -418,6 +429,7 @@ engine.execute(sp_getPostInfo)
 engine.execute(sp_getMyPosts)
 engine.execute(sp_getInterestedPosts)
 engine.execute(sp_getInterestedUsers)
+engine.execute(sp_getNewestPostId)
 
 if __name__ == '__main__':
     manager.run()
