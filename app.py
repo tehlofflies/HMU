@@ -638,6 +638,24 @@ def getUsers():
         cursor.close()
         conn.close()
 
+@app.route('/interested/<post_id>')
+def addInterest(post_id):
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    try:
+        if session.get('user'):
+            _user_id = session.get('user')
+            cursor.callproc('sp_addInterest', (_user_id, post_id))
+            conn.commit()
+            return redirect("/userHome")
+        else:
+            return render_template('error.html', error='Unauthorized Access')
+    except Exception as e:
+        return render_template('error.html', error=str(e))
+    finally:
+        cursor.close()
+        conn.close()
+
 @app.route('/logout')
 def logout():
     session.pop('user',None)
