@@ -744,10 +744,16 @@ def addInterest(post_id):
                 _location = post[5]
                 _link = "/user/" + str(post[6])
                 _contact = post[7]
-                print(_link)
-                print(_contact)
+                
+                cursor.callproc('sp_getInterestedUsers', (post_id,))
+                users = cursor.fetchall()
+                user_list = []
+                for user in users:
+                    user_list.append(user)
+
             return render_template('post.html', user=_user, headline=_headline, description=_description, posttime=_posttime,
-                meetingtime=_meetingtime, location=_location, link=_link, contact=_contact, post_id=post_id, interested=1)
+                meetingtime=_meetingtime, location=_location, link=_link, contact=_contact, post_id=post_id, user_list=user_list,
+                interested=1)
         else:
             return render_template('error.html', error='Unauthorized Access')
     except Exception as e:
@@ -763,8 +769,10 @@ def removeInterest(post_id):
     try:
         if session.get('user'):
             _user_id = session.get('user')
+
             cursor.callproc('sp_removeInterest', (_user_id, post_id))
             conn.commit()
+
             cursor.callproc('sp_getPostInfo', (_user_id,))
             posts = cursor.fetchall()
             for post in posts:
@@ -776,8 +784,16 @@ def removeInterest(post_id):
                 _location = post[5]
                 _link = "/user/" + str(post[6])
                 _contact = post[7]
+
+            cursor.callproc('sp_getInterestedUsers', (post_id,))
+            users = cursor.fetchall()
+            user_list = []
+            for user in users:
+                user_list.append(user)
+
             return render_template('post.html', user=_user, headline=_headline, description=_description, posttime=_posttime,
-                meetingtime=_meetingtime, location=_location, link=_link, contact=_contact, post_id=post_id, interested=0)
+                meetingtime=_meetingtime, location=_location, link=_link, contact=_contact, post_id=post_id, user_list=user_list,
+                interested=0)
         else:
             return render_template('error.html', error='Unauthorized Access')
     except Exception as e:
@@ -793,6 +809,7 @@ def getPostInfo(post_id):
     try:
         if session.get('user'):
             _user_id = session.get('user')
+
             cursor.callproc('sp_getPostInfo', (_user_id,))
             posts = cursor.fetchall()
             for post in posts:
@@ -805,6 +822,12 @@ def getPostInfo(post_id):
                 _link = "/user/" + str(post[6])
                 _contact = post[7]
 
+            cursor.callproc('sp_getInterestedUsers', (post_id,))
+            users = cursor.fetchall()
+            user_list = []
+            for user in users:
+                user_list.append(user)
+
             cursor.callproc("sp_getPostInterest", (_user_id, post_id))
             results = cursor.fetchall()
             if len(results) > 0:
@@ -813,7 +836,8 @@ def getPostInfo(post_id):
                 interested = 0
                 
             return render_template('post.html', user=_user, headline=_headline, description=_description, posttime=_posttime,
-                meetingtime=_meetingtime, location=_location, link=_link, contact=_contact, post_id=post_id, interested=interested)
+                meetingtime=_meetingtime, location=_location, link=_link, contact=_contact, post_id=post_id, user_list=user_list,
+                interested=interested)
         else:
             return render_template('error.html', error='Unauthorized Access')
     except Exception as e:

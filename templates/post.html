@@ -70,15 +70,23 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="intro-text">
+
                         <h1>User Info</h1>
                         <p><a href={{ link }} style="color:white">User: {{ user }}</a></p>
                         <p>Contact: {{ contact }}</p>
+
                         <h1>Post Info</h1>
                         <p>Headline: {{ headline }}</a></p>
                         <p>Description: {{ description }}</p>
                         <p>Post Time: {{ posttime }}</p>
                         <p>Meet Time: {{ meetingtime }}</p>
                         <p>Location: {{ location }}</p>
+
+                        <h1>People interested in attending:</h1>
+                        {% for user in user_list %}
+                            <p><a href="/user/{{ user[0] }}" style="color:white">User: {{ user[1] }}</a></p>
+                        {% endfor %} 
+
                         {% if interested %}
                         <form action="/uninterested/{{ post_id }}">
                             <input class="btn btn-primary" type="submit" value="I'm no longer interested!" />
@@ -88,6 +96,7 @@
                             <input class="btn btn-primary" type="submit" value="I'm interested!" />
                         </form>
                         {% endif %}
+
                     </div>
                 </div>
             </div>

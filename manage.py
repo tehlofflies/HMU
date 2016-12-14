@@ -382,6 +382,18 @@ BEGIN
 END
 """
 
+sp_getInterestedUsers = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getInterestedUsers`(
+    IN p_post_id bigint
+)
+BEGIN
+    select u.user_id, u.user_name
+    from tbl_post as p, tbl_user as u, tbl_interested as i
+    where p.post_id = p_post_id and u.user_id = i.interested_user_id
+    ;
+END
+"""
+
 engine.execute(sp_createUser)
 engine.execute(sp_validateLogin)
 engine.execute(sp_addPost)
@@ -405,6 +417,7 @@ engine.execute(sp_getPostInterest)
 engine.execute(sp_getPostInfo)
 engine.execute(sp_getMyPosts)
 engine.execute(sp_getInterestedPosts)
+engine.execute(sp_getInterestedUsers)
 
 if __name__ == '__main__':
     manager.run()
