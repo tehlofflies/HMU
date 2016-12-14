@@ -6,11 +6,11 @@ import sqlalchemy
 
 app = Flask(__name__)
 
-engine = sqlalchemy.create_engine('mysql://root:@127.0.0.1') # connect to server
+engine = sqlalchemy.create_engine('mysql://root:mysql@127.0.0.1') # connect to server
 engine.execute("DROP SCHEMA IF EXISTS HMU_TEST") 
 engine.execute("CREATE SCHEMA HMU_TEST") 
 engine.execute("USE HMU_TEST")
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@127.0.0.1/HMU_TEST'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:mysql@127.0.0.1/HMU_TEST'
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
