@@ -427,7 +427,7 @@ def deletePost(post_id):
     cursor = conn.cursor()
     try:
         if session.get('user'):
-            cursor.callproc('sp_getPostInfo', (post_id,))
+            cursor.callproc('sp_getPostUserId', (post_id,))
             results = cursor.fetchall()
             post_user = results[0][1]
             if post_user == session.get('user'):
@@ -648,6 +648,32 @@ def addInterest(post_id):
             cursor.callproc('sp_addInterest', (_user_id, post_id))
             conn.commit()
             return redirect("/userHome")
+        else:
+            return render_template('error.html', error='Unauthorized Access')
+    except Exception as e:
+        return render_template('error.html', error=str(e))
+    finally:
+        cursor.close()
+        conn.close()
+
+@app.route('/post/<post_id>')
+def getPostInfo(post_id):
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    try:
+        if session.get('user'):
+            _user_id = session.get('user')
+            cursor.callproc('sp_getPostInfo', (_user_id,))
+            posts = cursor.fetchall()
+            for post in posts:
+                _user = post[0]
+                _headline = post[1]
+                _description = post[2]
+                _posttime = post[3].strftime("%B %d, %Y, %I:%M %p")
+                _meetingtime = post[4].strftime("%B %d, %Y, %I:%M %p")
+                _location = post[5]
+            return render_template('post.html', user=_user, headline=_headline, description=_description, posttime=_posttime,
+                meetingtime=_meetingtime, location=_location)
         else:
             return render_template('error.html', error='Unauthorized Access')
     except Exception as e:
