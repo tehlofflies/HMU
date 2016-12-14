@@ -46,6 +46,11 @@ class tbl_follow(db.Model):
     follower_user_id = db.Column(db.Integer, nullable=False)
     followed_user_id = db.Column(db.Integer, nullable=False)
 
+class tbl_interested(db.Model):
+    interested_id = db.Column(db.Integer, primary_key=True)
+    interested_user_id = db.Column(db.Integer, nullable=False)
+    interested_post_id = db.Column(db.Integer, nullable=False)
+
 sp_createUser = """
 CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_createUser`(
     IN p_name VARCHAR(45),
@@ -296,6 +301,24 @@ BEGIN
 END
 """
 
+sp_addInterest = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_addInterest`(
+    IN p_user_id bigint,
+    IN p_post_id bigint
+)
+BEGIN
+    insert into tbl_interested(
+        interested_user_id,
+        interested_post_id
+    )
+    values
+    (
+        p_user_id,
+        p_post_id
+    );
+END
+"""
+
 engine.execute(sp_createUser)
 engine.execute(sp_validateLogin)
 engine.execute(sp_addPost)
@@ -313,6 +336,7 @@ engine.execute(sp_getFollowing)
 engine.execute(sp_getFollowers)
 engine.execute(sp_getFollowingIds)
 engine.execute(sp_getUsers)
+engine.execute(sp_addInterest)
 
 if __name__ == '__main__':
     manager.run()
