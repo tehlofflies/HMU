@@ -21,7 +21,7 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
 
     <script src="../static/js/jquery-3.1.1.min.js"></script>
-    <script src="../static/js/showPosts.js"></script>
+    <script src="../static/js/showInterestedPosts.js"></script>
     
   </head>
  
@@ -85,16 +85,14 @@
 
             <div class="row filter-options">
                 <h4>Filter Posts</h4>
-                <ul id="filters">
                     <li>
-                        <input type="checkbox" value="Following" id="filter-following" />
-                        <label for="filter-following">People I Follow</label>
+                    <a href="/userHome">All Posts</a>
                     </li>
                     <li>
-                        <a href="/userHome/me">My Posts Only</a>
+                    <a href="/userHome/me">My Posts Only</a>
                     </li>
                     <li>
-                        <a href="/userHome/interested">Interested Posts Only</a>
+                    <a href="/userHome/interested">Interested Posts Only</a>
                     </li>
                 </ul>
             </div>
