@@ -463,7 +463,7 @@ def getMyPost():
                     'Location': post[5],
                     'PostTime': post[6].strftime("%B %d, %Y, %I:%M %p"),
                     'MeetingTime': post[7].strftime("%B %d, %Y, %I:%M %p"),
-                    'NumInterested': post[8]
+                    'NumInterested': post[9]
                 }
                 posts_dict.append(post_dict)
 
