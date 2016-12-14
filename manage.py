@@ -324,7 +324,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getPostInfo`(
     IN p_user_id bigint
 )
 BEGIN
-    select u.user_name, p.post_headline, p.post_description, p.post_postTime, p.post_meetingTime, p.post_location
+    select u.user_name, p.post_headline, p.post_description, p.post_postTime, p.post_meetingTime, p.post_location, u.user_id
     from tbl_post as p, tbl_user as u
     where p.post_user_id = u.user_id
     ;
