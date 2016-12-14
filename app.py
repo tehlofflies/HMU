@@ -360,6 +360,11 @@ def addPost():
                 data = cursor.fetchall()
 
                 if len(data) is 0:
+                    cursor.callproc('sp_getNewestPostId')
+                    data = cursor.fetchall()
+                    _postId = data[0][0]
+                    print(_postId)
+                    cursor.callproc('sp_addInterest', (_user, _postId))
                     conn.commit()
                     return redirect('/userHome')
                 else:
@@ -421,6 +426,7 @@ def getPost():
                     'Location': post[5],
                     'PostTime': post[6].strftime("%B %d, %Y, %I:%M %p"),
                     'MeetingTime': post[7].strftime("%B %d, %Y, %I:%M %p"),
+                    'NumInterested': post[9],
                     'Filter': display_option
                 }
                 posts_dict.append(post_dict)
@@ -456,7 +462,8 @@ def getMyPost():
                     'Description': post[4],
                     'Location': post[5],
                     'PostTime': post[6].strftime("%B %d, %Y, %I:%M %p"),
-                    'MeetingTime': post[7].strftime("%B %d, %Y, %I:%M %p")
+                    'MeetingTime': post[7].strftime("%B %d, %Y, %I:%M %p"),
+                    'NumInterested': post[8]
                 }
                 posts_dict.append(post_dict)
 

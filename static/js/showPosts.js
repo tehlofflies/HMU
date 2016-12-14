@@ -30,7 +30,7 @@ $(function() {
                 $(post).find('#location').text("WHERE: " +value.Location);
                 $(post).find('#desc').text("WHAT'S UP: " +value.Description);
                 $(post).find('#postTime').text("Posted: " +value.PostTime);
-                $(post).find('#interested').text("People Interested");
+                $(post).find('#interested').text(value.NumInterested+" People Interested");
                 $('.posts').append(post);
             });
         },
