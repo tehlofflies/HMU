@@ -700,8 +700,11 @@ def addInterest(post_id):
                 _meetingtime = post[4].strftime("%B %d, %Y, %I:%M %p")
                 _location = post[5]
                 _link = "/user/" + str(post[6])
+                _contact = post[7]
+                print(_link)
+                print(_contact)
             return render_template('post.html', user=_user, headline=_headline, description=_description, posttime=_posttime,
-                meetingtime=_meetingtime, location=_location, link=_link, post_id=post_id, interested=1)
+                meetingtime=_meetingtime, location=_location, link=_link, contact=_contact, post_id=post_id, interested=1)
         else:
             return render_template('error.html', error='Unauthorized Access')
     except Exception as e:
@@ -729,8 +732,9 @@ def removeInterest(post_id):
                 _meetingtime = post[4].strftime("%B %d, %Y, %I:%M %p")
                 _location = post[5]
                 _link = "/user/" + str(post[6])
+                _contact = post[7]
             return render_template('post.html', user=_user, headline=_headline, description=_description, posttime=_posttime,
-                meetingtime=_meetingtime, location=_location, link=_link, post_id=post_id, interested=0)
+                meetingtime=_meetingtime, location=_location, link=_link, contact=_contact, post_id=post_id, interested=0)
         else:
             return render_template('error.html', error='Unauthorized Access')
     except Exception as e:
@@ -756,6 +760,7 @@ def getPostInfo(post_id):
                 _meetingtime = post[4].strftime("%B %d, %Y, %I:%M %p")
                 _location = post[5]
                 _link = "/user/" + str(post[6])
+                _contact = post[7]
 
             cursor.callproc("sp_getPostInterest", (_user_id, post_id))
             results = cursor.fetchall()
@@ -765,7 +770,7 @@ def getPostInfo(post_id):
                 interested = 0
                 
             return render_template('post.html', user=_user, headline=_headline, description=_description, posttime=_posttime,
-                meetingtime=_meetingtime, location=_location, link=_link, post_id=post_id, interested=interested)
+                meetingtime=_meetingtime, location=_location, link=_link, contact=_contact, post_id=post_id, interested=interested)
         else:
             return render_template('error.html', error='Unauthorized Access')
     except Exception as e:
