@@ -131,12 +131,12 @@ END
 """
 
 
-sp_getPostInfo = """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getPostInfo`(
+sp_getPostUserId = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getPostId`(
     IN p_id bigint
 )
 BEGIN
-    select * from tbl_post
+    select user_id from tbl_post
     where post_id = p_id 
     ;   
 END
@@ -319,11 +319,23 @@ BEGIN
 END
 """
 
+sp_getPostInfo = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getPostInfo`(
+    IN p_user_id bigint
+)
+BEGIN
+    select u.user_name, p.post_headline, p.post_description, p.post_postTime, p.post_meetingTime, p.post_location
+    from tbl_post as p, tbl_user as u
+    where p.post_user_id = u.user_id
+    ;
+END
+"""
+
 engine.execute(sp_createUser)
 engine.execute(sp_validateLogin)
 engine.execute(sp_addPost)
 engine.execute(sp_getPosts)
-engine.execute(sp_getPostInfo)
+engine.execute(sp_getPostUserId)
 engine.execute(sp_deletePost)
 engine.execute(sp_checkFollow)
 engine.execute(sp_addFollow)
@@ -337,6 +349,7 @@ engine.execute(sp_getFollowers)
 engine.execute(sp_getFollowingIds)
 engine.execute(sp_getUsers)
 engine.execute(sp_addInterest)
+engine.execute(sp_getPostInfo)
 
 if __name__ == '__main__':
     manager.run()
