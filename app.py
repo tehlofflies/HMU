@@ -674,7 +674,7 @@ def getPostInfo(post_id):
                 _location = post[5]
                 _link = "/user/" + str(post[6])
             return render_template('post.html', user=_user, headline=_headline, description=_description, posttime=_posttime,
-                meetingtime=_meetingtime, location=_location, link=_link)
+                meetingtime=_meetingtime, location=_location, link=_link, post_id=post_id)
         else:
             return render_template('error.html', error='Unauthorized Access')
     except Exception as e:
