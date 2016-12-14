@@ -399,7 +399,7 @@ def getPost():
                     display_option = "no-filter"
 
                 post_dict = {
-                    'Id': post[0],
+                    'PostId': post[0],
                     'User': post[1],
                     'UserId': post[2],
                     'Headline': post[3],
