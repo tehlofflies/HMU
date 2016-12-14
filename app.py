@@ -565,6 +565,42 @@ def getFollowing():
         cursor.close()
         conn.close()
 
+@app.route('/followers')
+def showFollwers():
+    if session.get('user'):
+        return render_template('followers.html')
+    else:
+        return render_template('error.html', error='Unauthorized Access')
+
+@app.route('/getFollowers')
+def getFollowers():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    try:
+        if session.get('user'):
+            _user = session.get('user')
+            cursor.callproc('sp_getFollowers', (_user,))
+            followers = cursor.fetchall()
+
+            followers_dict = []
+            for follower in followers:
+                follower_dict = {
+                    'FollowerId': follower[0],
+                    'FollowerName': follower[1]
+                }
+                print(follower[0])
+                print(follower[1])
+                followers_dict.append(follower_dict)
+
+            return json.dumps(followers_dict)
+        else:
+            return render_template('error.html', error='Unauthorized Access')
+    except Exception as e:
+        return render_template('error.html', error=str(e))
+    finally:
+        cursor.close()
+        conn.close()
+
 @app.route('/users')
 def showUsers():
     if session.get('user'):
