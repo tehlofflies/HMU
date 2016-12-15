@@ -170,11 +170,11 @@ END
 """
 
 sp_getPostUserId = """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getPostId`(
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getPostUserId`(
     IN p_id bigint
 )
 BEGIN
-    select user_id from tbl_post
+    select post_user_id from tbl_post
     where post_id = p_id 
     ;   
 END

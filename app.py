@@ -522,7 +522,7 @@ def deletePost(post_id):
         if session.get('user'):
             cursor.callproc('sp_getPostUserId', (post_id,))
             results = cursor.fetchall()
-            post_user = results[0][1]
+            post_user = results[0][0]
             if post_user == session.get('user'):
                 cursor.callproc('sp_deletePost', (post_id,))
                 conn.commit()
@@ -817,6 +817,14 @@ def getPostInfo(post_id):
         if session.get('user'):
             _user_id = session.get('user')
 
+            cursor.callproc('sp_getPostUserId', (post_id,))
+            results = cursor.fetchall()
+            post_user = results[0][0]
+            if post_user == session.get('user'):
+                me = 1
+            else:
+                me = 0
+
             cursor.callproc('sp_getPostInfo', (_user_id,))
             posts = cursor.fetchall()
             for post in posts:
@@ -844,7 +852,7 @@ def getPostInfo(post_id):
                 
             return render_template('post.html', user=_user, headline=_headline, description=_description, posttime=_posttime,
                 meetingtime=_meetingtime, location=_location, link=_link, contact=_contact, post_id=post_id, user_list=user_list,
-                interested=interested)
+                interested=interested, me=me)
         else:
             return render_template('error.html', error='Unauthorized Access')
     except Exception as e:
