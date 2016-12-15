@@ -540,11 +540,15 @@ def deletePost(post_id):
     cursor = conn.cursor()
     try:
         if session.get('user'):
+            _user_id = session.get('user');
             cursor.callproc('sp_getPostUserId', (post_id,))
             results = cursor.fetchall()
             post_user = results[0][0]
             if post_user == session.get('user'):
                 cursor.callproc('sp_deletePost', (post_id,))
+                conn.commit()
+
+                cursor.callproc('sp_deleteUserInterested', (_user_id,))
                 conn.commit()
                 return redirect('/userHome')
         else:
