@@ -603,7 +603,7 @@ def deletePost(post_id):
         if session.get('user'):
             cursor.callproc('sp_getPostUserId', (post_id,))
             results = cursor.fetchall()
-            post_user = results[0][1]
+            post_user = results[0][0]
             if post_user == session.get('user'):
                 cursor.callproc('sp_deletePost', (post_id,))
                 conn.commit()
@@ -843,7 +843,7 @@ def addInterest(post_id):
             _user_id = session.get('user')
             cursor.callproc('sp_addInterest', (_user_id, post_id))
             conn.commit()
-            cursor.callproc('sp_getPostInfo', (_user_id,))
+            cursor.callproc('sp_getPostInfo')
             posts = cursor.fetchall()
             for post in posts:
                 _user = post[0]
@@ -888,7 +888,7 @@ def removeInterest(post_id):
             cursor.callproc('sp_removeInterest', (_user_id, post_id))
             conn.commit()
 
-            cursor.callproc('sp_getPostInfo', (_user_id,))
+            cursor.callproc('sp_getPostInfo')
             posts = cursor.fetchall()
             for post in posts:
                 _user = post[0]
@@ -930,7 +930,7 @@ def getPostInfo(post_id):
         if session.get('user'):
             _user_id = session.get('user')
 
-            cursor.callproc('sp_getPostInfo', (_user_id,))
+            cursor.callproc('sp_getPostInfo')
             posts = cursor.fetchall()
             for post in posts:
                 _user = post[0]
@@ -941,6 +941,14 @@ def getPostInfo(post_id):
                 _location = post[5]
                 _link = "/user/" + str(post[6])
                 _contact = post[7]
+
+                cursor.callproc('sp_getPostUserId', (post_id,))
+                results = cursor.fetchall()
+                post_user = results[0][0]
+                if post_user == _user_id:
+                    me = 1
+                else:
+                    me = 0
 
             cursor.callproc('sp_getInterestedUsers', (post_id,))
             users = cursor.fetchall()
@@ -955,7 +963,7 @@ def getPostInfo(post_id):
             else:
                 interested = 0
                 
-            r = make_response(render_template('post.html', user=_user, headline=_headline, description=_description, posttime=_posttime,
+            r = make_response(render_template('post.html', me=me, user=_user, headline=_headline, description=_description, posttime=_posttime,
                 meetingtime=_meetingtime, location=_location, link=_link, contact=_contact, post_id=post_id, user_list=user_list,
                 interested=interested))
             r.headers.set('Cache-Control', "no-cache, no-store, must-revalidate")
