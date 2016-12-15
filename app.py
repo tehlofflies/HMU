@@ -198,7 +198,7 @@ def showEditProfile():
         cursor.close()
         conn.close()
         
-        r = make_response(render_template('userHomeInterested.html', 
+        r = make_response(render_template('editProfile.html', 
             name=_name, 
             description=_description, 
             email=_email, 
