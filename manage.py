@@ -47,7 +47,7 @@ class tbl_follow(db.Model):
     followed_user_id = db.Column(db.Integer, nullable=False)
 
 class tbl_interested(db.Model):
-    interested_id = db.Column(db.Integer, primary_key=True)
+    interested_id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
     interested_user_id = db.Column(db.Integer, nullable=False)
     interested_post_id = db.Column(db.Integer, nullable=False)
 
@@ -122,29 +122,11 @@ END
 sp_getPosts = """
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getPosts`()
 BEGIN
-    select *
-    from (
-        select p.post_id, u.user_name, u.user_id, p.post_headline, p.post_description, p.post_location, p.post_postTime, p.post_meetingTime
-        from tbl_post as p, tbl_user as u
-        where p.post_user_id = u.user_id) x join (
-        select interested_post_id, count(interested_user_id)
-        from tbl_interested group by interested_post_id) i on x.post_id = i.interested_post_id
+	select p.post_id, u.user_name, u.user_id, p.post_headline, p.post_description, p.post_location, p.post_postTime, p.post_meetingTime
+    from tbl_post as p, tbl_user as u
     where post_meetingTime > NOW()
     order by post_meetingTime asc
     ;
-    
-END
-"""
-
-sp_getInterestedPosts = """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getInterestedPosts`(
-    IN p_user_id bigint
-)
-BEGIN
-    select p.post_id, u.user_name, u.user_id, p.post_headline, p.post_description, p.post_location, p.post_postTime, p.post_meetingTime, count(i.interested_user_id)
-    from tbl_post as p, tbl_user as u, tbl_interested as i
-    where i.interested_user_id = p_user_id AND p.post_id = i.interested_post_id AND p.post_meetingTime > NOW()
-    order by p.post_meetingTime asc;
     
 END
 """
@@ -399,19 +381,6 @@ BEGIN
 END
 """
 
-sp_getPostInterest= """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getPostInterest`(
-    IN p_user_id bigint,
-    IN p_post_id bigint
-)
-BEGIN
-    select * from tbl_interested
-    where interested_user_id = p_user_id
-    and interested_post_id = p_post_id
-    ;
-END
-"""
-
 sp_getPostInfo = """
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getPostInfo`(
     IN p_user_id bigint
@@ -424,8 +393,8 @@ BEGIN
 END
 """
 
-sp_getInterestedUsers = """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getInterestedUsers`(
+sp_getPostInterest = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getPostInterest`(
     IN p_post_id bigint
 )
 BEGIN
@@ -469,11 +438,8 @@ engine.execute(sp_getFollowingIds)
 engine.execute(sp_getUsers)
 engine.execute(sp_addInterest)
 engine.execute(sp_removeInterest)
-engine.execute(sp_getPostInterest)
 engine.execute(sp_getPostInfo)
-engine.execute(sp_getMyPosts)
-engine.execute(sp_getInterestedPosts)
-engine.execute(sp_getInterestedUsers)
+engine.execute(sp_getPostInterest)
 engine.execute(sp_getNewestPostId)
 
 if __name__ == '__main__':

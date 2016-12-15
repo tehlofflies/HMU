@@ -38,14 +38,6 @@ def userHome():
         return render_template('error.html', error='Unauthorized Access')
 
 
-@app.route('/userHome/interested')
-def filterInterested():
-    if session.get('user'):
-        return render_template('userHomeInterested.html')
-    else:
-        return render_template('error.html', error='Unauthorized Access')
-
-
 @app.route('/showSignUp')
 def showSignUp():
     return render_template('signup.html')
@@ -238,6 +230,7 @@ def deleteUser(user_id):
     finally:
         conn.close()
         cursor.close()
+
 
 @app.route('/actuallyDeleteUser/<user_id>')
 def actuallyDeleteUser(user_id):
@@ -441,6 +434,7 @@ def getPost():
             for following in followings:
                 followings_dict[following[0]] = True
 
+
             # get posts
             cursor.callproc('sp_getPosts')
             posts = cursor.fetchall()
@@ -456,6 +450,14 @@ def getPost():
                 if post[2] == _user:
                     display_option = "mine"
 
+                # get interest for this post
+                cursor.callproc('sp_getPostInterest', (post[0],))
+                interest = cursor.fetchall()
+
+                interested_ppl = {}
+                for person in interested_ppl:
+                    interest_ppl[interest[0]] = True
+
                 post_dict = {
                     'PostId': post[0],
                     'User': post[1],
@@ -465,8 +467,8 @@ def getPost():
                     'Location': post[5],
                     'PostTime': post[6].strftime("%B %d, %Y, %I:%M %p"),
                     'MeetingTime': post[7].strftime("%B %d, %Y, %I:%M %p"),
-                    'NumInterested': post[9],
-                    'Filter': display_option
+                    'Filter': display_option,
+                    'Interest': interested_ppl
                 }
                 posts_dict.append(post_dict)
 
@@ -756,7 +758,7 @@ def addInterest(post_id):
                 _link = "/user/" + str(post[6])
                 _contact = post[7]
                 
-                cursor.callproc('sp_getInterestedUsers', (post_id,))
+                cursor.callproc('sp_getPostInterest', (post_id,))
                 users = cursor.fetchall()
                 user_list = []
                 for user in users:
@@ -764,7 +766,7 @@ def addInterest(post_id):
 
             return render_template('post.html', user=_user, headline=_headline, description=_description, posttime=_posttime,
                 meetingtime=_meetingtime, location=_location, link=_link, contact=_contact, post_id=post_id, user_list=user_list,
-                interested=1)
+                interested=user_list)
         else:
             return render_template('error.html', error='Unauthorized Access')
     except Exception as e:
@@ -796,7 +798,7 @@ def removeInterest(post_id):
                 _link = "/user/" + str(post[6])
                 _contact = post[7]
 
-            cursor.callproc('sp_getInterestedUsers', (post_id,))
+            cursor.callproc('sp_getPostInterest', (post_id,))
             users = cursor.fetchall()
             user_list = []
             for user in users:
@@ -804,7 +806,7 @@ def removeInterest(post_id):
 
             return render_template('post.html', user=_user, headline=_headline, description=_description, posttime=_posttime,
                 meetingtime=_meetingtime, location=_location, link=_link, contact=_contact, post_id=post_id, user_list=user_list,
-                interested=0)
+                interested=user_list)
         else:
             return render_template('error.html', error='Unauthorized Access')
     except Exception as e:
@@ -833,18 +835,15 @@ def getPostInfo(post_id):
                 _link = "/user/" + str(post[6])
                 _contact = post[7]
 
-            cursor.callproc('sp_getInterestedUsers', (post_id,))
+            cursor.callproc('sp_getPostInterest', (post_id,))
             users = cursor.fetchall()
             user_list = []
             for user in users:
                 user_list.append(user)
-
-            cursor.callproc("sp_getPostInterest", (_user_id, post_id))
-            results = cursor.fetchall()
-            if len(results) > 0:
-                interested = 1
-            else:
-                interested = 0
+                if user == _user_id:
+                    interested = 1
+                else:
+                    interested = 0
                 
             return render_template('post.html', user=_user, headline=_headline, description=_description, posttime=_posttime,
                 meetingtime=_meetingtime, location=_location, link=_link, contact=_contact, post_id=post_id, user_list=user_list,
