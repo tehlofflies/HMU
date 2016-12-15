@@ -479,42 +479,6 @@ def getPost():
         cursor.close()
         conn.close()
 
-@app.route('/getMyPost')
-def getMyPost():
-    conn = mysql.connect()
-    cursor = conn.cursor()
-    try:
-        if session.get('user'):
-
-            _user = session.get('user')
-            cursor.callproc('sp_getMyPosts', (_user,))
-            posts = cursor.fetchall()
-
-            posts_dict = []
-            for post in posts:
-
-                post_dict = {
-                    'PostId': post[0],
-                    'User': post[1],
-                    'UserId': post[2],
-                    'Headline': post[3],
-                    'Description': post[4],
-                    'Location': post[5],
-                    'PostTime': post[6].strftime("%B %d, %Y, %I:%M %p"),
-                    'MeetingTime': post[7].strftime("%B %d, %Y, %I:%M %p"),
-                    'NumInterested': post[9]
-                }
-                posts_dict.append(post_dict)
-
-            print(posts_dict, file=sys.stderr)
-            return json.dumps(posts_dict)
-        else:
-            return render_template('error.html', error='Unauthorized Access')
-    except Exception as e:
-        return render_template('error.html', error=str(e))
-    finally:
-        cursor.close()
-        conn.close()
 
 @app.route('/getInterestedPost')
 def getInterestedPost():

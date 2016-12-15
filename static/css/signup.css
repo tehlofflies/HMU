@@ -9,12 +9,15 @@ body {
 
 
 /* posts */
-.list-group-item { 
+.list-group-item:not(:last-child) { 
   background-color: #ccc; 
   transition: all 0.5s ease;
 }
-.list-group-item:hover { 
+.list-group-item:not(:last-child):hover { 
   background-color: #18BC9A !important;
+}
+.list-group-item:last-child { 
+  background-color: #18BC9A; 
 }
 .list-group-item-heading { padding: 10px 0; }
 .list-group-item-text { color: white; }

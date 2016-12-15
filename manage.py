@@ -136,26 +136,6 @@ BEGIN
 END
 """
 
-sp_getMyPosts = """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getMyPosts`(
-    IN p_user_id bigint
-)
-BEGIN
-
-    select *
-    from (
-        select p.post_id, u.user_name, u.user_id, p.post_headline, p.post_description, p.post_location, p.post_postTime, p.post_meetingTime
-        from tbl_post as p, tbl_user as u
-        where p.post_user_id = u.user_id) x join (
-        select interested_post_id, count(interested_user_id)
-        from tbl_interested group by interested_post_id) i on x.post_id = i.interested_post_id
-    where post_meetingTime > NOW() AND p_user_id = user_id
-    order by post_meetingTime asc
-    ;
-    
-END
-"""
-
 sp_getInterestedPosts = """
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getInterestedPosts`(
     IN p_user_id bigint
