@@ -52,7 +52,7 @@ class tbl_interested(db.Model):
     interested_post_id = db.Column(db.Integer, nullable=False)
 
 sp_createUser = """
-CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_createUser`(
+CREATE DEFINER = `root`@`127.0.0.1` PROCEDURE `sp_createUser`(
     IN p_name VARCHAR(45),
     IN p_username VARCHAR(45),
     IN p_password VARCHAR(45)
@@ -82,7 +82,7 @@ END
 """
 
 sp_validateLogin = """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_validateLogin`(
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_validateLogin`(
     IN p_username VARCHAR(45)
 )
 BEGIN
@@ -91,7 +91,7 @@ END
 """
 
 sp_addPost = """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_addPost`(
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_addPost`(
     IN p_headline varchar(45),
     IN p_description varchar(1000),
     IN p_user_id bigint,
@@ -120,7 +120,7 @@ END
 """
 
 sp_getPosts = """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getPosts`()
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_getPosts`()
 BEGIN
     select *
     from (
@@ -137,7 +137,7 @@ END
 """
 
 sp_getMyPosts = """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getMyPosts`(
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_getMyPosts`(
     IN p_user_id bigint
 )
 BEGIN
@@ -157,7 +157,7 @@ END
 """
 
 sp_getInterestedPosts = """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getInterestedPosts`(
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_getInterestedPosts`(
     IN p_user_id bigint
 )
 BEGIN
@@ -170,7 +170,7 @@ END
 """
 
 sp_getPostUserId = """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getPostUserId`(
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_getPostUserId`(
     IN p_id bigint
 )
 BEGIN
@@ -181,7 +181,7 @@ END
 """
 
 sp_deletePost = """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_deletePost`(
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_deletePost`(
     IN p_id bigint
 )
 BEGIN
@@ -192,7 +192,7 @@ END
 """
 
 sp_createProfile = """
-CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_createProfile`(
+CREATE DEFINER = `root`@`127.0.0.1` PROCEDURE `sp_createProfile`(
     IN p_name VARCHAR(45),
     IN p_bio VARCHAR(5000),
     IN p_username VARCHAR(45),
@@ -220,7 +220,7 @@ END
 """
 
 sp_editProfile = """
-CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_editProfile`(
+CREATE DEFINER = `root`@`127.0.0.1` PROCEDURE `sp_editProfile`(
     IN p_name VARCHAR(45),
     IN p_bio VARCHAR(5000),
     IN p_username VARCHAR(45),
@@ -240,7 +240,7 @@ END
 """
 
 sp_deleteUser = """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_deleteUser`(
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_deleteUser`(
     IN p_user_id bigint
 )
 BEGIN
@@ -250,7 +250,7 @@ END
 """
 
 sp_deleteUserPost = """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_deleteUserPost`(
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_deleteUserPost`(
     IN p_user_id bigint
 )
 BEGIN
@@ -260,7 +260,7 @@ END
 """
 
 sp_deleteUserProfile = """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_deleteUserProfile`(
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_deleteUserProfile`(
     IN p_user_id bigint
 )
 BEGIN
@@ -270,7 +270,7 @@ END
 """
 
 sp_deleteUserInterested = """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_deleteUserInterested`(
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_deleteUserInterested`(
     IN p_user_id bigint
 )
 BEGIN
@@ -280,7 +280,7 @@ END
 """
 
 sp_deleteUserFollow = """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_deleteUserFollow`(
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_deleteUserFollow`(
     IN p_user_id bigint
 )
 BEGIN
@@ -290,7 +290,7 @@ END
 """
 
 sp_getProfile = """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getProfile`(
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_getProfile`(
     IN p_user_id bigint
 )
 BEGIN
@@ -299,7 +299,7 @@ END
 """
 
 sp_checkFollow = """
-CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_checkFollow`(
+CREATE DEFINER = `root`@`127.0.0.1` PROCEDURE `sp_checkFollow`(
     IN p_follower_user_id bigint,
     IN p_followed_user_id bigint
 )
@@ -312,7 +312,7 @@ END
 """
 
 sp_addFollow = """
-CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_addFollow`(
+CREATE DEFINER = `root`@`127.0.0.1` PROCEDURE `sp_addFollow`(
     IN p_follower_user_id bigint,
     IN p_followed_user_id bigint
 )
@@ -331,7 +331,7 @@ END
 """
 
 sp_deleteFollow = """
-CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_deleteFollow`(
+CREATE DEFINER = `root`@`127.0.0.1` PROCEDURE `sp_deleteFollow`(
     IN p_follower_user_id bigint,
     IN p_followed_user_id bigint
 )
@@ -344,7 +344,7 @@ END
 """
 
 sp_getFollowing = """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getFollowing`(
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_getFollowing`(
     IN p_user_id bigint
 )
 BEGIN
@@ -356,7 +356,7 @@ END
 """
 
 sp_getFollowers = """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getFollowers`(
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_getFollowers`(
     IN p_user_id bigint
 )
 BEGIN
@@ -368,7 +368,7 @@ END
 """
 
 sp_getFollowingIds = """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getFollowingIds`(
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_getFollowingIds`(
     IN p_user_id bigint
 )
 BEGIN
@@ -380,7 +380,7 @@ END
 """
 
 sp_getUsers = """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getUsers`()
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_getUsers`()
 BEGIN
     select * from tbl_profile
     order by profile_name asc;
@@ -389,7 +389,7 @@ END
 """
 
 sp_addInterest = """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_addInterest`(
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_addInterest`(
     IN p_user_id bigint,
     IN p_post_id bigint
 )
@@ -407,7 +407,7 @@ END
 """
 
 sp_removeInterest = """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_removeInterest`(
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_removeInterest`(
     IN p_user_id bigint,
     IN p_post_id bigint
 )
@@ -420,7 +420,7 @@ END
 """
 
 sp_getPostInterest= """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getPostInterest`(
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_getPostInterest`(
     IN p_user_id bigint,
     IN p_post_id bigint
 )
@@ -433,7 +433,7 @@ END
 """
 
 sp_getPostInfo = """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getPostInfo`(
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_getPostInfo`(
     IN p_post_id bigint
 )
 BEGIN
@@ -445,7 +445,7 @@ END
 """
 
 sp_getInterestedUsers = """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getInterestedUsers`(
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_getInterestedUsers`(
     IN p_post_id bigint
 )
 BEGIN
@@ -457,7 +457,7 @@ END
 """
 
 sp_getNewestPostId = """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getNewestPostId`()
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_getNewestPostId`()
 BEGIN
     select MAX(post_id)
     from tbl_post
