@@ -47,6 +47,7 @@ See our [wiki](https://github.com/tehlofflies/HMU/wiki) for more information on 
 To run unit tests, run the following:
 
 ```
+./runHMUtest
 python app_test.py
 ```
 See our [wiki](https://github.com/tehlofflies/HMU/wiki) for more information on what unit tests are available in our current iteration.
@@ -55,7 +56,7 @@ See our [wiki](https://github.com/tehlofflies/HMU/wiki) for more information on 
 
 * [Flask](http://flask.pocoo.org/) - Web framework
 * [Python](https://www.python.org/) - Language
-* [MySQL](https://www.mysql.com/) - Databade
+* [MySQL](https://www.mysql.com/) - Database
 
 ## Authors
 
