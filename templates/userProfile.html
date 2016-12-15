@@ -78,6 +78,9 @@
                         {% endif %}
 
                         <hr class="star-light">
+                        {% if me %}
+                        <p>Name: {{ name }}</p>
+                        {% endif %}
 
                         {% if bio %}
                         <p>Bio: {{ bio }}</p>

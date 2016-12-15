@@ -170,11 +170,11 @@ END
 """
 
 sp_getPostUserId = """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getPostId`(
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getPostUserId`(
     IN p_id bigint
 )
 BEGIN
-    select user_id from tbl_post
+    select post_user_id from tbl_post
     where post_id = p_id 
     ;   
 END
@@ -269,7 +269,6 @@ BEGIN
 END
 """
 
-<<<<<<< HEAD
 sp_deleteUserInterested = """
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_deleteUserInterested`(
     IN p_user_id bigint
@@ -280,8 +279,6 @@ BEGIN
 END
 """
 
-=======
->>>>>>> ac2c22c9131b74bd5924e5aae230fc125f202e38
 sp_deleteUserFollow = """
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_deleteUserFollow`(
     IN p_user_id bigint
@@ -484,10 +481,7 @@ engine.execute(sp_deleteUser)
 engine.execute(sp_deleteUserPost)
 engine.execute(sp_deleteUserProfile)
 engine.execute(sp_deleteUserFollow)
-<<<<<<< HEAD
 engine.execute(sp_deleteUserInterested)
-=======
->>>>>>> ac2c22c9131b74bd5924e5aae230fc125f202e38
 engine.execute(sp_getProfile)
 engine.execute(sp_getFollowing)
 engine.execute(sp_getFollowers)

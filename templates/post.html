@@ -88,12 +88,19 @@
                             <p><a href="/user/{{ user[0] }}" style="color:white">{{ user[1] }}</a></p>
                         {% endfor %} 
 
-                        {% if interested %}
-                        <form action="/uninterested/{{ post_id }}">
-                            <input class="btn btn-primary" type="submit" value="I'm no longer interested!" />
-                        </form>
+                        {% if interested %}   
+                            {% if me %}                                
+                                <form action="/deletePost/{{ post_id }}">
+                                    <input class="btn btn-primary" type="submit" value="Delete Post" />
+                                </form> 
+                            {% else %}
+                                <form action="/uninterested/{{ post_id }}">
+                                    <input class="btn btn-primary" type="submit" value="I'm no longer interested!" />
+                                </form>
+                            {% endif %}
+
                         {% else %}
-                        <form action="/interested/{{post_id}}">
+                        <form action="/interested/{{ post_id }}">
                             <input class="btn btn-primary" type="submit" value="I'm interested!" />
                         </form>
                         {% endif %}
