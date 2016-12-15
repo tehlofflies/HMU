@@ -17,7 +17,7 @@ app.secret_key = 'why would I tell you my secret key?'
 app.config['MYSQL_DATABASE_USER'] = 'root'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'mysql'
 app.config['MYSQL_DATABASE_DB'] = 'HMU'
-app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+app.config['MYSQL_DATABASE_HOST'] = '127.0.0.1'
 
 mysql.init_app(app)
 
@@ -187,7 +187,8 @@ def showEditProfile():
             description=_description, 
             email=_email, 
             phone=_phone, 
-            facebook=_facebook
+            facebook=_facebook,
+            id=_id
         )
 
     else:
@@ -223,6 +224,52 @@ def editProfile():
             else:
                 flash("Please give valid entries for required fields", category='error')
                 return redirect('/showEditProfile')
+    except Exception as e:
+        return render_template('error.html', error=str(e))
+    finally:
+        conn.close()
+        cursor.close()
+
+@app.route('/deleteUser/<user_id>')
+def deleteUser(user_id):
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    try:
+        if session.get('user') and user_id == str(session.get('user')):
+            return render_template('deleteProfile.html', id=user_id)
+        else:
+            return render_template('error.html', error='Unauthorized Access')
+    except Exception as e:
+        return render_template('error.html', error=str(e))
+    finally:
+        conn.close()
+        cursor.close()
+
+@app.route('/actuallyDeleteUser/<user_id>')
+def actuallyDeleteUser(user_id):
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    try:
+        if session.get('user') and user_id == str(session.get('user')):
+            _user_id = session.get('user')
+
+            cursor.callproc('sp_deleteUser', (_user_id,))
+            conn.commit()
+            cursor.callproc('sp_deleteUserPost', (_user_id,))
+            conn.commit()
+            cursor.callproc('sp_deleteUserProfile', (_user_id,))
+            conn.commit()
+            cursor.callproc('sp_deleteUserFollow', (_user_id,))
+            conn.commit()
+<<<<<<< HEAD
+            cursor.callproc('sp_deleteUserInterested', (_user_id,))
+            conn.commit()
+=======
+>>>>>>> ac2c22c9131b74bd5924e5aae230fc125f202e38
+
+            return redirect('/')
+        else:
+            return render_template('error.html', error='Unauthorized Access')
     except Exception as e:
         return render_template('error.html', error=str(e))
     finally:
@@ -499,7 +546,8 @@ def getInterestedPost():
                     'Description': post[4],
                     'Location': post[5],
                     'PostTime': post[6].strftime("%B %d, %Y, %I:%M %p"),
-                    'MeetingTime': post[7].strftime("%B %d, %Y, %I:%M %p")
+                    'MeetingTime': post[7].strftime("%B %d, %Y, %I:%M %p"),
+                    'NumInterested': post[8]
                 }
                 posts_dict.append(post_dict)
 
