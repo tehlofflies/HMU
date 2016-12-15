@@ -46,6 +46,10 @@ class tbl_follow(db.Model):
     follower_user_id = db.Column(db.Integer, nullable=False)
     followed_user_id = db.Column(db.Integer, nullable=False)
 
+class tbl_interested(db.Model):
+    interested_id = db.Column(db.Integer, primary_key=True)
+    interested_user_id = db.Column(db.Integer, nullable=False)
+    interested_post_id = db.Column(db.Integer, nullable=False)
 
 sp_createUser = """
 CREATE DEFINER = `root`@`127.0.0.1` PROCEDURE `sp_createUser`(
@@ -118,21 +122,59 @@ END
 sp_getPosts = """
 CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_getPosts`()
 BEGIN
-    select p.post_id, u.user_name, u.user_id, p.post_headline, p.post_description, p.post_location, p.post_postTime, p.post_meetingTime
-    from tbl_post as p, tbl_user as u
-    where p.post_user_id = u.user_id AND p.post_meetingTime > NOW()
+    select *
+    from (
+        select p.post_id, u.user_name, u.user_id, p.post_headline, p.post_description, p.post_location, p.post_postTime, p.post_meetingTime
+        from tbl_post as p, tbl_user as u
+        where p.post_user_id = u.user_id) x join (
+        select interested_post_id, count(interested_user_id)
+        from tbl_interested group by interested_post_id) i on x.post_id = i.interested_post_id
+    where post_meetingTime > NOW()
+    order by post_meetingTime asc
+    ;
+    
+END
+"""
+
+sp_getMyPosts = """
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_getMyPosts`(
+    IN p_user_id bigint
+)
+BEGIN
+
+    select *
+    from (
+        select p.post_id, u.user_name, u.user_id, p.post_headline, p.post_description, p.post_location, p.post_postTime, p.post_meetingTime
+        from tbl_post as p, tbl_user as u
+        where p.post_user_id = u.user_id) x join (
+        select interested_post_id, count(interested_user_id)
+        from tbl_interested group by interested_post_id) i on x.post_id = i.interested_post_id
+    where post_meetingTime > NOW() AND p_user_id = user_id
+    order by post_meetingTime asc
+    ;
+    
+END
+"""
+
+sp_getInterestedPosts = """
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_getInterestedPosts`(
+    IN p_user_id bigint
+)
+BEGIN
+    select p.post_id, u.user_name, u.user_id, p.post_headline, p.post_description, p.post_location, p.post_postTime, p.post_meetingTime, count(i.interested_user_id)
+    from tbl_post as p, tbl_user as u, tbl_interested as i
+    where i.interested_user_id = p_user_id AND p.post_id = i.interested_post_id AND p.post_meetingTime > NOW()
     order by p.post_meetingTime asc;
     
 END
 """
 
-
-sp_getPostInfo = """
-CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_getPostInfo`(
+sp_getPostUserId = """
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_getPostUserId`(
     IN p_id bigint
 )
 BEGIN
-    select * from tbl_post
+    select post_user_id from tbl_post
     where post_id = p_id 
     ;   
 END
@@ -197,6 +239,56 @@ BEGIN
 END
 """
 
+sp_deleteUser = """
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_deleteUser`(
+    IN p_user_id bigint
+)
+BEGIN
+    delete from tbl_user
+    where user_id = p_user_id;
+END
+"""
+
+sp_deleteUserPost = """
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_deleteUserPost`(
+    IN p_user_id bigint
+)
+BEGIN
+    delete from tbl_post
+    where post_user_id = p_user_id;
+END
+"""
+
+sp_deleteUserProfile = """
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_deleteUserProfile`(
+    IN p_user_id bigint
+)
+BEGIN
+    delete from tbl_profile
+    where profile_id = p_user_id;
+END
+"""
+
+sp_deleteUserInterested = """
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_deleteUserInterested`(
+    IN p_user_id bigint
+)
+BEGIN
+    delete from tbl_interested
+    where interested_user_id = p_user_id;
+END
+"""
+
+sp_deleteUserFollow = """
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_deleteUserFollow`(
+    IN p_user_id bigint
+)
+BEGIN
+    delete from tbl_follow
+    where follower_user_id = p_user_id or followed_user_id = p_user_id;
+END
+"""
+
 sp_getProfile = """
 CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_getProfile`(
     IN p_user_id bigint
@@ -205,7 +297,6 @@ BEGIN
     select * from tbl_profile where profile_id = p_user_id;    
 END
 """
-
 
 sp_checkFollow = """
 CREATE DEFINER = `root`@`127.0.0.1` PROCEDURE `sp_checkFollow`(
@@ -264,6 +355,18 @@ BEGIN
 END
 """
 
+sp_getFollowers = """
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_getFollowers`(
+    IN p_user_id bigint
+)
+BEGIN
+    select f.follower_user_id, u.user_name
+    from tbl_follow as f, tbl_user as u
+    where f.followed_user_id = p_user_id and f.follower_user_id = u.user_id;
+    
+END
+"""
+
 sp_getFollowingIds = """
 CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_getFollowingIds`(
     IN p_user_id bigint
@@ -285,11 +388,88 @@ BEGIN
 END
 """
 
+sp_addInterest = """
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_addInterest`(
+    IN p_user_id bigint,
+    IN p_post_id bigint
+)
+BEGIN
+    insert into tbl_interested(
+        interested_user_id,
+        interested_post_id
+    )
+    values
+    (
+        p_user_id,
+        p_post_id
+    );
+END
+"""
+
+sp_removeInterest = """
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_removeInterest`(
+    IN p_user_id bigint,
+    IN p_post_id bigint
+)
+BEGIN
+    delete from tbl_interested
+    where interested_user_id=p_user_id
+    and interested_post_id=p_post_id
+    ;
+END
+"""
+
+sp_getPostInterest= """
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_getPostInterest`(
+    IN p_user_id bigint,
+    IN p_post_id bigint
+)
+BEGIN
+    select * from tbl_interested
+    where interested_user_id = p_user_id
+    and interested_post_id = p_post_id
+    ;
+END
+"""
+
+sp_getPostInfo = """
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_getPostInfo`(
+    IN p_post_id bigint
+)
+BEGIN
+    select u.user_name, p.post_headline, p.post_description, p.post_postTime, p.post_meetingTime, p.post_location, u.user_id, u.user_username
+    from tbl_post as p, tbl_user as u
+    where p.post_user_id = u.user_id AND p_post_id = p.post_id
+    ;
+END
+"""
+
+sp_getInterestedUsers = """
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_getInterestedUsers`(
+    IN p_post_id bigint
+)
+BEGIN
+    select u.user_id, u.user_name
+    from tbl_post as p, tbl_user as u, tbl_interested as i
+    where p.post_id = p_post_id and u.user_id = i.interested_user_id
+    ;
+END
+"""
+
+sp_getNewestPostId = """
+CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_getNewestPostId`()
+BEGIN
+    select MAX(post_id)
+    from tbl_post
+    ;
+END
+"""
+
 engine.execute(sp_createUser)
 engine.execute(sp_validateLogin)
 engine.execute(sp_addPost)
 engine.execute(sp_getPosts)
-engine.execute(sp_getPostInfo)
+engine.execute(sp_getPostUserId)
 engine.execute(sp_deletePost)
 engine.execute(sp_checkFollow)
 engine.execute(sp_addFollow)
@@ -297,10 +477,25 @@ engine.execute(sp_deleteFollow)
 engine.execute("set global sql_mode = 'strict_trans_tables';")
 engine.execute(sp_createProfile)
 engine.execute(sp_editProfile)
+engine.execute(sp_deleteUser)
+engine.execute(sp_deleteUserPost)
+engine.execute(sp_deleteUserProfile)
+engine.execute(sp_deleteUserFollow)
+engine.execute(sp_deleteUserInterested)
 engine.execute(sp_getProfile)
 engine.execute(sp_getFollowing)
+engine.execute(sp_getFollowers)
 engine.execute(sp_getFollowingIds)
 engine.execute(sp_getUsers)
+engine.execute(sp_addInterest)
+engine.execute(sp_removeInterest)
+engine.execute(sp_getPostInterest)
+engine.execute(sp_getPostInfo)
+engine.execute(sp_getMyPosts)
+engine.execute(sp_getInterestedPosts)
+engine.execute(sp_getInterestedUsers)
+engine.execute(sp_getNewestPostId)
+
 
 
 if __name__ == '__main__':

@@ -2,7 +2,7 @@ from __future__ import print_function # In python 2.7
 import sys
 import datetime
 
-from flask import Flask, render_template, json, request, redirect, session, flash
+from flask import Flask, render_template, json, request, redirect, session, flash, make_response
 from flaskext.mysql import MySQL
 
 from flask_wtf import Form
@@ -33,7 +33,34 @@ def main():
 @app.route('/userHome')
 def userHome():
     if session.get('user'):
-        return render_template('userHome.html')
+        r = make_response(render_template('userHome.html'))
+        r.headers.set('Cache-Control', "no-cache, no-store, must-revalidate")
+        r.headers.set('Pragma', "no-cache")
+        r.headers.set('Expires', "0")
+        return r
+    else:
+        return render_template('error.html', error='Unauthorized Access')
+
+
+@app.route('/userHome/me')
+def filterMe():
+    if session.get('user'):
+        r = make_response(render_template('userHomeMe.html'))
+        r.headers.set('Cache-Control', "no-cache, no-store, must-revalidate")
+        r.headers.set('Pragma', "no-cache")
+        r.headers.set('Expires', "0")
+        return r
+    else:
+        return render_template('error.html', error='Unauthorized Access')
+
+@app.route('/userHome/interested')
+def filterInterested():
+    if session.get('user'):
+        r = make_response(render_template('userHomeInterested.html'))
+        r.headers.set('Cache-Control', "no-cache, no-store, must-revalidate")
+        r.headers.set('Pragma', "no-cache")
+        r.headers.set('Expires', "0")
+        return r
     else:
         return render_template('error.html', error='Unauthorized Access')
 
@@ -102,7 +129,11 @@ def signUp():
 @app.route('/showSignIn')
 def showSignIn():
     if session.get('user'):
-        return render_template('userHome.html')
+        r = make_response(render_template('userHome.html'))
+        r.headers.set('Cache-Control', "no-cache, no-store, must-revalidate")
+        r.headers.set('Pragma', "no-cache")
+        r.headers.set('Expires', "0")
+        return r
     else:
         return render_template('signin.html')
 
@@ -168,14 +199,17 @@ def showEditProfile():
         cursor.close()
         conn.close()
         
-        return render_template('editprofile.html', 
+        r = make_response(render_template('editProfile.html', 
             name=_name, 
             description=_description, 
             email=_email, 
             phone=_phone, 
             facebook=_facebook,
-            id=_id
-        )
+            id=_id))
+        r.headers.set('Cache-Control', "no-cache, no-store, must-revalidate")
+        r.headers.set('Pragma', "no-cache")
+        r.headers.set('Expires', "0")
+        return r
 
     else:
         return render_template('error.html', error='Unauthorized Access')
@@ -222,7 +256,11 @@ def deleteUser(user_id):
     cursor = conn.cursor()
     try:
         if session.get('user') and user_id == str(session.get('user')):
-            return render_template('deleteProfile.html', id=user_id)
+            r = make_response(render_template('deleteProfile.html', id=user_id))
+            r.headers.set('Cache-Control', "no-cache, no-store, must-revalidate")
+            r.headers.set('Pragma', "no-cache")
+            r.headers.set('Expires', "0")
+            return r
         else:
             return render_template('error.html', error='Unauthorized Access')
     except Exception as e:
@@ -279,7 +317,7 @@ def userMe():
                 phone = info[4]
                 fb = info[5]
 
-            return render_template('userProfile.html', 
+            r = make_response(render_template('userProfile.html', 
                 me = 1,
                 user_id = _user, 
                 name = name,
@@ -287,7 +325,12 @@ def userMe():
                 email = email,
                 phone = phone,
                 fb = fb
-            )
+            ))
+            r.headers.set('Cache-Control', "no-cache, no-store, must-revalidate")
+            r.headers.set('Pragma', "no-cache")
+            r.headers.set('Expires', "0")
+            return r
+
         else:
             return render_template('error.html', error='Unauthorized Access')
     except Exception as e:
@@ -323,7 +366,7 @@ def user(user_id):
                 if result[2] == int(user_id):
                     following = 1
 
-            return render_template('userProfile.html', 
+            r = make_response(render_template('userProfile.html', 
                 me = 0,
                 following = following,
                 user_id = user_id, 
@@ -332,7 +375,11 @@ def user(user_id):
                 email = email,
                 phone = phone,
                 fb = fb
-            )
+            ))
+            r.headers.set('Cache-Control', "no-cache, no-store, must-revalidate")
+            r.headers.set('Pragma', "no-cache")
+            r.headers.set('Expires', "0")
+            return r
 
         else:
             return render_template('error.html', error='Unauthorized Access')
@@ -347,7 +394,11 @@ def user(user_id):
 def showAddPost():
     form = DateForm()
     if session.get('user'):
-        return render_template('addPost.html', form=form)
+        r = make_response(render_template('addPost.html', form=form))
+        r.headers.set('Cache-Control', "no-cache, no-store, must-revalidate")
+        r.headers.set('Pragma', "no-cache")
+        r.headers.set('Expires', "0")
+        return r
     else:
         return render_template('error.html', error='Unauthorized Access')
 
@@ -455,8 +506,9 @@ def getPost():
                 interest = cursor.fetchall()
 
                 interested_ppl = {}
-                for person in interested_ppl:
-                    interest_ppl[interest[0]] = True
+                for person in interest:
+                    interested_ppl[person[0]] = True
+
 
                 post_dict = {
                     'PostId': post[0],
@@ -509,7 +561,6 @@ def getInterestedPost():
                 }
                 posts_dict.append(post_dict)
 
-            print(posts_dict, file=sys.stderr)
             return json.dumps(posts_dict)
         else:
             return render_template('error.html', error='Unauthorized Access')
@@ -528,7 +579,7 @@ def deletePost(post_id):
         if session.get('user'):
             cursor.callproc('sp_getPostUserId', (post_id,))
             results = cursor.fetchall()
-            post_user = results[0][1]
+            post_user = results[0][0]
             if post_user == session.get('user'):
                 cursor.callproc('sp_deletePost', (post_id,))
                 conn.commit()
@@ -568,7 +619,7 @@ def addFollow(followed_user_id):
                     phone = info[4]
                     fb = info[5]
 
-                return render_template('userProfile.html', 
+                r = make_response(render_template('userProfile.html', 
                     me = 0,
                     user_id = _followed_user_id, 
                     name = name,
@@ -577,7 +628,12 @@ def addFollow(followed_user_id):
                     phone = phone,
                     fb = fb,
                     following = 1
-                )
+                ))
+                r.headers.set('Cache-Control', "no-cache, no-store, must-revalidate")
+                r.headers.set('Pragma', "no-cache")
+                r.headers.set('Expires', "0")
+                return r
+
             else:
                 return render_template('error.html', error='Already following')
         else:
@@ -610,7 +666,7 @@ def deleteFollow(followed_user_id):
                 phone = info[4]
                 fb = info[5]
 
-            return render_template('userProfile.html', 
+            r = make_response(render_template('userProfile.html', 
                 me = 0,
                 user_id = _followed_user_id, 
                 name = name,
@@ -619,7 +675,12 @@ def deleteFollow(followed_user_id):
                 phone = phone,
                 fb = fb,
                 following = 0
-            )
+            ))
+            r.headers.set('Cache-Control', "no-cache, no-store, must-revalidate")
+            r.headers.set('Pragma', "no-cache")
+            r.headers.set('Expires', "0")
+            return r
+
         else:
             return render_template('error.html', error='Unauthorized Access')
     except Exception as e:
@@ -632,7 +693,11 @@ def deleteFollow(followed_user_id):
 @app.route('/following')
 def showFollowing():
     if session.get('user'):
-        return render_template('following.html')
+        r = make_response(render_template('following.html'))
+        r.headers.set('Cache-Control', "no-cache, no-store, must-revalidate")
+        r.headers.set('Pragma', "no-cache")
+        r.headers.set('Expires', "0")
+        return r
     else:
         return render_template('error.html', error='Unauthorized Access')
 
@@ -667,7 +732,11 @@ def getFollowing():
 @app.route('/followers')
 def showFollwers():
     if session.get('user'):
-        return render_template('followers.html')
+        r = make_response(render_template('followers.html'))
+        r.headers.set('Cache-Control', "no-cache, no-store, must-revalidate")
+        r.headers.set('Pragma', "no-cache")
+        r.headers.set('Expires', "0")
+        return r
     else:
         return render_template('error.html', error='Unauthorized Access')
 
@@ -703,7 +772,11 @@ def getFollowers():
 @app.route('/users')
 def showUsers():
     if session.get('user'):
-        return render_template('users.html')
+        r = make_response(render_template('users.html'))
+        r.headers.set('Cache-Control', "no-cache, no-store, must-revalidate")
+        r.headers.set('Pragma', "no-cache")
+        r.headers.set('Expires', "0")
+        return r
     else:
         return render_template('error.html', error='Unauthorized Access')
 
@@ -746,7 +819,7 @@ def addInterest(post_id):
             _user_id = session.get('user')
             cursor.callproc('sp_addInterest', (_user_id, post_id))
             conn.commit()
-            cursor.callproc('sp_getPostInfo', (_user_id,))
+            cursor.callproc('sp_getPostInfo', (post_id,))
             posts = cursor.fetchall()
             for post in posts:
                 _user = post[0]
@@ -764,9 +837,13 @@ def addInterest(post_id):
                 for user in users:
                     user_list.append(user)
 
-            return render_template('post.html', user=_user, headline=_headline, description=_description, posttime=_posttime,
-                meetingtime=_meetingtime, location=_location, link=_link, contact=_contact, post_id=post_id, user_list=user_list,
-                interested=user_list)
+            r = make_response(render_template('post.html', user=_user, headline=_headline, description=_description, posttime=_posttime,
+                meetingtime=_meetingtime, location=_location, link=_link, contact=_contact, post_id=post_id, user_list=user_list, interested=1))
+            r.headers.set('Cache-Control', "no-cache, no-store, must-revalidate")
+            r.headers.set('Pragma', "no-cache")
+            r.headers.set('Expires', "0")
+            return r
+
         else:
             return render_template('error.html', error='Unauthorized Access')
     except Exception as e:
@@ -786,7 +863,7 @@ def removeInterest(post_id):
             cursor.callproc('sp_removeInterest', (_user_id, post_id))
             conn.commit()
 
-            cursor.callproc('sp_getPostInfo', (_user_id,))
+            cursor.callproc('sp_getPostInfo', (post_id,))
             posts = cursor.fetchall()
             for post in posts:
                 _user = post[0]
@@ -804,9 +881,13 @@ def removeInterest(post_id):
             for user in users:
                 user_list.append(user)
 
-            return render_template('post.html', user=_user, headline=_headline, description=_description, posttime=_posttime,
-                meetingtime=_meetingtime, location=_location, link=_link, contact=_contact, post_id=post_id, user_list=user_list,
-                interested=user_list)
+            r = make_response(render_template('post.html', user=_user, headline=_headline, description=_description, posttime=_posttime,
+                meetingtime=_meetingtime, location=_location, link=_link, contact=_contact, post_id=post_id, user_list=user_list, interested=0))
+            r.headers.set('Cache-Control', "no-cache, no-store, must-revalidate")
+            r.headers.set('Pragma', "no-cache")
+            r.headers.set('Expires', "0")
+            return r
+
         else:
             return render_template('error.html', error='Unauthorized Access')
     except Exception as e:
@@ -823,8 +904,11 @@ def getPostInfo(post_id):
         if session.get('user'):
             _user_id = session.get('user')
 
-            cursor.callproc('sp_getPostInfo', (_user_id,))
+            cursor.callproc('sp_getPostInfo', (post_id,))
             posts = cursor.fetchall()
+
+            print(posts, file=sys.stderr)
+
             for post in posts:
                 _user = post[0]
                 _headline = post[1]
@@ -834,6 +918,14 @@ def getPostInfo(post_id):
                 _location = post[5]
                 _link = "/user/" + str(post[6])
                 _contact = post[7]
+
+                cursor.callproc('sp_getPostUserId', (post_id,))
+                results = cursor.fetchall()
+                post_user = results[0][0]
+                if post_user == _user_id:
+                    me = 1
+                else:
+                    me = 0
 
             cursor.callproc('sp_getPostInterest', (post_id,))
             users = cursor.fetchall()
@@ -845,9 +937,14 @@ def getPostInfo(post_id):
                 else:
                     interested = 0
                 
-            return render_template('post.html', user=_user, headline=_headline, description=_description, posttime=_posttime,
+            r = make_response(render_template('post.html', me=me, user=_user, headline=_headline, description=_description, posttime=_posttime,
                 meetingtime=_meetingtime, location=_location, link=_link, contact=_contact, post_id=post_id, user_list=user_list,
-                interested=interested)
+                interested=interested))
+            r.headers.set('Cache-Control', "no-cache, no-store, must-revalidate")
+            r.headers.set('Pragma', "no-cache")
+            r.headers.set('Expires', "0")
+            return r
+
         else:
             return render_template('error.html', error='Unauthorized Access')
     except Exception as e:
@@ -859,7 +956,7 @@ def getPostInfo(post_id):
 @app.route('/logout')
 def logout():
     session.pop('user',None)
-    return redirect('/')
+    return render_template('logout.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
