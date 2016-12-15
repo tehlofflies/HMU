@@ -198,7 +198,7 @@ def showEditProfile():
         cursor.close()
         conn.close()
         
-        r = make_response(render_template('editProfile.html', 
+        r = make_response(render_template('editprofile.html', 
             name=_name, 
             description=_description, 
             email=_email, 
@@ -489,7 +489,7 @@ def getPost():
 
             posts_dict = []
             for post in posts:
-                
+
                 # get interest for this post
                 cursor.callproc('sp_getInterestedUsers', (post[0],))
                 interest = cursor.fetchall()
