@@ -239,13 +239,43 @@ BEGIN
 END
 """
 
-sp_deleteProfile = """
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_deleteProfile`(
+sp_deleteUser = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_deleteUser`(
     IN p_user_id bigint
 )
 BEGIN
     delete from tbl_user
     where user_id = p_user_id;
+END
+"""
+
+sp_deleteUserPost = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_deleteUserPost`(
+    IN p_user_id bigint
+)
+BEGIN
+    delete from tbl_post
+    where post_user_id = p_user_id;
+END
+"""
+
+sp_deleteUserProfile = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_deleteUserProfile`(
+    IN p_user_id bigint
+)
+BEGIN
+    delete from tbl_profile
+    where profile_id = p_user_id;
+END
+"""
+
+sp_deleteUserFollow = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_deleteUserFollow`(
+    IN p_user_id bigint
+)
+BEGIN
+    delete from tbl_follow
+    where follower_user_id = p_user_id or followed_user_id = p_user_id;
 END
 """
 
@@ -257,7 +287,6 @@ BEGIN
     select * from tbl_profile where profile_id = p_user_id;    
 END
 """
-
 
 sp_checkFollow = """
 CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_checkFollow`(
@@ -438,7 +467,10 @@ engine.execute(sp_deleteFollow)
 engine.execute("set global sql_mode = 'strict_trans_tables';")
 engine.execute(sp_createProfile)
 engine.execute(sp_editProfile)
-engine.execute(sp_deleteProfile)
+engine.execute(sp_deleteUser)
+engine.execute(sp_deleteUserPost)
+engine.execute(sp_deleteUserProfile)
+engine.execute(sp_deleteUserFollow)
 engine.execute(sp_getProfile)
 engine.execute(sp_getFollowing)
 engine.execute(sp_getFollowers)
