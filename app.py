@@ -902,7 +902,7 @@ def getPostInfo(post_id):
 @app.route('/logout')
 def logout():
     session.pop('user',None)
-    return redirect('/')
+    return render_template('logout.html')
 
 if __name__ == "__main__":
     app.run(debug=True)

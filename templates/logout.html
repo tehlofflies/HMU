@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta http-equiv="refresh" content="3;url=/" />
 
     <title>HMU</title>
 
@@ -21,7 +22,7 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
 
     <script src="../static/js/jquery-3.1.1.min.js"></script>
-    <script src="../static/js/showPosts.js"></script>
+    <script src="../static/js/secure.js"></script>
     
   </head>
  
@@ -45,19 +46,13 @@
                         <a href="#page-top"></a>
                     </li>
                     <li>
-                        <a href="/showAddPost">Add Post</a>
+                        <a href="/">Home</a>
+                    </li>
+                    <li>
+                        <a href="/showSignIn">Sign In</a>
                     </li>
                     <li class="active">
-                        <a href="/userHome">Newsfeed</a>
-                    </li>
-                    <li>
-                        <a href="/users">Directory</a>
-                    </li>
-                    <li>
-                        <a href="/me">My Profile</a>
-                    </li>
-                    <li>
-                        <a href="/logout">Logout</a>
+                        <a href="/showSignUp">Sign Up</a>
                     </li>
                 </ul>
             </div>
@@ -72,42 +67,12 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="intro-text">
-                        <h1>Welcome to HMU!</h1>
+                        <h1>You have logged out!</h1>
                     </div>
                 </div>
             </div>
         </div>
     </header>
-
-    <!-- Join Section -->
-    <section id="join">
-        <div class="container">
-
-            <div class="row filter-options">
-                <h4>Filter Posts</h4>
-                <ul id="filters">
-                    <li>
-                        <input type="checkbox" value="Following" id="filter-following" />
-                        <label for="filter-following">People I Follow</label>
-                    </li>
-                    <li>
-                        <a href="/userHome/me">My Posts Only</a>
-                    </li>
-                    <li>
-                        <a href="/userHome/interested">Interested Posts Only</a>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 posts">
-                    
-                    <!-- posts are here -->
-
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Footer -->
     <footer class="text-center">
