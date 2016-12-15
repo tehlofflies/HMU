@@ -843,7 +843,7 @@ def addInterest(post_id):
             _user_id = session.get('user')
             cursor.callproc('sp_addInterest', (_user_id, post_id))
             conn.commit()
-            cursor.callproc('sp_getPostInfo')
+            cursor.callproc('sp_getPostInfo', (post_id,))
             posts = cursor.fetchall()
             for post in posts:
                 _user = post[0]
@@ -888,7 +888,7 @@ def removeInterest(post_id):
             cursor.callproc('sp_removeInterest', (_user_id, post_id))
             conn.commit()
 
-            cursor.callproc('sp_getPostInfo')
+            cursor.callproc('sp_getPostInfo', (post_id,))
             posts = cursor.fetchall()
             for post in posts:
                 _user = post[0]
