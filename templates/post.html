@@ -84,11 +84,8 @@
 
                         <h1>People interested in attending:</h1>
                         {% for user in user_list %}
-                            <p><a href="/user/{{ user[0] }}" style="color:white">{{ user[1] }}</a></p>
+                            <p><a href="/user/{{ user[0] }}" style="color:white">{{ user[1] }}</a></p><br>
                         {% endfor %} 
-                        {% if user_list|length < 1 %}
-                            <br><p>None right now :(</p><br>
-                        {% endif %} 
 
                         {% if interested %}   
                             {% if me %}                                
@@ -102,15 +99,9 @@
                             {% endif %}
 
                         {% else %}
-                            {% if me %}                                
-                                <form action="/deletePost/{{ post_id }}">
-                                    <input class="btn btn-primary" type="submit" value="Delete Post" />
-                                </form> 
-                            {% else %}
-                                <form action="/interested/{{ post_id }}">
-                                    <input class="btn btn-primary" type="submit" value="I'm interested!" />
-                                </form>
-                            {% endif %}
+                            <form action="/interested/{{ post_id }}">
+                                <input class="btn btn-primary" type="submit" value="I'm interested!" />
+                            </form>
                         {% endif %}
 
                     </div>

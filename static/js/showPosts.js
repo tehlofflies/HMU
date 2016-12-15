@@ -51,11 +51,8 @@ $(document).ready(function() {
 
         $(".list-group").each(function() {
           var $this = $(this);
-          $this[post.source!="" && post.test($this.attr("class")) ? "show" : "hide"]();
+          $this[post.source!="" && post.test($this.attr("class")) ? "show" : "hide"](200);
         });
-
-        
-
     }); 
 
 });
