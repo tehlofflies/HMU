@@ -930,8 +930,11 @@ def getPostInfo(post_id):
         if session.get('user'):
             _user_id = session.get('user')
 
-            cursor.callproc('sp_getPostInfo')
+            cursor.callproc('sp_getPostInfo', (post_id,))
             posts = cursor.fetchall()
+
+            print(posts, file=sys.stderr)
+
             for post in posts:
                 _user = post[0]
                 _headline = post[1]
