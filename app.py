@@ -15,7 +15,7 @@ app.secret_key = 'why would I tell you my secret key?'
 
 # MySQL configurations
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = ''
+app.config['MYSQL_DATABASE_PASSWORD'] = 'mysql'
 app.config['MYSQL_DATABASE_DB'] = 'HMU'
 app.config['MYSQL_DATABASE_HOST'] = '127.0.0.1'
 
@@ -252,8 +252,16 @@ def actuallyDeleteUser(user_id):
     try:
         if session.get('user') and user_id == str(session.get('user')):
             _user_id = session.get('user')
-            cursor.callproc('sp_deleteProfile', (_user_id,))
+
+            cursor.callproc('sp_deleteUser', (_user_id,))
             conn.commit()
+            cursor.callproc('sp_deleteUserPost', (_user_id,))
+            conn.commit()
+            cursor.callproc('sp_deleteUserProfile', (_user_id,))
+            conn.commit()
+            cursor.callproc('sp_deleteUserFollow', (_user_id,))
+            conn.commit()
+
             return redirect('/')
         else:
             return render_template('error.html', error='Unauthorized Access')
