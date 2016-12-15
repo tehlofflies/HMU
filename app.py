@@ -187,7 +187,8 @@ def showEditProfile():
             description=_description, 
             email=_email, 
             phone=_phone, 
-            facebook=_facebook
+            facebook=_facebook,
+            id=_id
         )
 
     else:
@@ -223,6 +224,39 @@ def editProfile():
             else:
                 flash("Please give valid entries for required fields", category='error')
                 return redirect('/showEditProfile')
+    except Exception as e:
+        return render_template('error.html', error=str(e))
+    finally:
+        conn.close()
+        cursor.close()
+
+@app.route('/deleteUser/<user_id>')
+def deleteUser(user_id):
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    try:
+        if session.get('user') and user_id == str(session.get('user')):
+            return render_template('deleteProfile.html', id=user_id)
+        else:
+            return render_template('error.html', error='Unauthorized Access')
+    except Exception as e:
+        return render_template('error.html', error=str(e))
+    finally:
+        conn.close()
+        cursor.close()
+
+@app.route('/actuallyDeleteUser/<user_id>')
+def actuallyDeleteUser(user_id):
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    try:
+        if session.get('user') and user_id == str(session.get('user')):
+            _user_id = session.get('user')
+            cursor.callproc('sp_deleteProfile', (_user_id,))
+            conn.commit()
+            return redirect('/')
+        else:
+            return render_template('error.html', error='Unauthorized Access')
     except Exception as e:
         return render_template('error.html', error=str(e))
     finally:

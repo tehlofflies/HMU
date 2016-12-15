@@ -239,6 +239,16 @@ BEGIN
 END
 """
 
+sp_deleteProfile = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_deleteProfile`(
+    IN p_user_id bigint
+)
+BEGIN
+    delete from tbl_user
+    where user_id = p_user_id;
+END
+"""
+
 sp_getProfile = """
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getProfile`(
     IN p_user_id bigint
@@ -428,6 +438,7 @@ engine.execute(sp_deleteFollow)
 engine.execute("set global sql_mode = 'strict_trans_tables';")
 engine.execute(sp_createProfile)
 engine.execute(sp_editProfile)
+engine.execute(sp_deleteProfile)
 engine.execute(sp_getProfile)
 engine.execute(sp_getFollowing)
 engine.execute(sp_getFollowers)
