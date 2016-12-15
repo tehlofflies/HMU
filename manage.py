@@ -269,6 +269,16 @@ BEGIN
 END
 """
 
+sp_deleteUserInterested = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_deleteUserInterested`(
+    IN p_user_id bigint
+)
+BEGIN
+    delete from tbl_interested
+    where interested_user_id = p_user_id;
+END
+"""
+
 sp_deleteUserFollow = """
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_deleteUserFollow`(
     IN p_user_id bigint
@@ -471,6 +481,7 @@ engine.execute(sp_deleteUser)
 engine.execute(sp_deleteUserPost)
 engine.execute(sp_deleteUserProfile)
 engine.execute(sp_deleteUserFollow)
+engine.execute(sp_deleteUserInterested)
 engine.execute(sp_getProfile)
 engine.execute(sp_getFollowing)
 engine.execute(sp_getFollowers)

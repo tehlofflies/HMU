@@ -261,6 +261,8 @@ def actuallyDeleteUser(user_id):
             conn.commit()
             cursor.callproc('sp_deleteUserFollow', (_user_id,))
             conn.commit()
+            cursor.callproc('sp_deleteUserInterested', (_user_id,))
+            conn.commit()
 
             return redirect('/')
         else:
