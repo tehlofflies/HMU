@@ -489,14 +489,24 @@ def getPost():
 
             posts_dict = []
             for post in posts:
+                
+                # get interest for this post
+                cursor.callproc('sp_getInterestedUsers', (post[0],))
+                interest = cursor.fetchall()
+
+                bool_interested = ""
+                for person in interest:
+                    if person[0] == _user:
+                        bool_interested = "interested"
 
                 # set a display or no display option if the post author is being followed
                 # this dict entry gets used for css styling, see showPosts.js
-                display_option = "filter"
+                display_option = ""
                 if post[2] in followings_dict:
-                    display_option = "no-filter"
-                #if post[2] == _user:
-                    #display_option = "no-filter"
+                    display_option = "following"
+                if post[2] == _user:
+                    display_option = "mine"
+                    bool_interested = ""
 
                 post_dict = {
                     'PostId': post[0],
@@ -508,6 +518,7 @@ def getPost():
                     'PostTime': post[6].strftime("%B %d, %Y, %I:%M %p"),
                     'MeetingTime': post[7].strftime("%B %d, %Y, %I:%M %p"),
                     'NumInterested': post[9],
+                    'Interest': bool_interested,
                     'Filter': display_option
                 }
                 posts_dict.append(post_dict)

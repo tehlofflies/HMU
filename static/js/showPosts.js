@@ -23,6 +23,7 @@ $(function() {
             $.each(postObj, function(index, value) {
                 post = $(div).clone();
                 $(post).addClass(value.Filter);
+                $(post).addClass(value.Interest);
                 $(post).find('#postLink').attr("href", "/post/"+value.PostId);
                 $(post).find('#postHeading').text(value.Headline);
                 $(post).find('#user').attr("href", "/user/"+value.UserId).text("WHO: " +value.User);
@@ -42,15 +43,15 @@ $(function() {
 
 
 $(document).ready(function() {
-    $('#filter-following').click(function() {
+    $('#filters :checkbox').click(function() {
 
-        if (document.getElementById('filter-following').checked) {
-            $('.filter').hide(200);
-            console.log("ok");
-        }
-        else {
-            $('.filter').show(200);
-        }
+        var post = new RegExp($("#filters :checkbox:checked").map(function() {
+            return this.value;
+        }).get().join("|") );
 
+        $(".list-group").each(function() {
+          var $this = $(this);
+          $this[post.source!="" && post.test($this.attr("class")) ? "show" : "hide"](200);
+        });
     }); 
 });

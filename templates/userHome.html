@@ -87,16 +87,19 @@
                 <h4>Filter Posts</h4>
                 <ul id="filters">
                     <li>
-                        <input type="checkbox" value="Following" id="filter-following" />
-                        <label for="filter-following">People I Follow</label>
+                        <input type="checkbox" name="post-filter" value="following" id="following" />
+                        <label for="following">People I Follow</label>
                     </li>
                     <li>
-                        <a href="/userHome/me">My Posts Only</a>
+                        <input type="checkbox" name="post-filter" value="mine" id="mine" />
+                        <label for="mine">My Posts</label>
                     </li>
                     <li>
-                        <a href="/userHome/interested">Interested Posts Only</a>
+                        <input type="checkbox" name="post-filter" value="interested" id="interested" />
+                        <label for="interested">Other Posts I'm Interested In</label>
                     </li>
                 </ul>
+
             </div>
 
             <div class="row">

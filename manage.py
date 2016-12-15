@@ -451,7 +451,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getInterestedUsers`(
 BEGIN
     select u.user_id, u.user_name
     from tbl_post as p, tbl_user as u, tbl_interested as i
-    where p.post_id = p_post_id and u.user_id = i.interested_user_id
+    where p.post_id = p_post_id and p.post_id = i.interested_post_id and u.user_id = i.interested_user_id
     ;
 END
 """
