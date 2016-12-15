@@ -39,9 +39,9 @@ class FlaskrTestCase(unittest.TestCase):
     def tearDown(self):
         self.app.engine = sqlalchemy.create_engine('mysql://root:@127.0.0.1')
         self.app.engine.execute("USE HMU_TEST")
-        self.app.engine.execute("TRUNCATE TABLE TBL_USER")
-        self.app.engine.execute("TRUNCATE TABLE TBL_POST")
-        self.app.engine.execute("TRUNCATE TABLE TBL_PROFILE")
+        self.app.engine.execute("TRUNCATE TABLE tbl_user")
+        self.app.engine.execute("TRUNCATE TABLE tbl_post")
+        self.app.engine.execute("TRUNCATE TABLE tbl_profile")
 
         
     def signUp(self, name, email, password):
