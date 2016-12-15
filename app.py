@@ -37,12 +37,6 @@ def userHome():
     else:
         return render_template('error.html', error='Unauthorized Access')
 
-@app.route('/userHome/me')
-def filterMe():
-    if session.get('user'):
-        return render_template('userHomeMe.html')
-    else:
-        return render_template('error.html', error='Unauthorized Access')
 
 @app.route('/userHome/interested')
 def filterInterested():
@@ -456,11 +450,11 @@ def getPost():
 
                 # set a display or no display option if the post author is being followed
                 # this dict entry gets used for css styling, see showPosts.js
-                display_option = "filter"
+                display_option = "hide"
                 if post[2] in followings_dict:
-                    display_option = "no-filter"
-                #if post[2] == _user:
-                    #display_option = "no-filter"
+                    display_option = "following"
+                if post[2] == _user:
+                    display_option = "mine"
 
                 post_dict = {
                     'PostId': post[0],
