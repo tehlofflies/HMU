@@ -46,9 +46,13 @@ class tbl_follow(db.Model):
     follower_user_id = db.Column(db.Integer, nullable=False)
     followed_user_id = db.Column(db.Integer, nullable=False)
 
+class tbl_interested(db.Model):
+    interested_id = db.Column(db.Integer, primary_key=True)
+    interested_user_id = db.Column(db.Integer, nullable=False)
+    interested_post_id = db.Column(db.Integer, nullable=False)
 
 sp_createUser = """
-CREATE DEFINER = `root`@`127.0.0.1` PROCEDURE `sp_createUser`(
+CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_createUser`(
     IN p_name VARCHAR(45),
     IN p_username VARCHAR(45),
     IN p_password VARCHAR(45)
@@ -78,7 +82,7 @@ END
 """
 
 sp_validateLogin = """
-CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_validateLogin`(
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_validateLogin`(
     IN p_username VARCHAR(45)
 )
 BEGIN
@@ -87,7 +91,7 @@ END
 """
 
 sp_addPost = """
-CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_addPost`(
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_addPost`(
     IN p_headline varchar(45),
     IN p_description varchar(1000),
     IN p_user_id bigint,
@@ -116,30 +120,68 @@ END
 """
 
 sp_getPosts = """
-CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_getPosts`()
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getPosts`()
 BEGIN
-    select p.post_id, u.user_name, u.user_id, p.post_headline, p.post_description, p.post_location, p.post_postTime, p.post_meetingTime
-    from tbl_post as p, tbl_user as u
-    where p.post_user_id = u.user_id AND p.post_meetingTime > NOW()
+    select *
+    from (
+        select p.post_id, u.user_name, u.user_id, p.post_headline, p.post_description, p.post_location, p.post_postTime, p.post_meetingTime
+        from tbl_post as p, tbl_user as u
+        where p.post_user_id = u.user_id) x join (
+        select interested_post_id, count(interested_user_id)
+        from tbl_interested group by interested_post_id) i on x.post_id = i.interested_post_id
+    where post_meetingTime > NOW()
+    order by post_meetingTime asc
+    ;
+    
+END
+"""
+
+sp_getMyPosts = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getMyPosts`(
+    IN p_user_id bigint
+)
+BEGIN
+
+    select *
+    from (
+        select p.post_id, u.user_name, u.user_id, p.post_headline, p.post_description, p.post_location, p.post_postTime, p.post_meetingTime
+        from tbl_post as p, tbl_user as u
+        where p.post_user_id = u.user_id) x join (
+        select interested_post_id, count(interested_user_id)
+        from tbl_interested group by interested_post_id) i on x.post_id = i.interested_post_id
+    where post_meetingTime > NOW() AND p_user_id = user_id
+    order by post_meetingTime asc
+    ;
+    
+END
+"""
+
+sp_getInterestedPosts = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getInterestedPosts`(
+    IN p_user_id bigint
+)
+BEGIN
+    select p.post_id, u.user_name, u.user_id, p.post_headline, p.post_description, p.post_location, p.post_postTime, p.post_meetingTime, count(i.interested_user_id)
+    from tbl_post as p, tbl_user as u, tbl_interested as i
+    where i.interested_user_id = p_user_id AND p.post_id = i.interested_post_id AND p.post_meetingTime > NOW()
     order by p.post_meetingTime asc;
     
 END
 """
 
-
-sp_getPostInfo = """
-CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_getPostInfo`(
+sp_getPostUserId = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getPostUserId`(
     IN p_id bigint
 )
 BEGIN
-    select * from tbl_post
+    select post_user_id from tbl_post
     where post_id = p_id 
     ;   
 END
 """
 
 sp_deletePost = """
-CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_deletePost`(
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_deletePost`(
     IN p_id bigint
 )
 BEGIN
@@ -150,7 +192,7 @@ END
 """
 
 sp_createProfile = """
-CREATE DEFINER = `root`@`127.0.0.1` PROCEDURE `sp_createProfile`(
+CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_createProfile`(
     IN p_name VARCHAR(45),
     IN p_bio VARCHAR(5000),
     IN p_username VARCHAR(45),
@@ -178,7 +220,7 @@ END
 """
 
 sp_editProfile = """
-CREATE DEFINER = `root`@`127.0.0.1` PROCEDURE `sp_editProfile`(
+CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_editProfile`(
     IN p_name VARCHAR(45),
     IN p_bio VARCHAR(5000),
     IN p_username VARCHAR(45),
@@ -197,8 +239,58 @@ BEGIN
 END
 """
 
+sp_deleteUser = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_deleteUser`(
+    IN p_user_id bigint
+)
+BEGIN
+    delete from tbl_user
+    where user_id = p_user_id;
+END
+"""
+
+sp_deleteUserPost = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_deleteUserPost`(
+    IN p_user_id bigint
+)
+BEGIN
+    delete from tbl_post
+    where post_user_id = p_user_id;
+END
+"""
+
+sp_deleteUserProfile = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_deleteUserProfile`(
+    IN p_user_id bigint
+)
+BEGIN
+    delete from tbl_profile
+    where profile_id = p_user_id;
+END
+"""
+
+sp_deleteUserInterested = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_deleteUserInterested`(
+    IN p_user_id bigint
+)
+BEGIN
+    delete from tbl_interested
+    where interested_user_id = p_user_id;
+END
+"""
+
+sp_deleteUserFollow = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_deleteUserFollow`(
+    IN p_user_id bigint
+)
+BEGIN
+    delete from tbl_follow
+    where follower_user_id = p_user_id or followed_user_id = p_user_id;
+END
+"""
+
 sp_getProfile = """
-CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_getProfile`(
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getProfile`(
     IN p_user_id bigint
 )
 BEGIN
@@ -206,9 +298,8 @@ BEGIN
 END
 """
 
-
 sp_checkFollow = """
-CREATE DEFINER = `root`@`127.0.0.1` PROCEDURE `sp_checkFollow`(
+CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_checkFollow`(
     IN p_follower_user_id bigint,
     IN p_followed_user_id bigint
 )
@@ -221,7 +312,7 @@ END
 """
 
 sp_addFollow = """
-CREATE DEFINER = `root`@`127.0.0.1` PROCEDURE `sp_addFollow`(
+CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_addFollow`(
     IN p_follower_user_id bigint,
     IN p_followed_user_id bigint
 )
@@ -240,7 +331,7 @@ END
 """
 
 sp_deleteFollow = """
-CREATE DEFINER = `root`@`127.0.0.1` PROCEDURE `sp_deleteFollow`(
+CREATE DEFINER = `root`@`localhost` PROCEDURE `sp_deleteFollow`(
     IN p_follower_user_id bigint,
     IN p_followed_user_id bigint
 )
@@ -253,7 +344,7 @@ END
 """
 
 sp_getFollowing = """
-CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_getFollowing`(
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getFollowing`(
     IN p_user_id bigint
 )
 BEGIN
@@ -264,8 +355,20 @@ BEGIN
 END
 """
 
+sp_getFollowers = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getFollowers`(
+    IN p_user_id bigint
+)
+BEGIN
+    select f.follower_user_id, u.user_name
+    from tbl_follow as f, tbl_user as u
+    where f.followed_user_id = p_user_id and f.follower_user_id = u.user_id;
+    
+END
+"""
+
 sp_getFollowingIds = """
-CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_getFollowingIds`(
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getFollowingIds`(
     IN p_user_id bigint
 )
 BEGIN
@@ -277,7 +380,7 @@ END
 """
 
 sp_getUsers = """
-CREATE DEFINER=`root`@`127.0.0.1` PROCEDURE `sp_getUsers`()
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getUsers`()
 BEGIN
     select * from tbl_profile
     order by profile_name asc;
@@ -285,11 +388,88 @@ BEGIN
 END
 """
 
+sp_addInterest = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_addInterest`(
+    IN p_user_id bigint,
+    IN p_post_id bigint
+)
+BEGIN
+    insert into tbl_interested(
+        interested_user_id,
+        interested_post_id
+    )
+    values
+    (
+        p_user_id,
+        p_post_id
+    );
+END
+"""
+
+sp_removeInterest = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_removeInterest`(
+    IN p_user_id bigint,
+    IN p_post_id bigint
+)
+BEGIN
+    delete from tbl_interested
+    where interested_user_id=p_user_id
+    and interested_post_id=p_post_id
+    ;
+END
+"""
+
+sp_getPostInterest= """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getPostInterest`(
+    IN p_user_id bigint,
+    IN p_post_id bigint
+)
+BEGIN
+    select * from tbl_interested
+    where interested_user_id = p_user_id
+    and interested_post_id = p_post_id
+    ;
+END
+"""
+
+sp_getPostInfo = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getPostInfo`(
+    IN p_post_id bigint
+)
+BEGIN
+    select u.user_name, p.post_headline, p.post_description, p.post_postTime, p.post_meetingTime, p.post_location, u.user_id, u.user_username
+    from tbl_post as p, tbl_user as u
+    where p.post_user_id = u.user_id AND p_post_id = p.post_id
+    ;
+END
+"""
+
+sp_getInterestedUsers = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getInterestedUsers`(
+    IN p_post_id bigint
+)
+BEGIN
+    select u.user_id, u.user_name
+    from tbl_post as p, tbl_user as u, tbl_interested as i
+    where p.post_id = p_post_id and u.user_id = i.interested_user_id
+    ;
+END
+"""
+
+sp_getNewestPostId = """
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getNewestPostId`()
+BEGIN
+    select MAX(post_id)
+    from tbl_post
+    ;
+END
+"""
+
 engine.execute(sp_createUser)
 engine.execute(sp_validateLogin)
 engine.execute(sp_addPost)
 engine.execute(sp_getPosts)
-engine.execute(sp_getPostInfo)
+engine.execute(sp_getPostUserId)
 engine.execute(sp_deletePost)
 engine.execute(sp_checkFollow)
 engine.execute(sp_addFollow)
@@ -297,10 +477,25 @@ engine.execute(sp_deleteFollow)
 engine.execute("set global sql_mode = 'strict_trans_tables';")
 engine.execute(sp_createProfile)
 engine.execute(sp_editProfile)
+engine.execute(sp_deleteUser)
+engine.execute(sp_deleteUserPost)
+engine.execute(sp_deleteUserProfile)
+engine.execute(sp_deleteUserFollow)
+engine.execute(sp_deleteUserInterested)
 engine.execute(sp_getProfile)
 engine.execute(sp_getFollowing)
+engine.execute(sp_getFollowers)
 engine.execute(sp_getFollowingIds)
 engine.execute(sp_getUsers)
+engine.execute(sp_addInterest)
+engine.execute(sp_removeInterest)
+engine.execute(sp_getPostInterest)
+engine.execute(sp_getPostInfo)
+engine.execute(sp_getMyPosts)
+engine.execute(sp_getInterestedPosts)
+engine.execute(sp_getInterestedUsers)
+engine.execute(sp_getNewestPostId)
+
 
 
 if __name__ == '__main__':
