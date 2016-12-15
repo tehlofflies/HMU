@@ -444,7 +444,6 @@ def addPost():
                     cursor.callproc('sp_getNewestPostId')
                     data = cursor.fetchall()
                     _postId = data[0][0]
-                    print(_postId)
                     cursor.callproc('sp_addInterest', (_user, _postId))
                     conn.commit()
                     return redirect('/userHome')
@@ -723,8 +722,6 @@ def getFollowers():
                     'FollowerId': follower[0],
                     'FollowerName': follower[1]
                 }
-                print(follower[0])
-                print(follower[1])
                 followers_dict.append(follower_dict)
 
             return json.dumps(followers_dict)
@@ -875,8 +872,6 @@ def getPostInfo(post_id):
 
             cursor.callproc('sp_getPostInfo', (post_id,))
             posts = cursor.fetchall()
-
-            print(posts, file=sys.stderr)
 
             for post in posts:
                 _user = post[0]
